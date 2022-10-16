@@ -5,10 +5,7 @@ using System;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using System.Text.Json;
-using System.Text.Json.Serialization;
- 
+
 public class UDPClient
 {
     IPEndPoint remoteEndPoint;
@@ -21,6 +18,7 @@ public class UDPClient
             UDPServerConfig.getPort()
         );
         client = new UdpClient();
+        client.Client.ReceiveTimeout = 5000;
     }
 
     public void sendData(IUDPREquest request){
@@ -28,7 +26,6 @@ public class UDPClient
         {
             Debug.Log(request.getRequestType());
             string text = request.saveToString();
-            Debug.Log(text);
             if (text != "")
             {
                 byte[] data = Encoding.UTF8.GetBytes(text);

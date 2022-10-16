@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class GetServerListRequest : IUDPREquest
 {
     public int id;
-    public string requestType = "get";
+    public RequestType requestType = RequestType.GET;
 
     public GetServerListRequest(int id){
         this.id = id;
     }
 
     public string getRequestType(){
-        return requestType;
+        return requestType.ToString();
     }
 
     public string saveToString()
