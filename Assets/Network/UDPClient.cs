@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
- 
+
 using System;
 using System.Text;
 using System.Net;
@@ -10,18 +10,20 @@ public class UDPClient
 {
     IPEndPoint remoteEndPoint;
     UdpClient client;
-   
+
     public void init()
-{
+    {
         remoteEndPoint = new IPEndPoint(
             IPAddress.Parse(UDPServerConfig.getIp()),
             UDPServerConfig.getPort()
         );
+        Debug.Log(remoteEndPoint.Port);
         client = new UdpClient();
         client.Client.ReceiveTimeout = 5000;
     }
 
-    public void sendData(IUDPREquest request){
+    public void sendData(IUDPREquest request)
+    {
         try
         {
             Debug.Log(request.getRequestType());
@@ -38,7 +40,8 @@ public class UDPClient
         }
     }
 
-    public byte[] receiveData(){
+    public byte[] receiveData()
+    {
         try
         {
             return client.Receive(ref remoteEndPoint);

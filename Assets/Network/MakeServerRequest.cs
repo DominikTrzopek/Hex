@@ -10,36 +10,44 @@ public class MakeServerRequest : MonoBehaviour
 
     public void RequestNewGameServer()
     {
-        new Thread(() => 
-        {
-            mutex.WaitOne();
-            UDPClient client = new UDPClient();
-            client.init();
-            client.sendData(new CreateServerRequest(1,"pass",3,4,5,1));
-            byte[] response = client.receiveData();
-            string message = Encoding.Default.GetString(response);
-            UDPResponse response1 = UDPResponse.fromString(message);
-            mutex.ReleaseMutex();
-        }).Start();
+        // new Thread(() =>
+        // {
+        //     mutex.WaitOne();
+        //     UDPClient client = new UDPClient();
+        //     client.init();
+        //     client.sendData(new CreateServerRequest(1, "test", "pass", 3, 4, 5, 1));
+        //     try
+        //     {
+        //         byte[] response = client.receiveData();
+        //         string message = Encoding.Default.GetString(response);
+        //         UDPResponse response1 = UDPResponse.fromString(message);
+        //     }
+        //     catch (Exception err)
+        //     {
+        //         Debug.Log(err.ToString());
+        //     }
+        //     mutex.ReleaseMutex();
+        // }).Start();
     }
 
     public void RequestServerList()
     {
 
-        new Thread(() => 
+        new Thread(() =>
         {
             mutex.WaitOne();
             UDPClient client = new UDPClient();
             client.init();
             client.sendData(new GetServerListRequest(1));
-            byte[] response;
-            string message;
-            while(true){
-                try{
-                    response = client.receiveData();
-                    message = Encoding.Default.GetString(response);
+            while (true)
+            {
+                try
+                {
+                    byte[] response = client.receiveData();
+                    string message = Encoding.Default.GetString(response);
                     UDPResponse response2 = UDPResponse.fromString(message);
-                    if(response2.responseType == ResponseType.ENDOFMESSAGE){
+                    if (response2.responseType == ResponseType.ENDOFMESSAGE)
+                    {
                         mutex.ReleaseMutex();
                         return;
                     }
@@ -54,8 +62,8 @@ public class MakeServerRequest : MonoBehaviour
         }).Start();
     }
 
-    
-    
+
+
 
 
 }

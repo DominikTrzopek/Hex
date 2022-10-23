@@ -6,16 +6,13 @@ public class CreateServerRequest : IUDPREquest
     public RequestType requestType = RequestType.CREATE;
     public TCPServerInfo serverInfo = new TCPServerInfo();
 
-    public CreateServerRequest(int id, string password, int numberOfPlayers, int numberOfTurns, int mapType, int seed){
-        this.serverInfo.creatorId = id;
-        this.serverInfo.password = password;
-        this.serverInfo.numberOfPlayers = numberOfPlayers;
-        this.serverInfo.numberOfTurns = numberOfPlayers;
-        this.serverInfo.mapType = mapType;
-        this.serverInfo.seed = seed;
+    public CreateServerRequest(TCPServerInfo serverInfo)
+    {
+        this.serverInfo = serverInfo;
     }
 
-    public string getRequestType(){
+    public string getRequestType()
+    {
         return requestType.ToString();
     }
 
