@@ -9,6 +9,7 @@ public class ServerListScreenLogic : MonoBehaviour
 
     [SerializeField]
     private GameObject CellPrefab;
+
     private static Mutex mutex = new Mutex();
 
     void OnEnable()
@@ -54,6 +55,11 @@ public class ServerListScreenLogic : MonoBehaviour
 
     private void DisplayServerInfo(List<TCPServerInfo> tcpServers)
     {
+        foreach (Transform child in this.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
         foreach (var serverInfo in tcpServers)
         {
             GameObject newCell = Instantiate(CellPrefab);
@@ -68,6 +74,7 @@ public class ServerListScreenLogic : MonoBehaviour
             numOfPlayersText.SetText(serverInfo.numberOfPlayers.ToString());
             gameLenghtText.SetText(serverInfo.numberOfTurns.ToString() + " TURNS");
             mapSizeText.SetText(serverInfo.mapSize.ToString() + " x " + serverInfo.mapSize.ToString() + " Cells");
+            newCell.GetComponent<ServerInfoReference>().setTCPInfo(serverInfo);
         }
     }
 
