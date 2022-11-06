@@ -71,7 +71,7 @@ public class ServerListScreenLogic : MonoBehaviour
             TMPro.TextMeshProUGUI mapSizeText = newCell.transform.Find("MapSize/SizeValue").GetComponent<TMPro.TextMeshProUGUI>();
 
             serverNameText.SetText(serverInfo.serverName);
-            numOfPlayersText.SetText(serverInfo.numberOfPlayers.ToString());
+            numOfPlayersText.SetText(serverInfo.connections.ToString() + "/" + serverInfo.numberOfPlayers.ToString());
             gameLenghtText.SetText(serverInfo.numberOfTurns.ToString() + " TURNS");
             mapSizeText.SetText(serverInfo.mapSize.ToString() + " x " + serverInfo.mapSize.ToString() + " Cells");
             newCell.GetComponent<ServerInfoReference>().setTCPInfo(serverInfo);

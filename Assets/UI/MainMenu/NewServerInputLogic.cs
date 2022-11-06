@@ -6,8 +6,12 @@ using System.Threading;
 using System.Text;
 using System;
 
+
 public class NewServerInputLogic : MonoBehaviour
 {
+
+    const int startingNumberOfConnections = 1;
+
     [SerializeField]
     private TMPro.TMP_InputField serverName;
     [SerializeField]
@@ -44,7 +48,8 @@ public class NewServerInputLogic : MonoBehaviour
             seed,
             int.Parse(mapType.options[mapType.value].text),
             int.Parse(mapSize.options[mapSize.value].text),
-            GetCustomMap()
+            GetCustomMap(),
+            startingNumberOfConnections
         );
     }
 

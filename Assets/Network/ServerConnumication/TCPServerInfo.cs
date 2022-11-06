@@ -14,6 +14,7 @@ public class TCPServerInfo
     public int[] customMap;
     public string ip;
     public int[] ports;
+    public int connections;
 
     public string saveToString()
     {
@@ -24,7 +25,7 @@ public class TCPServerInfo
 
     public TCPServerInfo(int creatorId, string serverName,
     string password, int numberOfPlayers, int numberOfTurns,
-    int seed, int mapType, int mapSize, int[] customMap)
+    int seed, int mapType, int mapSize, int[] customMap, int connections)
     {
         this.creatorId = creatorId;
         this.serverName = serverName;
@@ -35,5 +36,6 @@ public class TCPServerInfo
         this.mapSize = mapSize;
         this.mapType = mapType;
         this.customMap = customMap;
+        this.connections = connections;
     }
 }
