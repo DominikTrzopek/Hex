@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using System.Text;
 
 public class JoinServerLogic : MonoBehaviour
 {
 
     [SerializeField]
     private GameObject child;
+    
+    [SerializeField]
+    private TMPro.TMP_InputField serverPass;
 
     public void JoinGame()
     {
-        TCPServerInfo serverInfo = getTCPInfo();
-        TCPConnection.serverInfo = serverInfo;
+        
+        TCPServerInfo info = getTCPInfo();
+        ConnectMsg connectMsg = new ConnectMsg(new PlayerInfo("1","huj",PlayerStatus.NOTREADY, Color.green), getTCPPass());
+        TCPConnection conn = TCPConnection.instance;
+        conn.connectToGame(info, connectMsg);
         setScene();
-        TCPConnection.client = new TCPClient();
-        TCPConnection.client.setupSocket(serverInfo.ip, serverInfo.ports[serverInfo.connections - 1]);
-        TCPConnection.client.writeSocket("this is message from unity :D");
 
         //TODO: wlasciwa wymiana danycg
         //client.closeSocket();
@@ -34,5 +38,9 @@ public class JoinServerLogic : MonoBehaviour
     private TCPServerInfo getTCPInfo()
     {
         return child.GetComponent<ServerInfoReference>().getTCPInfo();
+    }
+
+    private string getTCPPass(){
+        return serverPass.text;
     }
 }

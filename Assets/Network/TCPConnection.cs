@@ -1,9 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public static class TCPConnection
+public class TCPConnection : MonoBehaviour
 {
-    public static TCPClient client;
-    public static TCPServerInfo serverInfo;
+    public static TCPConnection instance { get; private set; }
+    public TCPClient client;
+    public TCPServerInfo serverInfo;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+    }
+
+    public void connectToGame(TCPServerInfo info, ConnectMsg connectMsg)
+    {
+        serverInfo = info;
+        client.setupSocket(info.ip, info.ports[info.connections - 1]);
+        client.writeSocket(connectMsg);
+    }
 }

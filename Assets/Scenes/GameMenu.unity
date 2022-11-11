@@ -219,6 +219,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1956414270}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 931792037}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &19552396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12753,6 +12777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1243587862}
   - component: {fileID: 1243587860}
+  - component: {fileID: 1243587863}
   m_Layer: 0
   m_Name: ServerConfig
   m_TagString: Untagged
@@ -12787,6 +12812,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1243587863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243587859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eff799b22747b248ac9c6d00fc05285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverInfo:
+    creatorId: 0
+    serverName: 
+    password: 
+    numberOfPlayers: 0
+    numberOfTurns: 0
+    seed: 0
+    mapType: 0
+    mapSize: 0
+    customMap: 
+    ip: 
+    ports: 
+    connections: 0
 --- !u!1 &1250630256
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,8 @@ public class LobbyLogic : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        TCPServerInfo info = TCPConnection.serverInfo;
+        TCPConnection conn = TCPConnection.instance;
+        TCPServerInfo info = conn.serverInfo;
         for(int i = 0; i < info.numberOfPlayers; i++){
             GameObject newCell = Instantiate(CellPrefab);
             newCell.transform.SetParent(this.gameObject.transform, false);

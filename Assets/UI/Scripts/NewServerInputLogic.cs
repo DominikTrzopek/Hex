@@ -58,25 +58,34 @@ public class NewServerInputLogic : MonoBehaviour
     public void RequestNewGameServer()
     {
         int seed = UnityEngine.Random.Range(-10000, 10000);
-        new Thread(() =>
+        TCPServerInfo serverInfo = setServerInfo(seed);
+        Thread thread = new Thread(() =>
         {
             mutex.WaitOne();
             UDPClient client = new UDPClient();
             client.init();
-            client.sendData(new CreateServerRequest(setServerInfo(seed)));
+            client.sendData(new CreateServerRequest(serverInfo));
             try
             {
-                byte[] response = client.receiveData();
-                string message = Encoding.Default.GetString(response);
-                UDPResponse response1 = UDPResponse.fromString(message);
+                byte[] responseByte = client.receiveData();
+                string message = Encoding.Default.GetString(responseByte);
+                UDPResponse response = UDPResponse.fromString(message);
+                serverInfo = response.serverInfo;
             }
             catch (Exception err)
             {
                 Debug.Log(err.ToString());
             }
             mutex.ReleaseMutex();
-        }).Start();
-    }
+        });
 
+        thread.Start();
+        thread.Join();
+        //TODO ustawic connectMsg
+        ConnectMsg connectMsg = new ConnectMsg(new PlayerInfo("1","huj",PlayerStatus.NOTREADY, Color.green), serverInfo.password);
+        TCPConnection conn = TCPConnection.instance;
+        conn.connectToGame(serverInfo, connectMsg);
+      //  TCPConnection.ConnectToGame(serverInfo, connectMsg);
+    }
 
 }
