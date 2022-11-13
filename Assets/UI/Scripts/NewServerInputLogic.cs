@@ -40,7 +40,7 @@ public class NewServerInputLogic : MonoBehaviour
     public TCPServerInfo setServerInfo(int seed)
     {
         return new TCPServerInfo(
-            111, //todo: fix this shit
+            UDPServerConfig.getId(),
             serverName.text,
             serverPassword.text,
             int.Parse(numberOfPlayers.options[numberOfPlayers.value].text),
@@ -81,11 +81,11 @@ public class NewServerInputLogic : MonoBehaviour
 
         thread.Start();
         thread.Join();
-        //TODO ustawic connectMsg
-        ConnectMsg connectMsg = new ConnectMsg(new PlayerInfo("1","huj",PlayerStatus.NOTREADY, Color.green), serverInfo.password);
         TCPConnection conn = TCPConnection.instance;
-        conn.connectToGame(serverInfo, connectMsg);
-      //  TCPConnection.ConnectToGame(serverInfo, connectMsg);
+        conn.connectToGame(serverInfo, serverInfo.password);
+
+
+
     }
 
 }

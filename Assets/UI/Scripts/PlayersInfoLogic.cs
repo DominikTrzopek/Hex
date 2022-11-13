@@ -8,6 +8,8 @@ public class PlayersInfoLogic : MonoBehaviour
 
     public Image image;
     public TMPro.TMP_Text readyText;
+    public TMPro.TMP_Text nameText;
+    public PlayerInfo playerInfo;
 
     private List<Color> colors = new List<Color>{
         Color.blue,
@@ -25,6 +27,14 @@ public class PlayersInfoLogic : MonoBehaviour
         iterator = 0;
         ready = false;
         image.color = Color.gray;
+        playerInfo.id = null;
+    }
+
+    void Update()
+    {
+        Debug.Log(playerInfo.id);
+        nameText.text = playerInfo.name;
+        FormatStatus();
     }
 
     public void SetColorForward(){
@@ -41,6 +51,25 @@ public class PlayersInfoLogic : MonoBehaviour
             iterator = colors.Count - 1;
         }
         image.color = colors[iterator];
+    }
+
+    private void FormatStatus()
+    {
+        switch(playerInfo.status)
+        {
+            case PlayerStatus.NOTREADY:
+                readyText.text = "NOT READY";
+                readyText.color = Color.red;
+                break;
+            case PlayerStatus.READY:
+                readyText.text = "READY";
+                readyText.color = Color.green;
+                break;
+            default:
+                readyText.text = "NOT CONNECTED";
+                readyText.color = Color.gray;
+                break;
+        }
     }
 
     public void SetReadyStatus(){

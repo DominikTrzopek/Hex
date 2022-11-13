@@ -6,6 +6,8 @@ public class ConnectMsg : ITCPMsg
     public PlayerInfo playerInfo;
     public string password;
 
+    public ConnectMsg(){}
+
     public ConnectMsg(PlayerInfo info, string pass)
     {
         this.playerInfo = info;
@@ -16,4 +18,10 @@ public class ConnectMsg : ITCPMsg
     {
         return JsonUtility.ToJson(this);
     }
+
+    public static ConnectMsg fromString(string json){
+        return JsonUtility.FromJson<ConnectMsg>(json);
+    }
+
+
 }

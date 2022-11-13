@@ -732,6 +732,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 6689771312925282555}
   readyText: {fileID: 6689771312248830913}
+  nameText: {fileID: 6689771312692220584}
+  playerInfo:
+    id: 
+    color: {r: 0, g: 0, b: 0, a: 0}
+    name: 
+    status: 0
 --- !u!1 &6689771313305640458
 GameObject:
   m_ObjectHideFlags: 0

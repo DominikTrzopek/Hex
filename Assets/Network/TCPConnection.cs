@@ -1,10 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TCPConnection : MonoBehaviour
 {
     public static TCPConnection instance { get; private set; }
     public TCPClient client;
     public TCPServerInfo serverInfo;
+    public List<PlayerInfo> playerInfo = new List<PlayerInfo>();
 
     private void Awake()
     {
@@ -19,10 +21,22 @@ public class TCPConnection : MonoBehaviour
         }
     }
 
-    public void connectToGame(TCPServerInfo info, ConnectMsg connectMsg)
+    public void connectToGame(TCPServerInfo info, string password)
     {
         serverInfo = info;
+        Debug.Log(info.ports[info.connections - 1]);
         client.setupSocket(info.ip, info.ports[info.connections - 1]);
-        client.writeSocket(connectMsg);
+        client.writeSocket(buildConnectMsg(password));
+    }
+
+    private ConnectMsg buildConnectMsg(string password)
+    {
+        PlayerInfo info = new PlayerInfo(
+            UDPServerConfig.getId(),
+            UDPServerConfig.getPlayerName(),
+            PlayerStatus.NOTREADY,
+            Color.black
+        );
+        return new ConnectMsg(info, password);
     }
 }

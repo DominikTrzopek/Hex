@@ -15,15 +15,11 @@ public class JoinServerLogic : MonoBehaviour
 
     public void JoinGame()
     {
-        
         TCPServerInfo info = getTCPInfo();
-        ConnectMsg connectMsg = new ConnectMsg(new PlayerInfo("1","huj",PlayerStatus.NOTREADY, Color.green), getTCPPass());
+        info.connections++;
         TCPConnection conn = TCPConnection.instance;
-        conn.connectToGame(info, connectMsg);
+        conn.connectToGame(info, getTCPPass());
         setScene();
-
-        //TODO: wlasciwa wymiana danycg
-        //client.closeSocket();
     }
 
     private void setScene()

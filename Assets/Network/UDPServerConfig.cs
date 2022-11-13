@@ -1,11 +1,12 @@
 
 using UnityEngine;
 
-public class UDPServerConfig : MonoBehaviour
+public static class UDPServerConfig
 {
     private static string ipAddress = "192.168.0.219";
     private static int port = 8051;
     private static string playerName = "player";
+    private static string id = System.Guid.NewGuid().ToString(); //SystemInfo.deviceUniqueIdentifier;
 
     public static int getPort()
     {
@@ -35,6 +36,11 @@ public class UDPServerConfig : MonoBehaviour
     public static void setPlayerName(string newName)
     {
         playerName = newName;
+    }
+
+    public static string getId()
+    {
+        return id;
     }
 
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class TCPServerInfo
 {
-    public int creatorId;
+    public string creatorId;
     public string serverName;
     public string password;
     public int numberOfPlayers;
@@ -23,7 +23,7 @@ public class TCPServerInfo
 
     public TCPServerInfo() { }
 
-    public TCPServerInfo(int creatorId, string serverName,
+    public TCPServerInfo(string creatorId, string serverName,
     string password, int numberOfPlayers, int numberOfTurns,
     int seed, int mapType, int mapSize, int[] customMap, int connections)
     {
