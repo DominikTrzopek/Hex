@@ -31,13 +31,12 @@ public class LobbyLogic : MonoBehaviour
                     {
                         try
                         {
-                            Debug.Log("part" + part);
                             ConnectMsg response = ConnectMsg.fromString(part);
                             info_FIFO.Add(response.playerInfo);
                         }
                         catch (ArgumentException)
                         {
-                            Debug.Log("End of message");
+                            //Debug.Log("End of message");
                         }
                     }
                 }
@@ -49,6 +48,7 @@ public class LobbyLogic : MonoBehaviour
     {
         if (cells.Count > 0 && info_FIFO.Count > 0)
         {
+            Debug.Log(info_FIFO[0].id);
             int foundIndex = FindCell(info_FIFO[0].id);
             Debug.Log(foundIndex);
             if (foundIndex != -1)
@@ -66,7 +66,7 @@ public class LobbyLogic : MonoBehaviour
         }
         for (int i = 0; i < cells.Count; i++)
         {
-            if (cells[i].GetComponent<PlayersInfoLogic>().playerInfo.id == null)
+            if (cells[i].GetComponent<PlayersInfoLogic>().playerInfo.id == null && id != null && id.Trim() != "")
                 return i;
         }
         return -1;

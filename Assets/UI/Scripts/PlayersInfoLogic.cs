@@ -11,46 +11,43 @@ public class PlayersInfoLogic : MonoBehaviour
     public TMPro.TMP_Text nameText;
     public PlayerInfo playerInfo;
 
-    private List<Color> colors = new List<Color>{
-        Color.blue,
-        Color.green,
-        Color.magenta,
-        Color.red,
-        Color.yellow,
-        Color.cyan
-    };
-
     private static int iterator;
     private static bool ready;
 
     public void Awake(){
         iterator = 0;
         ready = false;
-        image.color = Color.gray;
+        image.color = ColorList.colors[0];
+        ColorList.colors.RemoveAt(0);
         playerInfo.id = null;
     }
 
     void Update()
     {
-        Debug.Log(playerInfo.id);
         nameText.text = playerInfo.name;
         FormatStatus();
     }
 
     public void SetColorForward(){
         iterator++;
-        if(iterator >= colors.Count){
+        if(iterator >= ColorList.colors.Count){
             iterator = 0;
         }
-        image.color = colors[iterator];
+        Color old = image.color;
+        image.color = ColorList.colors[iterator];
+        ColorList.colors.RemoveAt(iterator);
+        ColorList.colors.Add(old);
     }
 
         public void SetColorBackward(){
         iterator--;
         if(iterator < 0){
-            iterator = colors.Count - 1;
+            iterator = ColorList.colors.Count - 1;
         }
-        image.color = colors[iterator];
+        Color old = image.color;
+        image.color = ColorList.colors[iterator];
+        ColorList.colors.RemoveAt(iterator);
+        ColorList.colors.Add(old);
     }
 
     private void FormatStatus()

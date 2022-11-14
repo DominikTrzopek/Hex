@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Text;
 
 [System.Serializable]
 public class TCPClient
@@ -20,8 +21,8 @@ public class TCPClient
         try
         {
             client = new TcpClient(host, port);
-            client.SendTimeout = 5000;
-            client.ReceiveTimeout = 5000;
+            client.SendTimeout = 50000;
+            client.ReceiveTimeout = 50000;
             theStream = client.GetStream();
             theWriter = new StreamWriter(theStream);
             theReader = new StreamReader(theStream);
@@ -38,7 +39,7 @@ public class TCPClient
         {
             if (!socketReady)
                 return;
-            theWriter.Write(msg.saveToString());
+            theWriter.Write(msg.saveToString() + "\n");
             theWriter.Flush();
         }
         catch (Exception err)
@@ -54,15 +55,14 @@ public class TCPClient
             byte[] buffer = new byte[maxBuffer];
             int bytesRead = 0;
             int chunk;
-            while (bytesRead < maxBuffer)
+
+            chunk = theStream.Read(buffer, (int)bytesRead, buffer.Length - (int)bytesRead);
+            if (chunk == 0)
             {
-                chunk = theStream.Read(buffer, (int)bytesRead, buffer.Length - (int)bytesRead);
-                if (chunk == 0)
-                {
-                    return buffer;
-                }
-                bytesRead += chunk;
+                //połączenie zerwane
+                throw new Exception();
             }
+            bytesRead += chunk; 
             return buffer;
         }
         catch (Exception err)

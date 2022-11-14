@@ -24,7 +24,6 @@ public class TCPConnection : MonoBehaviour
     public void connectToGame(TCPServerInfo info, string password)
     {
         serverInfo = info;
-        Debug.Log(info.ports[info.connections - 1]);
         client.setupSocket(info.ip, info.ports[info.connections - 1]);
         client.writeSocket(buildConnectMsg(password));
     }
