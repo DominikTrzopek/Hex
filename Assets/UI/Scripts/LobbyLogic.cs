@@ -33,6 +33,7 @@ public class LobbyLogic : MonoBehaviour
                         {
                             ConnectMsg response = ConnectMsg.fromString(part);
                             info_FIFO.Add(response.playerInfo);
+                            //Debug.Log(response.saveToString());
                         }
                         catch (ArgumentException)
                         {
@@ -48,9 +49,7 @@ public class LobbyLogic : MonoBehaviour
     {
         if (cells.Count > 0 && info_FIFO.Count > 0)
         {
-            Debug.Log(info_FIFO[0].id);
             int foundIndex = FindCell(info_FIFO[0].id);
-            Debug.Log(foundIndex);
             if (foundIndex != -1)
                 cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo = info_FIFO[0];
             info_FIFO.RemoveAt(0);
@@ -87,7 +86,9 @@ public class LobbyLogic : MonoBehaviour
         conn = TCPConnection.instance;
         foreach(GameObject cell in cells)
         {
-            conn.playerInfo.Add(cell.GetComponent<PlayersInfoLogic>().playerInfo);
+            PlayersInfoLogic playerData = cell.GetComponent<PlayersInfoLogic>();
+            playerData.playerInfo.color = playerData.image.color;
+            conn.playerInfo.Add(playerData.playerInfo);
         }
     }
 

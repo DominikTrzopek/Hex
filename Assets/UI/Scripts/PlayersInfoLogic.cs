@@ -68,20 +68,4 @@ public class PlayersInfoLogic : MonoBehaviour
                 break;
         }
     }
-
-    public void SetReadyStatus(){
-        if(ready == false){
-            ready = true;
-            readyText.SetText("Ready");
-            readyText.color = Color.green;
-        }
-        else{
-            ready = false;
-            readyText.SetText("Not Ready");
-            readyText.color = Color.red;
-        }
-
-        //TODO: send message to TCP server with player info
-
-    }
 }

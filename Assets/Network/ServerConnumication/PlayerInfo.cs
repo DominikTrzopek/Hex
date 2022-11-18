@@ -17,6 +17,12 @@ public class PlayerInfo
         this.color = color;
     }
 
+    public PlayerInfo(PlayerStatus status){
+        this.id = UDPServerConfig.getId();
+        this.name = UDPServerConfig.getPlayerName();
+        this.status = status;
+    }
+
     public string saveToString()
     {
         return JsonUtility.ToJson(this);

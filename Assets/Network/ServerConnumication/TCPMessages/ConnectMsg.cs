@@ -8,6 +8,11 @@ public class ConnectMsg : ITCPMsg
 
     public ConnectMsg(){}
 
+    public ConnectMsg(PlayerInfo info)
+    {
+        this.playerInfo = info;
+    }
+
     public ConnectMsg(PlayerInfo info, string pass)
     {
         this.playerInfo = info;
