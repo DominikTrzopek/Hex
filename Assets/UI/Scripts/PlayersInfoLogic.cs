@@ -12,11 +12,9 @@ public class PlayersInfoLogic : MonoBehaviour
     public PlayerInfo playerInfo;
 
     private static int iterator;
-    private static bool ready;
 
     public void Awake(){
         iterator = 0;
-        ready = false;
         image.color = ColorList.colors[0];
         ColorList.colors.RemoveAt(0);
         playerInfo.id = null;

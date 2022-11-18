@@ -24,7 +24,7 @@ public class ConnectionScreenLogic : MonoBehaviour
 
     private void sendStatus(PlayerInfo info)
     {
-        Debug.Log(new ConnectMsg(info).saveToString());
+      //  Debug.Log(new ConnectMsg(info).saveToString());
         TCPConnection conn = TCPConnection.instance;
         conn.client.writeSocket(new ConnectMsg(info));
     }

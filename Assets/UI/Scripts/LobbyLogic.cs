@@ -33,7 +33,7 @@ public class LobbyLogic : MonoBehaviour
                         {
                             ConnectMsg response = ConnectMsg.fromString(part);
                             info_FIFO.Add(response.playerInfo);
-                            //Debug.Log(response.saveToString());
+                            Debug.Log(response.saveToString());
                         }
                         catch (ArgumentException)
                         {

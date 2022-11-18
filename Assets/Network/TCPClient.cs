@@ -60,6 +60,7 @@ public class TCPClient
             if (chunk == 0)
             {
                 //połączenie zerwane
+                Debug.Log("Polaczenie zerwane");
                 throw new Exception();
             }
             bytesRead += chunk; 

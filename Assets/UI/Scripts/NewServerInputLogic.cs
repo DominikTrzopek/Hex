@@ -70,6 +70,7 @@ public class NewServerInputLogic : MonoBehaviour
                 byte[] responseByte = client.receiveData();
                 string message = Encoding.Default.GetString(responseByte);
                 UDPResponse response = UDPResponse.fromString(message);
+                Debug.Log(message);
                 serverInfo = response.serverInfo;
             }
             catch (Exception err)

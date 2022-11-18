@@ -28,6 +28,7 @@ public class ServerListScreenLogic : MonoBehaviour
                 {
                     byte[] byteResponse = client.receiveData();
                     string message = Encoding.Default.GetString(byteResponse);
+                    //print(message);
                     UDPResponse udpResponse = UDPResponse.fromString(message);
                     if (udpResponse.responseType == ResponseType.ENDOFMESSAGE)
                     {
