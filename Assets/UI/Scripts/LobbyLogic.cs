@@ -51,7 +51,13 @@ public class LobbyLogic : MonoBehaviour
         {
             int foundIndex = FindCell(info_FIFO[0].id);
             if (foundIndex != -1)
+            {
                 cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo = info_FIFO[0];
+                if(info_FIFO[0].status == PlayerStatus.NOTCONNECTED)
+                {
+                    cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo.id = null;
+                }
+            }
             info_FIFO.RemoveAt(0);
         }
     }
