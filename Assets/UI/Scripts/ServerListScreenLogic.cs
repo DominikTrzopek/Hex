@@ -21,7 +21,7 @@ public class ServerListScreenLogic : MonoBehaviour
             mutex.WaitOne();
             UDPClient client = new UDPClient();
             client.init();
-            client.sendData(new GetServerListRequest(1));
+            client.sendData(new GetServerListRequest());
             while (true)
             {
                 try

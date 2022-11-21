@@ -1,12 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
+
 
 public class ConnectionScreenLogic : MonoBehaviour
 {
     private bool ready = false;
 
-    public void SetReadyStatus()
+    public void setReadyStatus()
     {
         if (ready == false)
         {
@@ -24,8 +27,41 @@ public class ConnectionScreenLogic : MonoBehaviour
 
     private void sendStatus(PlayerInfo info)
     {
-      //  Debug.Log(new ConnectMsg(info).saveToString());
         TCPConnection conn = TCPConnection.instance;
         conn.client.writeSocket(new ConnectMsg(info));
+    }
+
+    public void sendDeleteRequest()
+    {
+        new Thread(() =>
+        {
+            Debug.Log(TCPConnection.instance.serverInfo.pid);
+            UDPClient client = new UDPClient();
+            client.init();
+            client.sendData(new DeleteServerRequest(TCPConnection.instance.serverInfo.pid));
+            try
+            {
+                byte[] responseByte = client.receiveData();
+                string message = Encoding.Default.GetString(responseByte);
+                UDPResponse response = UDPResponse.fromString(message);
+                Debug.Log(message);
+            }
+            catch (Exception err)
+            {
+                Debug.Log(err.ToString());
+            }
+
+            clearConnection();
+
+        }).Start();
+
+    }
+
+    public void clearConnection()
+    {
+        TCPConnection.instance.client.closeSocket();
+        TCPConnection.instance.playerInfo = new List<PlayerInfo>();
+        TCPConnection.instance.serverInfo = null;
+        TCPConnection.instance.client = new TCPClient();
     }
 }

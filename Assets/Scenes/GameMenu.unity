@@ -3211,7 +3211,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 579591955}
+      - m_Target: {fileID: 866648406}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -5715,7 +5715,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 931792039}
         m_TargetAssemblyTypeName: ConnectionScreenLogic, Assembly-CSharp
-        m_MethodName: SetReadyStatus
+        m_MethodName: setReadyStatus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7150,7 +7150,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 711381976}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 931792039}
+        m_TargetAssemblyTypeName: ConnectionScreenLogic, Assembly-CSharp
+        m_MethodName: sendDeleteRequest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 931792037}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 866648406}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &711381976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12837,6 +12873,7 @@ MonoBehaviour:
     ip: 
     ports: 
     connections: 0
+    pid: 0
   playerInfo: []
 --- !u!1 &1250630256
 GameObject:

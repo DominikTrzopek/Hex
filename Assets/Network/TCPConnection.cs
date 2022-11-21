@@ -21,6 +21,11 @@ public class TCPConnection : MonoBehaviour
         }
     }
 
+    public void clear()
+    {
+        instance = null;
+    }
+
     public void connectToGame(TCPServerInfo info, string password)
     {
         serverInfo = info;

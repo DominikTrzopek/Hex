@@ -37,10 +37,10 @@ public class NewServerInputLogic : MonoBehaviour
         return null;
     }
 
-    public TCPServerInfo setServerInfo(int seed)
+    private TCPServerInfo setServerInfo(int seed)
     {
         return new TCPServerInfo(
-            UDPServerConfig.getId(),
+            UDPServerConfig.getSecretId(),
             serverName.text,
             serverPassword.text,
             int.Parse(numberOfPlayers.options[numberOfPlayers.value].text),
@@ -70,7 +70,6 @@ public class NewServerInputLogic : MonoBehaviour
                 byte[] responseByte = client.receiveData();
                 string message = Encoding.Default.GetString(responseByte);
                 UDPResponse response = UDPResponse.fromString(message);
-                Debug.Log(message);
                 serverInfo = response.serverInfo;
             }
             catch (Exception err)
@@ -83,7 +82,7 @@ public class NewServerInputLogic : MonoBehaviour
         thread.Start();
         thread.Join();
         TCPConnection conn = TCPConnection.instance;
-        conn.connectToGame(serverInfo, serverInfo.password);
+        conn.connectToGame(serverInfo, serverPassword.text);
 
 
 

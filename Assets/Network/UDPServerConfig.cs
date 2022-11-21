@@ -7,6 +7,7 @@ public static class UDPServerConfig
     private static int port = 8051;
     private static string playerName = "player";
     private static string id = System.Guid.NewGuid().ToString(); //SystemInfo.deviceUniqueIdentifier;
+    private static string secretId = System.Guid.NewGuid().ToString();
 
     public static int getPort()
     {
@@ -41,6 +42,11 @@ public static class UDPServerConfig
     public static string getId()
     {
         return id;
+    }
+
+    public static string getSecretId()
+    {
+        return secretId;
     }
 
 }

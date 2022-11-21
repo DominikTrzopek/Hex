@@ -15,6 +15,7 @@ public class TCPServerInfo
     public string ip;
     public int[] ports;
     public int connections;
+    public int pid;
 
     public string saveToString()
     {

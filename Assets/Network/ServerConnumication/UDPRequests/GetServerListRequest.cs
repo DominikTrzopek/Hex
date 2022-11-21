@@ -3,11 +3,11 @@ using UnityEngine;
 [System.Serializable]
 public class GetServerListRequest : IUDPREquest
 {
-    public int id;
+    public string id;
     public RequestType requestType = RequestType.GET;
 
-    public GetServerListRequest(int id){
-        this.id = id;
+    public GetServerListRequest(){
+        this.id = UDPServerConfig.getId();
     }
 
     public string getRequestType(){
