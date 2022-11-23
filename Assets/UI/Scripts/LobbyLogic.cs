@@ -9,10 +9,13 @@ public class LobbyLogic : MonoBehaviour
 {
     [SerializeField]
     private GameObject CellPrefab;
+    [SerializeField]
+    private GameObject errorScreen;
     private TCPConnection conn;
     private bool isActive = false;
     private List<PlayerInfo> info_FIFO = new List<PlayerInfo>();
     private List<GameObject> cells = new List<GameObject>();
+
 
     void OnEnable()
     {
@@ -22,7 +25,7 @@ public class LobbyLogic : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
         cells.Clear();
-        TCPConnection conn = TCPConnection.instance;
+        conn = TCPConnection.instance;
         TCPServerInfo info = conn.serverInfo;
         for (int i = 0; i < info.numberOfPlayers; i++)
         {
@@ -30,53 +33,50 @@ public class LobbyLogic : MonoBehaviour
             cells.Add(newCell);
             newCell.transform.SetParent(this.gameObject.transform, false);
         }
+        Debug.Log(conn.messageQueue.Count);
         isActive = true;
-        conn = TCPConnection.instance;
-        
-        new Thread(() =>
-        {
-            Debug.Log(isActive);
-            while (conn.client.socketReady && isActive)
-            {
-                byte[] bytes = conn.client.readSocket();
-                if (bytes != null)
-                {
-                    string message = Encoding.Default.GetString(bytes);
-                    string[] splieted = message.Split("\n");
-                    foreach (string part in splieted)
-                    {
-                        try
-                        {
-                            ConnectMsg response = ConnectMsg.fromString(part);
-                            info_FIFO.Add(response.playerInfo);
-                            Debug.Log(part);
-                        }
-                        catch (ArgumentException)
-                        {
-                            Debug.Log(part);
-                        }
-                    }
-                }
-            }
-        }).Start();
     }
 
     void Update()
     {
-        if(isActive)
+        if(isActive == true && conn.client.socketReady)
         {
-            if (cells.Count > 0 && info_FIFO.Count > 0)
+            if (cells.Count > 0 && conn.messageQueue.Count > 0)
             {
-                int foundIndex = FindCell(info_FIFO[0].id);
-                if (foundIndex != -1)
+                try 
                 {
-                    cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo = info_FIFO[0];
-                    if (info_FIFO[0].status == PlayerStatus.NOTCONNECTED)
+                    
+                    ConnectMsg info = ConnectMsg.fromString(conn.messageQueue[0]);
+                    if(info.code == ResponseType.WRONGPASSWORD)
                     {
-                        cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo.id = null;
+                        errorScreen.SetActive(true);
+                        errorScreen.transform.Find("ErrorMessage").GetComponent<TMPro.TextMeshProUGUI>().text = "Authorization failed, wrong password!";
+                        Debug.Log(this.transform.parent.parent.gameObject.name);
+                        this.transform.parent.parent.gameObject.SetActive(false);
                     }
+                    if(info.code == ResponseType.BADREQUEST || info.code == ResponseType.BADARGUMENTS)
+                    {
+                        errorScreen.SetActive(true);
+                        errorScreen.transform.Find("ErrorMessage").GetComponent<TMPro.TextMeshProUGUI>().text = "Authorization failed, bad message structure!";
+                        Debug.Log(this.transform.parent.parent.gameObject.name);
+                        this.transform.parent.parent.gameObject.SetActive(false);
+                    }
+                    int foundIndex = FindCell(info.playerInfo.id);
+                    if (foundIndex != -1)
+                    {
+                        cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo = info.playerInfo;
+                        if (info.playerInfo.status == PlayerStatus.NOTCONNECTED)
+                        {
+                            cells[foundIndex].GetComponent<PlayersInfoLogic>().playerInfo.id = null;
+                        }
+                    }
+                    conn.messageQueue.RemoveAt(0);
                 }
-                info_FIFO.RemoveAt(0);
+                catch (ArgumentException err)
+                {
+                    Debug.Log(err.ToString());
+                    conn.messageQueue.RemoveAt(0);
+                }
             }
         }
     }

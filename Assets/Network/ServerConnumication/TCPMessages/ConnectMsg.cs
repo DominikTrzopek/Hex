@@ -5,6 +5,7 @@ public class ConnectMsg : ITCPMsg
 {
     public PlayerInfo playerInfo;
     public string password;
+    public ResponseType code;
 
     public ConnectMsg(){}
 

@@ -76,6 +76,11 @@ public class ServerListScreenLogic : MonoBehaviour
             gameLenghtText.SetText(serverInfo.numberOfTurns.ToString() + " TURNS");
             mapSizeText.SetText(serverInfo.mapSize.ToString() + " x " + serverInfo.mapSize.ToString() + " Cells");
             newCell.GetComponent<ServerInfoReference>().setTCPInfo(serverInfo);
+            Debug.Log(serverInfo.password);
+            if(serverInfo.password == null || serverInfo.password.Trim() == "")
+            {
+                newCell.transform.Find("Button/PasswordInputField").gameObject.SetActive(false);
+            }
         }
     }
 

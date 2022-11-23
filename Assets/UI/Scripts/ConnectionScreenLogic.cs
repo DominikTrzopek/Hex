@@ -61,7 +61,9 @@ public class ConnectionScreenLogic : MonoBehaviour
     {
         TCPConnection.instance.client.closeSocket();
         TCPConnection.instance.playerInfo = new List<PlayerInfo>();
+        TCPConnection.instance.messageQueue = new List<string>();
         TCPConnection.instance.serverInfo = null;
         TCPConnection.instance.client = new TCPClient();
+        TCPConnection.instance.receiverThread.Join();
     }
 }
