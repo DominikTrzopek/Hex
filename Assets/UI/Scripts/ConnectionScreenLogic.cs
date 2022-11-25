@@ -37,10 +37,10 @@ public class ConnectionScreenLogic : MonoBehaviour
         {
             Debug.Log(TCPConnection.instance.serverInfo.pid);
             UDPClient client = new UDPClient();
-            client.init();
-            client.sendData(new DeleteServerRequest(TCPConnection.instance.serverInfo.pid));
             try
             {
+                client.init();
+                client.sendData(new DeleteServerRequest(TCPConnection.instance.serverInfo.pid));
                 byte[] responseByte = client.receiveData();
                 string message = Encoding.Default.GetString(responseByte);
                 UDPResponse response = UDPResponse.fromString(message);
@@ -50,20 +50,10 @@ public class ConnectionScreenLogic : MonoBehaviour
             {
                 Debug.Log(err.ToString());
             }
-
-            clearConnection();
+            TCPConnection.instance.clearConnection();
 
         }).Start();
 
     }
 
-    public void clearConnection()
-    {
-        TCPConnection.instance.client.closeSocket();
-        TCPConnection.instance.playerInfo = new List<PlayerInfo>();
-        TCPConnection.instance.messageQueue = new List<string>();
-        TCPConnection.instance.serverInfo = null;
-        TCPConnection.instance.client = new TCPClient();
-        TCPConnection.instance.receiverThread.Join();
-    }
 }

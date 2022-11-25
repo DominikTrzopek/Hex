@@ -11,7 +11,7 @@ public class TCPConnection : MonoBehaviour
     public TCPServerInfo serverInfo;
     public List<PlayerInfo> playerInfo = new List<PlayerInfo>();
     public List<string> messageQueue = new List<string>();
-    public Thread receiverThread;
+    private Thread receiverThread;
 
     private void Awake()
     {
@@ -74,7 +74,21 @@ public class TCPConnection : MonoBehaviour
                         }
                     }
                 }
+                else
+                {
+                    messageQueue.Add("Zerwano polaczenie");
+                }
             }
         }).Start();
+    }
+
+    public void clearConnection()
+    {
+        client.closeSocket();
+        playerInfo = new List<PlayerInfo>();
+        messageQueue = new List<string>();
+        serverInfo = null;
+        client = new TCPClient();
+        receiverThread.Join();
     }
 }

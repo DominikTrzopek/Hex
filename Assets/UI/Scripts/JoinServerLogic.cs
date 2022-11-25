@@ -16,7 +16,6 @@ public class JoinServerLogic : MonoBehaviour
     public void JoinGame()
     {
         TCPServerInfo info = getTCPInfo();
-        info.connections++;
         TCPConnection conn = TCPConnection.instance;
         conn.connectToGame(info, getTCPPass());
         setScene();

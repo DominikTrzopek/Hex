@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using System.Threading;
 using System.Text;
 using System;
-
+using System.Net.Sockets;
 
 public class NewServerInputLogic : MonoBehaviour
 {
 
-    const int startingNumberOfConnections = 1;
+    const int startingNumberOfConnections = 0;
 
     [SerializeField]
     private TMPro.TMP_InputField serverName;
@@ -26,6 +26,11 @@ public class NewServerInputLogic : MonoBehaviour
     private TMPro.TMP_Dropdown mapType;
     [SerializeField]
     private Toggle useCustomMap;
+    [SerializeField]
+    private GameObject newView;
+    private bool dataReady = false;
+    private TCPServerInfo serverInfo;
+    private ResponseType responseCode;
 
     private int[] GetCustomMap()
     {
@@ -53,39 +58,66 @@ public class NewServerInputLogic : MonoBehaviour
         );
     }
 
-    private static Mutex mutex = new Mutex();
 
     public void RequestNewGameServer()
     {
         int seed = UnityEngine.Random.Range(-10000, 10000);
-        TCPServerInfo serverInfo = setServerInfo(seed);
-        Thread thread = new Thread(() =>
+        serverInfo = setServerInfo(seed);
+        new Thread(() =>
         {
-            mutex.WaitOne();
             UDPClient client = new UDPClient();
-            client.init();
-            client.sendData(new CreateServerRequest(serverInfo));
+            try
+            {
+                client.init();
+                client.sendData(new CreateServerRequest(serverInfo));
+            }
+            catch(Exception err)
+            {
+                responseCode = ResponseType.BADADDRESS;
+                Debug.Log(err);
+                dataReady = true;
+                return;
+            }
             try
             {
                 byte[] responseByte = client.receiveData();
                 string message = Encoding.Default.GetString(responseByte);
                 UDPResponse response = UDPResponse.fromString(message);
                 serverInfo = response.serverInfo;
+                responseCode = response.responseType;
+                dataReady = true;
             }
             catch (Exception err)
             {
                 Debug.Log(err.ToString());
+                dataReady = true;
+                responseCode = ResponseType.UDPSERVERDOWN;
             }
-            mutex.ReleaseMutex();
-        });
+        }).Start();
+    }
 
-        thread.Start();
-        thread.Join();
-        TCPConnection conn = TCPConnection.instance;
-        conn.connectToGame(serverInfo, serverPassword.text);
+    void OnDisable()
+    {
+        dataReady = false;
+    }
 
 
-
+    public void Update()
+    {
+        if(dataReady)
+        {
+            dataReady = false;
+            if(responseCode != ResponseType.SUCCESS)
+            {
+                Debug.Log(this.gameObject.name);
+                ErrorHandling.handle(responseCode, this.gameObject);
+                return;
+            }
+            TCPConnection conn = TCPConnection.instance;
+            conn.connectToGame(serverInfo, serverPassword.text);
+            this.gameObject.SetActive(false);
+            newView.SetActive(true);
+        }
     }
 
 }

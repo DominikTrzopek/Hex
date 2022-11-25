@@ -9,8 +9,6 @@ public class LobbyLogic : MonoBehaviour
 {
     [SerializeField]
     private GameObject CellPrefab;
-    [SerializeField]
-    private GameObject errorScreen;
     private TCPConnection conn;
     private bool isActive = false;
     private List<PlayerInfo> info_FIFO = new List<PlayerInfo>();
@@ -33,7 +31,6 @@ public class LobbyLogic : MonoBehaviour
             cells.Add(newCell);
             newCell.transform.SetParent(this.gameObject.transform, false);
         }
-        Debug.Log(conn.messageQueue.Count);
         isActive = true;
     }
 
@@ -47,20 +44,8 @@ public class LobbyLogic : MonoBehaviour
                 {
                     
                     ConnectMsg info = ConnectMsg.fromString(conn.messageQueue[0]);
-                    if(info.code == ResponseType.WRONGPASSWORD)
-                    {
-                        errorScreen.SetActive(true);
-                        errorScreen.transform.Find("ErrorMessage").GetComponent<TMPro.TextMeshProUGUI>().text = "Authorization failed, wrong password!";
-                        Debug.Log(this.transform.parent.parent.gameObject.name);
-                        this.transform.parent.parent.gameObject.SetActive(false);
-                    }
-                    if(info.code == ResponseType.BADREQUEST || info.code == ResponseType.BADARGUMENTS)
-                    {
-                        errorScreen.SetActive(true);
-                        errorScreen.transform.Find("ErrorMessage").GetComponent<TMPro.TextMeshProUGUI>().text = "Authorization failed, bad message structure!";
-                        Debug.Log(this.transform.parent.parent.gameObject.name);
-                        this.transform.parent.parent.gameObject.SetActive(false);
-                    }
+                    Debug.Log(info.saveToString());
+                    ErrorHandling.handle(info.code, this.transform.parent.parent.gameObject);
                     int foundIndex = FindCell(info.playerInfo.id);
                     if (foundIndex != -1)
                     {
@@ -72,12 +57,17 @@ public class LobbyLogic : MonoBehaviour
                     }
                     conn.messageQueue.RemoveAt(0);
                 }
-                catch (ArgumentException err)
+                catch (ArgumentException)
                 {
-                    Debug.Log(err.ToString());
+                    //Debug.Log(err.ToString());
                     conn.messageQueue.RemoveAt(0);
                 }
             }
+        }
+        else if(isActive == true && !conn.client.socketReady)
+        {
+            ErrorHandling.handle(ResponseType.DISCONNECT, this.transform.parent.parent.gameObject);
+            conn.clearConnection();
         }
     }
 

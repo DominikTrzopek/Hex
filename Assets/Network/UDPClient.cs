@@ -19,7 +19,8 @@ public class UDPClient
         );
         //Debug.Log(remoteEndPoint.Port);
         client = new UdpClient();
-        client.Client.ReceiveTimeout = 5000;
+        client.Client.ReceiveTimeout = 4000;
+        client.Client.SendTimeout = 2000;
     }
 
     public void sendData(IUDPREquest request)

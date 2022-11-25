@@ -12,46 +12,75 @@ public class ServerListScreenLogic : MonoBehaviour
 
     private static Mutex mutex = new Mutex();
 
+    private ResponseType responseCode;
+    private bool dataReady = false;
+    List<TCPServerInfo> tcpServers;
+
     void OnEnable()
     {
-        List<TCPServerInfo> tcpServers = new List<TCPServerInfo>();
+        tcpServers = new List<TCPServerInfo>();
         //RequestServerList
-        Thread thread = new Thread(() =>
+        new Thread(() =>
         {
-            mutex.WaitOne();
             UDPClient client = new UDPClient();
-            client.init();
-            client.sendData(new GetServerListRequest());
+            try
+            {
+                client.init();
+                client.sendData(new GetServerListRequest());
+            }
+            catch(Exception err)
+            {
+                responseCode = ResponseType.BADADDRESS;
+                Debug.Log(err);
+                dataReady = true;
+                return;
+            }
             while (true)
             {
                 try
                 {
                     byte[] byteResponse = client.receiveData();
+                    Debug.Log("ss");
                     string message = Encoding.Default.GetString(byteResponse);
-                    //print(message);
                     UDPResponse udpResponse = UDPResponse.fromString(message);
                     if (udpResponse.responseType == ResponseType.ENDOFMESSAGE)
                     {
-                        mutex.ReleaseMutex();
+                        dataReady = true;
                         return;
                     }
-
+                    responseCode = udpResponse.responseType;
                     tcpServers.Add(udpResponse.serverInfo);
 
                 }
                 catch (Exception err)
                 {
                     Debug.Log(err.ToString());
-                    mutex.ReleaseMutex();
+                    responseCode = ResponseType.UDPSERVERDOWN;
+                    dataReady = true;
                     return;
                 }
             }
-        });
+        }).Start();
+    }
 
-        thread.Start();
-        thread.Join();
-        DisplayServerInfo(tcpServers);
+    void OnDisable()
+    {
+        dataReady = false;
+    }
 
+    public void Update()
+    {
+        if(dataReady)
+        {
+            dataReady = false;
+            if(responseCode != ResponseType.SUCCESS)
+            {
+                Debug.Log(this.gameObject.name);
+                ErrorHandling.handle(responseCode, this.transform.parent.parent.gameObject);
+                return;
+            }
+            DisplayServerInfo(tcpServers);
+        }
     }
 
     private void DisplayServerInfo(List<TCPServerInfo> tcpServers)
@@ -76,7 +105,6 @@ public class ServerListScreenLogic : MonoBehaviour
             gameLenghtText.SetText(serverInfo.numberOfTurns.ToString() + " TURNS");
             mapSizeText.SetText(serverInfo.mapSize.ToString() + " x " + serverInfo.mapSize.ToString() + " Cells");
             newCell.GetComponent<ServerInfoReference>().setTCPInfo(serverInfo);
-            Debug.Log(serverInfo.password);
             if(serverInfo.password == null || serverInfo.password.Trim() == "")
             {
                 newCell.transform.Find("Button/PasswordInputField").gameObject.SetActive(false);

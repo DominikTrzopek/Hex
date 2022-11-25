@@ -59,9 +59,8 @@ public class TCPClient
             chunk = theStream.Read(buffer, (int)bytesRead, buffer.Length - (int)bytesRead);
             if (chunk == 0)
             {
-                //połączenie zerwane
-                Debug.Log("Polaczenie zerwane");
-                throw new Exception();
+                socketReady = false;
+                throw new SocketException();
             }
             bytesRead += chunk; 
             return buffer;

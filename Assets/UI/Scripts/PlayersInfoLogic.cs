@@ -13,11 +13,16 @@ public class PlayersInfoLogic : MonoBehaviour
 
     private static int iterator;
 
-    public void Awake(){
+    public void OnEnable(){
         iterator = 0;
         image.color = ColorList.colors[0];
         ColorList.colors.RemoveAt(0);
         playerInfo.id = null;
+    }
+
+    public void OnDisable()
+    {
+        ColorList.colors.Add(image.color);
     }
 
     void Update()

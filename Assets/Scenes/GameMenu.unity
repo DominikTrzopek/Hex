@@ -219,30 +219,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1956414270}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 931792037}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!114 &19552396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3360,8 +3336,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 931792039}
-        m_TargetAssemblyTypeName: ConnectionScreenLogic, Assembly-CSharp
+      - m_Target: {fileID: 1243587863}
+        m_TargetAssemblyTypeName: TCPConnection, Assembly-CSharp
         m_MethodName: clearConnection
         m_Mode: 1
         m_Arguments:
@@ -12988,6 +12964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1243587862}
   - component: {fileID: 1243587863}
+  - component: {fileID: 1243587864}
   m_Layer: 0
   m_Name: ServerConfig
   m_TagString: Untagged
@@ -13038,6 +13015,18 @@ MonoBehaviour:
     pid: 0
   playerInfo: []
   messageQueue: []
+--- !u!114 &1243587864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243587859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be805731b1f5c64bb2da499252c5785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1250630256
 GameObject:
   m_ObjectHideFlags: 0
@@ -17858,7 +17847,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CellPrefab: {fileID: 6689771312958232378, guid: 18ed1b4402e66a3449fb049413c31dee, type: 3}
-  errorScreen: {fileID: 39662416}
 --- !u!1 &1819319792
 GameObject:
   m_ObjectHideFlags: 0
@@ -18549,6 +18537,7 @@ MonoBehaviour:
   mapSize: {fileID: 1703826943}
   mapType: {fileID: 1409803933}
   useCustomMap: {fileID: 457762508}
+  newView: {fileID: 931792037}
 --- !u!1 &1966658083
 GameObject:
   m_ObjectHideFlags: 0
