@@ -51,7 +51,7 @@ public class NewServerInputLogic : MonoBehaviour
             int.Parse(numberOfPlayers.options[numberOfPlayers.value].text),
             int.Parse(numberOfTurns.options[numberOfTurns.value].text),
             seed,
-            int.Parse(mapType.options[mapType.value].text),
+            mapType.options[mapType.value].text,
             int.Parse(mapSize.options[mapSize.value].text),
             GetCustomMap(),
             startingNumberOfConnections

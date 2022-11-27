@@ -13276,7 +13276,7 @@ MonoBehaviour:
     numberOfPlayers: 0
     numberOfTurns: 0
     seed: 0
-    mapType: 0
+    mapType: 
     mapSize: 0
     customMap: 
     ip: 
@@ -14326,11 +14326,21 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: 1
+    - m_Text: plains
       m_Image: {fileID: 0}
-    - m_Text: 2
+    - m_Text: island
       m_Image: {fileID: 0}
-    - m_Text: 3
+    - m_Text: mountains
+      m_Image: {fileID: 0}
+    - m_Text: desert
+      m_Image: {fileID: 0}
+    - m_Text: oasis
+      m_Image: {fileID: 0}
+    - m_Text: canyon
+      m_Image: {fileID: 0}
+    - m_Text: taiga
+      m_Image: {fileID: 0}
+    - m_Text: swamp
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
