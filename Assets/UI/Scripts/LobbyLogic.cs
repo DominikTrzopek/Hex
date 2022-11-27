@@ -9,6 +9,8 @@ public class LobbyLogic : MonoBehaviour
 {
     [SerializeField]
     private GameObject CellPrefab;
+    [SerializeField]
+    private GameObject deleteButton;
     private TCPConnection conn;
     private bool isActive = false;
     private List<PlayerInfo> info_FIFO = new List<PlayerInfo>();
@@ -25,6 +27,14 @@ public class LobbyLogic : MonoBehaviour
         cells.Clear();
         conn = TCPConnection.instance;
         TCPServerInfo info = conn.serverInfo;
+        if(UDPServerConfig.getSecretHash() != info.creatorId)
+        {
+            deleteButton.SetActive(false);
+        }
+        else
+        {
+            deleteButton.SetActive(true);
+        }
         for (int i = 0; i < info.numberOfPlayers; i++)
         {
             GameObject newCell = Instantiate(CellPrefab);
@@ -36,7 +46,7 @@ public class LobbyLogic : MonoBehaviour
 
     void Update()
     {
-        if(isActive == true && conn.client.socketReady)
+        if(isActive == true)
         {
             if (cells.Count > 0 && conn.messageQueue.Count > 0)
             {
@@ -64,7 +74,7 @@ public class LobbyLogic : MonoBehaviour
                 }
             }
         }
-        else if(isActive == true && !conn.client.socketReady)
+        if(isActive == true && !conn.client.socketReady && conn.messageQueue.Count <= 1)
         {
             ErrorHandling.handle(ResponseType.DISCONNECT, this.transform.parent.parent.gameObject);
             conn.clearConnection();

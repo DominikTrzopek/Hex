@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SetServerInputFields : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class SetServerInputFields : MonoBehaviour
         setInputFields();
         portInputField.text = UDPServerConfig.getPort().ToString();
         ipInputField.text = UDPServerConfig.getIp();
-        playerName.text = UDPServerConfig.getPlayerName() + Random.Range(100, 1000).ToString();
+        playerName.text = UDPServerConfig.getPlayerName() + UnityEngine.Random.Range(100, 1000).ToString();
     }
 
     public static void setInputFields()
@@ -29,6 +30,16 @@ public class SetServerInputFields : MonoBehaviour
         UDPServerConfig.setPort(int.Parse(portInputField.text));
         UDPServerConfig.setIP(ipInputField.text);
         UDPServerConfig.setPlayerName(playerName.text);
+    }
+
+    void OnEnable()
+    {
+        try
+        {
+            TCPConnection conn = TCPConnection.instance;
+            conn.clearConnection();
+        }
+        catch(NullReferenceException){}
     }
 
 }

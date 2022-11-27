@@ -34,10 +34,29 @@ public class TCPConnection : MonoBehaviour
     public void connectToGame(TCPServerInfo info, string password)
     {
         serverInfo = info;
-        client.setupSocket(info.ip, info.ports[0]);
-        client.writeSocket(buildConnectMsg(password));
-        receiverThread = new Thread(new ThreadStart(receiveData));
-        receiverThread.Start();
+        foreach (int port in info.ports)
+        {
+            try
+            {
+                client.setupSocket(info.ip, port);
+                client.readSocket();
+                if (!client.socketReady)
+                {
+                    client.closeSocket();
+                    throw new System.IO.IOException();
+                }
+                client.setTimeout(120);
+                client.writeSocket(buildConnectMsg(password));
+                receiverThread = new Thread(new ThreadStart(receiveData));
+                receiverThread.Start();
+                return;
+                
+            }
+            catch (System.IO.IOException)
+            {
+                Debug.Log("Port in use");
+            }
+        }
     }
 
     private ConnectMsg buildConnectMsg(string password)
@@ -89,6 +108,7 @@ public class TCPConnection : MonoBehaviour
         messageQueue = new List<string>();
         serverInfo = null;
         client = new TCPClient();
-        receiverThread.Join();
+        if(receiverThread != null)
+            receiverThread.Join();
     }
 }

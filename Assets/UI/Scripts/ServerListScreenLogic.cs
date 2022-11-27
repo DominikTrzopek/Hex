@@ -9,16 +9,22 @@ public class ServerListScreenLogic : MonoBehaviour
 
     [SerializeField]
     private GameObject CellPrefab;
-
     private static Mutex mutex = new Mutex();
-
     private ResponseType responseCode;
     private bool dataReady = false;
+    private bool refresh = false;
     List<TCPServerInfo> tcpServers;
 
     void OnEnable()
     {
+
+        foreach (Transform child in this.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
         tcpServers = new List<TCPServerInfo>();
+
         //RequestServerList
         new Thread(() =>
         {
@@ -28,7 +34,7 @@ public class ServerListScreenLogic : MonoBehaviour
                 client.init();
                 client.sendData(new GetServerListRequest());
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 responseCode = ResponseType.BADADDRESS;
                 Debug.Log(err);
@@ -40,11 +46,11 @@ public class ServerListScreenLogic : MonoBehaviour
                 try
                 {
                     byte[] byteResponse = client.receiveData();
-                    Debug.Log("ss");
                     string message = Encoding.Default.GetString(byteResponse);
                     UDPResponse udpResponse = UDPResponse.fromString(message);
                     if (udpResponse.responseType == ResponseType.ENDOFMESSAGE)
                     {
+                        responseCode = ResponseType.ENDOFMESSAGE;
                         dataReady = true;
                         return;
                     }
@@ -61,6 +67,7 @@ public class ServerListScreenLogic : MonoBehaviour
                 }
             }
         }).Start();
+
     }
 
     void OnDisable()
@@ -70,25 +77,30 @@ public class ServerListScreenLogic : MonoBehaviour
 
     public void Update()
     {
-        if(dataReady)
+        if (dataReady)
         {
             dataReady = false;
-            if(responseCode != ResponseType.SUCCESS)
+            if (responseCode != ResponseType.SUCCESS && responseCode != ResponseType.ENDOFMESSAGE)
             {
-                Debug.Log(this.gameObject.name);
                 ErrorHandling.handle(responseCode, this.transform.parent.parent.gameObject);
                 return;
             }
             DisplayServerInfo(tcpServers);
         }
+        if(refresh)
+        {
+            refresh = false;
+            OnEnable();
+        }
+    }
+
+    public void Refresh()
+    {
+        refresh = true;
     }
 
     private void DisplayServerInfo(List<TCPServerInfo> tcpServers)
     {
-        foreach (Transform child in this.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
 
         foreach (var serverInfo in tcpServers)
         {
@@ -105,7 +117,7 @@ public class ServerListScreenLogic : MonoBehaviour
             gameLenghtText.SetText(serverInfo.numberOfTurns.ToString() + " TURNS");
             mapSizeText.SetText(serverInfo.mapSize.ToString() + " x " + serverInfo.mapSize.ToString() + " Cells");
             newCell.GetComponent<ServerInfoReference>().setTCPInfo(serverInfo);
-            if(serverInfo.password == null || serverInfo.password.Trim() == "")
+            if (serverInfo.password == null || serverInfo.password.Trim() == "")
             {
                 newCell.transform.Find("Button/PasswordInputField").gameObject.SetActive(false);
             }

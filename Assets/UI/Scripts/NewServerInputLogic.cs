@@ -84,6 +84,7 @@ public class NewServerInputLogic : MonoBehaviour
                 string message = Encoding.Default.GetString(responseByte);
                 UDPResponse response = UDPResponse.fromString(message);
                 serverInfo = response.serverInfo;
+                UDPServerConfig.setSecretHash(serverInfo.creatorId);
                 responseCode = response.responseType;
                 dataReady = true;
             }
@@ -114,7 +115,15 @@ public class NewServerInputLogic : MonoBehaviour
                 return;
             }
             TCPConnection conn = TCPConnection.instance;
-            conn.connectToGame(serverInfo, serverPassword.text);
+            try
+            {
+                conn.connectToGame(serverInfo, serverPassword.text);
+            }
+            catch
+            {
+                conn.clearConnection();
+                return;
+            }
             this.gameObject.SetActive(false);
             newView.SetActive(true);
         }

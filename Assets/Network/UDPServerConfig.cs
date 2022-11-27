@@ -8,6 +8,7 @@ public static class UDPServerConfig
     private static string playerName = "player";
     private static string id = System.Guid.NewGuid().ToString(); //SystemInfo.deviceUniqueIdentifier;
     private static string secretId = System.Guid.NewGuid().ToString();
+    private static string secretHash;
 
     public static int getPort()
     {
@@ -47,6 +48,16 @@ public static class UDPServerConfig
     public static string getSecretId()
     {
         return secretId;
+    }
+
+    public static string getSecretHash()
+    {
+        return secretHash;
+    }
+
+    public static void setSecretHash(string hash)
+    {
+        secretHash = hash;
     }
 
 }

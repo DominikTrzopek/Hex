@@ -21,8 +21,8 @@ public class TCPClient
         try
         {
             client = new TcpClient(host, port);
-            client.SendTimeout = 50000;
-            client.ReceiveTimeout = 50000;
+            client.SendTimeout = 2000;
+            client.ReceiveTimeout = 2000;
             theStream = client.GetStream();
             theWriter = new StreamWriter(theStream);
             theReader = new StreamReader(theStream);
@@ -33,6 +33,13 @@ public class TCPClient
             Debug.Log("Socket error: " + e);
         }
     }
+
+    public void setTimeout(int seconds)
+    {
+        client.SendTimeout = seconds * 1000;
+        client.ReceiveTimeout = seconds * 1000;
+    }
+
     public void writeSocket(ITCPMsg msg)
     {
         try
@@ -67,6 +74,7 @@ public class TCPClient
         }
         catch (Exception err)
         {
+            socketReady = false;
             Debug.Log(err.ToString());
         }
         return null;
