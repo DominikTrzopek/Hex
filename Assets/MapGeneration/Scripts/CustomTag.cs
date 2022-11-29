@@ -10,10 +10,12 @@ public class CustomTag : MonoBehaviour
     2 - typ terenu, droga
     -----------------------------------------------*/
     [SerializeField]
-    private List<string> tags = new List<string>();
-
-    public int range = 1000;
+    private List<CellTag> tags = new List<CellTag>();
+    public PathTag pathTag = PathTag.none;
     public bool taken;
+    public int range = 1000;
+
+    
     public bool in_base_range;
     public int noise = 1;
     public bool has_tree = false;
@@ -24,22 +26,22 @@ public class CustomTag : MonoBehaviour
     public short distance_from_HQ = 1000;
     public bool taken_by_player;
 
-    public bool HasTag(string tag)
+    public bool HasTag(CellTag tag)
     {
         return tags.Contains(tag);
     }
 
-    public IEnumerable<string> GetTags()
+    public IEnumerable<CellTag> GetTags()
     {
         return tags;
     }
 
-    public void Rename(int index, string tagName)
+    public void Rename(int index, CellTag tagName)
     {
         tags[index] = tagName;
     }
 
-    public string GetAtIndex(int index)
+    public CellTag GetAtIndex(int index)
     {
         return tags[index];
     }
@@ -48,4 +50,20 @@ public class CustomTag : MonoBehaviour
     {
         get { return tags.Count; }
     }
+}
+
+public enum CellTag
+{
+    water,
+    standard,
+    mountain,
+    structure,
+    obstruction,
+}
+
+public enum PathTag
+{
+    none,
+    inRange
+
 }

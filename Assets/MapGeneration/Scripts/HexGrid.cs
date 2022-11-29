@@ -12,6 +12,7 @@ public class HexGrid : MonoBehaviour
     public AnimationCurve animationCurve;
     public float multiplayer = 1f;
     Vector2 offset = new Vector2(1, 1);
+    public GameObject basePrefab;
     public Biome[] terrain;
     public int usefalloff = 1;
     public float instantiate_height = 4;
@@ -76,25 +77,29 @@ public class HexGrid : MonoBehaviour
         {
             for (int z = 0; z < size; z++)
             {
-                position.x = ((x + z * 0.5f - z / 2) * (HexMetrics.inner_radious * 2f)) * 2;
+                position.x = ((x + z * 0.5f - z / 2) * (HexMetrics.innerRadious * 2f)) * 2;
                 position.y = animationCurve.Evaluate(heightMap[x, z]) * multiplayer;
-                position.z = z * (HexMetrics.outer_radious * 1.5f);
+                position.z = z * (HexMetrics.outerRadious * 1.5f);
+
+                GameObject obj = Instantiate(hex, position, rotation);
+                hex_array[x, z] = obj;
+
                 if(heightMap[x,z] >= level_height * instantiate_height)
                 {
                     
-                    var obj = Instantiate(hex, position, rotation);
-                    hex_array[x, z] = obj;
                     for (int l = 0; l < levels; l++)
                     {
                         if (heightMap[x, z] <= (level_height * l) + level_height)
                         {
                             obj.GetComponent<Renderer>().material.color = terrain[l].regionColour;
-                            obj.GetComponent<CustomTag>().Rename(2, terrain[l].name);
+                            Debug.Log(terrain[l].name);
+                            obj.GetComponent<CustomTag>().Rename(0, terrain[l].name);
+                            Debug.Log(obj.GetComponent<CustomTag>().GetAtIndex(0));
                             break;
                         }
                     }
 
-                    if(!obj.GetComponent<CustomTag>().HasTag("stone"))
+                    if(!obj.GetComponent<CustomTag>().HasTag(CellTag.obstruction))
                     {
                         if (tree_map[x, z] >= 0.7f)
                         {
@@ -110,13 +115,19 @@ public class HexGrid : MonoBehaviour
                         }
                     }
                 }
+                else
+                {
+                    obj.GetComponent<MeshRenderer>().enabled = false;
+                    obj.GetComponent<CustomTag>().Rename(0, terrain[0].name);
+                }
             }
         }
     }
     void Start()
     {
         //Application.targetFrameRate = 60;
-        CreateMap(size, TerrainType.mapTerrainEnum("island"), true);
+        CreateMap(size, TerrainType.mapTerrainEnum("island"), false);
+        SpawnBase.prepareGrid(size, 4, basePrefab, usefalloff != 0 ? 0.25f : 0.15f);
     }
 
     

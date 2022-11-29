@@ -37,10 +37,10 @@ public class TerrainType
 [System.Serializable]
 public struct Terrain
 {
-    public string name;
+    public CellTag name;
     public Color regionColour;
 
-    public Terrain(string name, Color color)
+    public Terrain(CellTag name, Color color)
     {
         this.name = name;
         this.regionColour = color;
