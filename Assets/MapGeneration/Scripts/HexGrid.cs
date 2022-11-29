@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class HexGrid : MonoBehaviour
 {
@@ -29,29 +30,45 @@ public class HexGrid : MonoBehaviour
         Biome biom = TerrainType.initTerrainType(biomName, biomes);
         Terrain[] terrain = biom.terrains;
         hex_array = new GameObject[size, size];
-        seed = Random.Range(-10000, 10000);
+        seed = UnityEngine.Random.Range(-10000, 10000);
         int levels = terrain.Length;
         float[,] heightMap = new float[size, size];
-        heightMap = Noise.GenerateNoiseMap(size, scale, persistance, lacunarity, octaves, seed, offset, levels, biom.falloff);
 
-        //wczytac custom mape do heighmapy
+        ///
+        Texture2D level = CustomMapLogic.Load("dd.jpg");
+        
+        level = CustomMapLogic.scaled(level, size, size);
+        float[] val = CustomMapLogic.getGreyScale(level, size);
+
+        //float[] val = CustomMapLogic.resize(level, size);
+
+        ///
+        ///
+        int[] levelMap = CustomMapLogic.convertToTerrainLevelMap(val, levels);
+        int[] test = CustomMapLogic.compressData(levelMap);
+        int[] test2 = CustomMapLogic.decompressData(test);
+        float[] new_val = CustomMapLogic.convertToNoiseMap(levelMap,levels);
+        ///
+
+        CustomMapLogic.convertToNoiseMap(levelMap, levels);
         if(useCustomMap)
         {
-            // Texture2D levelBitmap = Resources.Load( "Maps/as" ) as Texture2D;
-            // Debug.Log( levelBitmap.GetPixel( 1 , 1 ).r );
-            Texture2D level = CustomMapLogic.LoadPNG("gg.bmp");
-            Debug.Log( level.GetPixel( 1 , 1 ).r );
+            heightMap = Noise.GenerateFromCustomMap(new_val, size, levels, biom.falloff);
+        }
+        else
+        {
+            heightMap = Noise.GenerateNoiseMap(size, scale, persistance, lacunarity, octaves, seed, offset, levels, biom.falloff);
         }
 
         Vector3 position = new Vector3(0, 0, 0);
         Quaternion rotation = hex.transform.rotation;
         float level_height = 1f / levels;
 
-        int tree_seed = Random.Range(-10000, 10000);
+        int tree_seed = UnityEngine.Random.Range(-10000, 10000);
         float[,] tree_map = new float[size, size];
         tree_map = Noise.GenerateNoiseMap(size, scale / 2, persistance, lacunarity, octaves, tree_seed, offset, levels, 0);
 
-        int ore_seed = Random.Range(-10000, 10000);
+        int ore_seed = UnityEngine.Random.Range(-10000, 10000);
         float[,] ore_map = new float[size, size];
         ore_map = Noise.GenerateNoiseMap(size, scale / 5, persistance / 5, lacunarity / 5, octaves * 2, ore_seed, offset, 100, 0);
 
@@ -81,13 +98,13 @@ public class HexGrid : MonoBehaviour
                     {
                         if (tree_map[x, z] >= 0.7f)
                         {
-                            Instantiate(tree, position, Quaternion.Euler(new Vector3(-90, Random.Range(0, 90), 0)));
+                            Instantiate(tree, position, Quaternion.Euler(new Vector3(-90, UnityEngine.Random.Range(0, 90), 0)));
                             obj.GetComponent<CustomTag>().has_tree = true;
                         }
 
                         else if (ore_map[x, z] <= chance)
                         {
-                            Instantiate(ore[0], position, Quaternion.Euler(new Vector3(0, Random.Range(0, 90), 0)));
+                            Instantiate(ore[0], position, Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 90), 0)));
                             obj.GetComponent<CustomTag>().taken = true;
                             obj.GetComponent<CustomTag>().has_ore = true;
                         }

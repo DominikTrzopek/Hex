@@ -45,6 +45,33 @@ public static class Noise
                 noiseMap[i, j] = noiseHeight;
             }
         }
+
+        return applyLevelsAndFallOff(levels, size, usefalloff, noiseMap, maxHeight, minHeight);
+    }
+
+    public static float[,] GenerateFromCustomMap(float[] customMap, int size, int levels, int usefalloff)
+    {
+        float[,] noiseMap = new float[size, size];
+        float minHeight = float.MaxValue;
+        float maxHeight = float.MinValue;
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                noiseMap[x, y] = customMap[(size - 1 - y) + x * size];
+
+                if (noiseMap[x, y] > maxHeight)
+                    maxHeight = noiseMap[x, y];
+                else if (noiseMap[x, y] < minHeight)
+                    minHeight = noiseMap[x, y];
+            }
+        }
+
+        return applyLevelsAndFallOff(levels, size, usefalloff, noiseMap, maxHeight, minHeight);
+    }
+
+    private static float[,] applyLevelsAndFallOff(int levels, int size, int usefalloff, float[,] noiseMap, float maxHeight, float minHeight)
+    {
         float level_height = 1f / levels;
         float[,] falloff = new float[size, size];
         if (usefalloff != 0)
@@ -55,7 +82,7 @@ public static class Noise
             {
                 noiseMap[i, j] = Mathf.InverseLerp(minHeight, maxHeight, noiseMap[i, j]);
                 noiseMap[i, j] -= falloff[i, j];
-                for(int l = 0; l < levels; l++)
+                for (int l = 0; l < levels; l++)
                 {
                     if (noiseMap[i, j] <= level_height * l)
                     {
@@ -67,4 +94,5 @@ public static class Noise
         }
         return noiseMap;
     }
+
 }
