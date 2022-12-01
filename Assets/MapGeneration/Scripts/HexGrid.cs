@@ -17,7 +17,9 @@ public class HexGrid : MonoBehaviour
     public int usefalloff = 1;
     public float instantiate_height = 4;
 
-    public GameObject[] ore;
+    public GameObject[] stone;
+    public GameObject bridge;
+    public GameObject ore;
     public float chance;
     public static GameObject[,] hex_array;
 
@@ -25,18 +27,21 @@ public class HexGrid : MonoBehaviour
     [SerializeField]
     private Biome[] biomes;
 
+    private float fixedYPosition;
+    private Biome biome;
+
 
     void CreateMap(int size, TerrainEnum biomName, bool useCustomMap)
     {
-        Biome biom = TerrainType.initTerrainType(biomName, biomes);
-        Terrain[] terrain = biom.terrains;
+        biome = TerrainType.initTerrainType(biomName, biomes);
+        Terrain[] terrain = biome.terrains;
         hex_array = new GameObject[size, size];
-        seed = UnityEngine.Random.Range(-10000, 10000);
+        seed = UnityEngine.Random.Range(-1000,1000);
         int levels = terrain.Length;
         float[,] heightMap = new float[size, size];
 
         ///
-        Texture2D level = CustomMapLogic.Load("dd.jpg");
+        Texture2D level = CustomMapLogic.Load("map.jpg");
         
         level = CustomMapLogic.scaled(level, size, size);
         float[] val = CustomMapLogic.getGreyScale(level, size);
@@ -54,24 +59,26 @@ public class HexGrid : MonoBehaviour
         CustomMapLogic.convertToNoiseMap(levelMap, levels);
         if(useCustomMap)
         {
-            heightMap = Noise.GenerateFromCustomMap(new_val, size, levels, biom.falloff);
+            heightMap = Noise.GenerateFromCustomMap(new_val, size, levels, biome.falloff);
         }
         else
         {
-            heightMap = Noise.GenerateNoiseMap(size, scale, persistance, lacunarity, octaves, seed, offset, levels, biom.falloff);
+            heightMap = Noise.GenerateNoiseMap(size, scale, persistance, lacunarity, octaves, seed, offset, levels, biome.falloff);
         }
 
         Vector3 position = new Vector3(0, 0, 0);
         Quaternion rotation = hex.transform.rotation;
         float level_height = 1f / levels;
 
-        int tree_seed = UnityEngine.Random.Range(-10000, 10000);
+        int tree_seed = seed + 1;
         float[,] tree_map = new float[size, size];
         tree_map = Noise.GenerateNoiseMap(size, scale / 2, persistance, lacunarity, octaves, tree_seed, offset, levels, 0);
 
-        int ore_seed = UnityEngine.Random.Range(-10000, 10000);
+        int ore_seed = seed + 2;
         float[,] ore_map = new float[size, size];
         ore_map = Noise.GenerateNoiseMap(size, scale / 5, persistance / 5, lacunarity / 5, octaves * 2, ore_seed, offset, 100, 0);
+
+        int stoneCount = 0;
 
         for (int x = 0; x < size; x++)
         {
@@ -83,6 +90,7 @@ public class HexGrid : MonoBehaviour
 
                 GameObject obj = Instantiate(hex, position, rotation);
                 hex_array[x, z] = obj;
+                obj.GetComponent<CustomTag>().coordinates = new Vector2Int(x,z);
 
                 if(heightMap[x,z] >= level_height * instantiate_height)
                 {
@@ -91,27 +99,37 @@ public class HexGrid : MonoBehaviour
                     {
                         if (heightMap[x, z] <= (level_height * l) + level_height)
                         {
+
                             obj.GetComponent<Renderer>().material.color = terrain[l].regionColour;
-                            Debug.Log(terrain[l].name);
                             obj.GetComponent<CustomTag>().Rename(0, terrain[l].name);
-                            Debug.Log(obj.GetComponent<CustomTag>().GetAtIndex(0));
                             break;
                         }
                     }
 
-                    if(!obj.GetComponent<CustomTag>().HasTag(CellTag.obstruction))
+                    if(obj.GetComponent<CustomTag>().HasTag(CellTag.standard))
                     {
                         if (tree_map[x, z] >= 0.7f)
                         {
-                            Instantiate(tree, position, Quaternion.Euler(new Vector3(-90, UnityEngine.Random.Range(0, 90), 0)));
+                            obj = SpawnBase.replaceTile(obj, tree, obj.GetComponent<Renderer>().material.color, obj.transform.position.y);
                             obj.GetComponent<CustomTag>().has_tree = true;
+                            hex_array[x, z] = obj;
                         }
 
                         else if (ore_map[x, z] <= chance)
                         {
-                            Instantiate(ore[0], position, Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 90), 0)));
-                            obj.GetComponent<CustomTag>().taken = true;
-                            obj.GetComponent<CustomTag>().has_ore = true;
+                            if(stoneCount == 3)
+                            {
+                                obj = SpawnBase.replaceTile(obj, ore, obj.GetComponent<Renderer>().material.color, obj.transform.position.y);  
+                                stoneCount = 0;
+                            }
+                            else
+                            {
+                                obj = SpawnBase.replaceTile(obj, stone[0], obj.GetComponent<Renderer>().material.color, obj.transform.position.y);
+                                obj.GetComponent<CustomTag>().taken = true;
+                                obj.GetComponent<CustomTag>().has_ore = true;
+                                hex_array[x, z] = obj;
+                                stoneCount++;
+                            }
                         }
                     }
                 }
@@ -126,10 +144,38 @@ public class HexGrid : MonoBehaviour
     void Start()
     {
         //Application.targetFrameRate = 60;
+
+        int numOfPlayers = 4;
+        
         CreateMap(size, TerrainType.mapTerrainEnum("island"), false);
-        SpawnBase.prepareGrid(size, 4, basePrefab, usefalloff != 0 ? 0.25f : 0.15f);
+        fixedYPosition = animationCurve.Evaluate(0.2f) * multiplayer;
+        float padding = usefalloff != 0 ? 0.25f : 0.15f;
+        int border = (int)(size * padding);
+        if(!SpawnBase.prepareGrid(size, numOfPlayers, basePrefab, hex, ore, fixedYPosition , biome, usefalloff != 0 ? 0.25f : 0.15f))
+        {
+            for (int x = border; x < size - border; x++)
+            {
+                for (int z = border; z < size - border; z++)
+                {
+                    if((z == x || z == x + 1) && !hex_array[x,z].GetComponent<CustomTag>().HasTag(CellTag.standard))
+                    {
+                        hex_array[x,z] = SpawnBase.replaceTile(hex_array[x,z], bridge, hex_array[x,z].GetComponent<Renderer>().material.color,  fixedYPosition);
+                    }
+
+                    if(numOfPlayers > 2)
+                    {
+                        if ((z + x == size - 1 || z + x == size - 2) && !hex_array[x,z].GetComponent<CustomTag>().HasTag(CellTag.standard)) 
+                        {
+                            hex_array[x,z] = SpawnBase.replaceTile(hex_array[x,z], bridge, hex_array[x,z].GetComponent<Renderer>().material.color,  fixedYPosition);
+                        }
+                    }
+
+
+                }
+
+            }
+        }
     }
 
-    
 
 }

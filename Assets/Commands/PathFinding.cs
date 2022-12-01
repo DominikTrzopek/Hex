@@ -23,7 +23,6 @@ public class PathFinding : MonoBehaviour
             listOfCells = SetNext(listOfCells, currentRange, layer);
             if(listOfCells.Count == 0)
             {
-                        Debug.Log(objectsInRange.Count);
                 return objectsInRange;
             }
             objectsInRange.AddRange(listOfCells);

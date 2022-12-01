@@ -52,5 +52,11 @@ public struct Biome
 {
     public Terrain[] terrains;
     public TerrainEnum name;
+    public Color standardColor;
     public int falloff;
+    public float persistance;
+    public float lacunarity;
+    public float scale;
+    public GameObject tree;
+    public AnimationCurve animationCurve;
 }

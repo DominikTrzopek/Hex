@@ -14,6 +14,7 @@ public class CustomTag : MonoBehaviour
     public PathTag pathTag = PathTag.none;
     public bool taken;
     public int range = 1000;
+    public Vector2Int coordinates;
 
     
     public bool in_base_range;
@@ -59,6 +60,7 @@ public enum CellTag
     mountain,
     structure,
     obstruction,
+    mainBase
 }
 
 public enum PathTag

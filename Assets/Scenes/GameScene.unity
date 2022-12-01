@@ -268,9 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bedd45b20c50145802bf211dfb9fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 10
+  size: 68
   hex: {fileID: 7851437885473715362, guid: d5ecfde406ee1c14da93a2fd5e461bc7, type: 3}
-  tree: {fileID: 7767468696482198404, guid: 01badc6cf6f0a0f468e763a64ea2afc7, type: 3}
+  tree: {fileID: 5011693752218651942, guid: 4358a373ba521384883e136ffde69db7, type: 3}
   scale: 7
   persistance: 0.4
   lacunarity: 2
@@ -332,8 +332,10 @@ MonoBehaviour:
   terrain: []
   usefalloff: 1
   instantiate_height: 4
-  ore:
-  - {fileID: 3673829386633825310, guid: 484c6d0dd57b80f49a22fdcc6150ae04, type: 3}
+  stone:
+  - {fileID: 625344076351086576, guid: 1a5bcd330b9c59a4ab94eda27a2fe90f, type: 3}
+  bridge: {fileID: 1944190761973533999, guid: 79ae17cc9325d874688e4363f138732d, type: 3}
+  ore: {fileID: 6142749499175370468, guid: 2807ff6b6a04dda4cb74506bf2a420a6, type: 3}
   chance: 0.2
   biomes:
   - terrains:
@@ -358,29 +360,31 @@ MonoBehaviour:
     - name: 2
       regionColour: {r: 0.509434, g: 0.3066048, b: 0.22347811, a: 0}
     name: 0
+    standardColor: {r: 0.18039216, g: 0.7725491, b: 0.18039216, a: 0}
     falloff: 1
   - terrains:
     - name: 0
       regionColour: {r: 0.18039216, g: 0.42352945, b: 0.47058827, a: 0}
     - name: 0
       regionColour: {r: 0.33610713, g: 0.8584906, b: 0.8533755, a: 0}
-    - name: 0
+    - name: 1
       regionColour: {r: 0.9725491, g: 0.9607844, b: 0.2784314, a: 0}
-    - name: 0
+    - name: 1
       regionColour: {r: 0.9725491, g: 0.9607844, b: 0.2784314, a: 0}
-    - name: 0
+    - name: 1
       regionColour: {r: 0.8584906, g: 0.6108973, b: 0.38470095, a: 0}
-    - name: 0
+    - name: 1
       regionColour: {r: 0.8588236, g: 0.6117647, b: 0.38431376, a: 0}
-    - name: 0
+    - name: 1
       regionColour: {r: 0.79215693, g: 0.47450984, b: 0.18431373, a: 0}
-    - name: 0
+    - name: 2
       regionColour: {r: 0.65882355, g: 0.41960788, b: 0.32156864, a: 0}
-    - name: 0
+    - name: 2
       regionColour: {r: 0.65882355, g: 0.41960788, b: 0.32156864, a: 0}
-    - name: 0
+    - name: 2
       regionColour: {r: 0.509434, g: 0.3066048, b: 0.22347811, a: 0}
     name: 3
+    standardColor: {r: 0.8588236, g: 0.6117647, b: 0.38431376, a: 0}
     falloff: 0
   - terrains:
     - name: 0
@@ -404,6 +408,7 @@ MonoBehaviour:
     - name: 2
       regionColour: {r: 0.509434, g: 0.3066048, b: 0.22347811, a: 0}
     name: 1
+    standardColor: {r: 0.18039216, g: 0.7725491, b: 0.18039216, a: 0}
     falloff: 1
 --- !u!4 &309983841
 Transform:
@@ -824,8 +829,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095616984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.95, z: 50}
-  m_LocalScale: {x: 20, y: 1, z: 20}
+  m_LocalPosition: {x: 75, y: -0.95, z: 75}
+  m_LocalScale: {x: 15, y: 1, z: 15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
