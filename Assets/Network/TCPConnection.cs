@@ -12,6 +12,7 @@ public class TCPConnection : MonoBehaviour
     public List<PlayerInfo> playerInfo = new List<PlayerInfo>();
     public List<string> messageQueue = new List<string>();
     private Thread receiverThread;
+    public int selfNumber;
 
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class TCPConnection : MonoBehaviour
                     client.closeSocket();
                     throw new System.IO.IOException();
                 }
-                client.setTimeout(120);
+                client.setTimeout(300);
                 client.writeSocket(buildConnectMsg(password));
                 receiverThread = new Thread(new ThreadStart(receiveData));
                 receiverThread.Start();
@@ -63,6 +64,7 @@ public class TCPConnection : MonoBehaviour
     {
         PlayerInfo info = new PlayerInfo(
             UDPServerConfig.getId(),
+            UDPServerConfig.getSecretId(),
             UDPServerConfig.getPlayerName(),
             PlayerStatus.NOTREADY,
             Color.black

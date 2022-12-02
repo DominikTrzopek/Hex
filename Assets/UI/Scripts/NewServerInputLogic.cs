@@ -17,6 +17,9 @@ public class NewServerInputLogic : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_InputField serverPassword;
     [SerializeField]
+    private TMPro.TMP_InputField customMapName;
+
+    [SerializeField]
     private TMPro.TMP_Dropdown numberOfPlayers;
     [SerializeField]
     private TMPro.TMP_Dropdown numberOfTurns;
@@ -32,17 +35,35 @@ public class NewServerInputLogic : MonoBehaviour
     private TCPServerInfo serverInfo;
     private ResponseType responseCode;
 
-    private int[] GetCustomMap()
+    private System.Int16[] GetCustomMap(int size)
     {
-        if (!useCustomMap.isOn) //inversed value
+        if (useCustomMap.isOn) 
         {
-            //todo load, calculate and compress bitmap
-            return new int[10];
+            Texture2D level;
+            try
+            {
+                level = CustomMapLogic.Load(customMapName.text);
+            }
+            catch(Exception err)
+            {
+                Debug.Log(err);
+                ErrorHandling.handle(ResponseType.FILENOTFOUND, this.gameObject);
+                return null;
+            }
+            level = CustomMapLogic.scaled(level, size, size);
+            float[] levelVal = CustomMapLogic.getGreyScale(level, size);
+            System.Int16[] levelMap = CustomMapLogic.convertToTerrainLevelMap(levelVal, TerrainType.levels);
+            if(levelMap.Length * sizeof(System.Int16) > 4096)
+            {
+                ErrorHandling.handle(ResponseType.MAPSIZETOLARGE, this.gameObject);
+                return null;
+            }
+            return CustomMapLogic.compressData(levelMap);
         }
         return null;
     }
 
-    private TCPServerInfo setServerInfo(int seed)
+    private TCPServerInfo setServerInfo(int seed, System.Int16[] customMap)
     {
         return new TCPServerInfo(
             UDPServerConfig.getSecretId(),
@@ -53,7 +74,7 @@ public class NewServerInputLogic : MonoBehaviour
             seed,
             mapType.options[mapType.value].text,
             int.Parse(mapSize.options[mapSize.value].text),
-            GetCustomMap(),
+            customMap,
             startingNumberOfConnections
         );
     }
@@ -62,7 +83,11 @@ public class NewServerInputLogic : MonoBehaviour
     public void RequestNewGameServer()
     {
         int seed = UnityEngine.Random.Range(-10000, 10000);
-        serverInfo = setServerInfo(seed);
+        System.Int16[] customMap = GetCustomMap(int.Parse(mapSize.options[mapSize.value].text));
+        if (useCustomMap.isOn && customMap == null)
+            return;
+        serverInfo = setServerInfo(seed, customMap);
+        Debug.Log(serverInfo.saveToString());
         new Thread(() =>
         {
             UDPClient client = new UDPClient();

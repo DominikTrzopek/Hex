@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TerrainType
 {
+    public const int levels = 10;
 
     public static Biome initTerrainType(TerrainEnum type, Biome[] biomes)
     {
@@ -25,9 +27,7 @@ public class TerrainType
             { "mountains", TerrainEnum.mountains },
             { "desert", TerrainEnum.desert },
             { "canyon", TerrainEnum.canyon},
-            { "oasis", TerrainEnum.oasis },
-            { "swamp", TerrainEnum.swamp },
-            { "taiga", TerrainEnum.taiga }
+            { "taiga", TerrainEnum.polar }
         };
         return dict[value];
     }
@@ -48,15 +48,19 @@ public struct Terrain
 }
 
 [System.Serializable]
-public struct Biome
+public class Biome
 {
-    public Terrain[] terrains;
+    public Terrain[] terrains = new Terrain[TerrainType.levels];
     public TerrainEnum name;
     public Color standardColor;
     public int falloff;
     public float persistance;
     public float lacunarity;
     public float scale;
+    public int octaves;
+    public float instantiateHeight;
+    public float treeDensity;
+    public float oreDensity;
     public GameObject tree;
     public AnimationCurve animationCurve;
 }

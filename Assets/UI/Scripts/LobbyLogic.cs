@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text;
 using System.Threading;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LobbyLogic : MonoBehaviour
 {
@@ -44,17 +45,30 @@ public class LobbyLogic : MonoBehaviour
         isActive = true;
     }
 
-    void Update()
+    int tick = 0;
+
+    void FixedUpdate()
     {
         if(isActive == true)
         {
+
+            if(checkIfPlayersReady())
+            {
+                tick++;
+                if(tick >= 100)
+                    StarGame();
+            }
+            else
+                tick = 0;
+
             if (cells.Count > 0 && conn.messageQueue.Count > 0)
             {
                 try 
                 {
                     
                     ConnectMsg info = ConnectMsg.fromString(conn.messageQueue[0]);
-                    Debug.Log(info.saveToString());
+                    if(info.playerInfo.id == UDPServerConfig.getId())
+                        conn.selfNumber = info.playerInfo.number;
                     ErrorHandling.handle(info.code, this.transform.parent.parent.gameObject);
                     int foundIndex = FindCell(info.playerInfo.id);
                     if (foundIndex != -1)
@@ -83,6 +97,7 @@ public class LobbyLogic : MonoBehaviour
 
     private int FindCell(string id)
     {
+
         for (int i = 0; i < cells.Count; i++)
         {
             if (cells[i].GetComponent<PlayersInfoLogic>().playerInfo.id == id)
@@ -107,15 +122,27 @@ public class LobbyLogic : MonoBehaviour
         isActive = false;
     }
 
-    void StarGame()
+    public void StarGame()
     {
         conn = TCPConnection.instance;
+        conn.client.writeSocket(new ConnectMsg(new PlayerInfo(PlayerStatus.INGAME, TCPConnection.instance.selfNumber)));
         foreach (GameObject cell in cells)
         {
             PlayersInfoLogic playerData = cell.GetComponent<PlayersInfoLogic>();
             playerData.playerInfo.color = playerData.image.color;
             conn.playerInfo.Add(playerData.playerInfo);
         }
+        SceneManager.LoadScene(1);
+    }
+
+    bool checkIfPlayersReady()
+    {
+        foreach(GameObject cell in cells)
+        {
+            if(cell.GetComponent<PlayersInfoLogic>().playerInfo.status != PlayerStatus.READY)
+                return false;
+        }
+        return true;
     }
 
   

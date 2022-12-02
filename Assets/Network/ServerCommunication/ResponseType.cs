@@ -9,5 +9,7 @@ public enum ResponseType {
     BADCONNECTION = 7,      // Broken connect msg json
     DISCONNECT = 8,         // Disconnected from server
     UDPSERVERDOWN = 9,      // Disconnected from server
-    BADADDRESS = 10         // Bad arguments for socket init
+    BADADDRESS = 10,        // Bad arguments for socket init
+    FILENOTFOUND = 11,      // File not found when loading custom map
+    MAPSIZETOLARGE = 12     // Map array to large to send
 };

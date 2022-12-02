@@ -9,18 +9,22 @@ public class PlayerInfo
     public Color color;
     public string name;
     public PlayerStatus status;
+    public int number;
+    public string secretId;
 
-    public PlayerInfo(string id, string name, PlayerStatus status, Color color){
+    public PlayerInfo(string id, string secretId, string name, PlayerStatus status, Color color){
         this.id = id;
+        this.secretId = secretId;
         this.name = name;
         this.status = status;
         this.color = color;
     }
 
-    public PlayerInfo(PlayerStatus status){
+    public PlayerInfo(PlayerStatus status, int number){
         this.id = UDPServerConfig.getId();
         this.name = UDPServerConfig.getPlayerName();
         this.status = status;
+        this.number = number;
     }
 
     public string saveToString()

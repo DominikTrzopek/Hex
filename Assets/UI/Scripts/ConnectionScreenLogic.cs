@@ -11,16 +11,17 @@ public class ConnectionScreenLogic : MonoBehaviour
 
     public void setReadyStatus()
     {
+        Debug.Log(TCPConnection.instance.selfNumber);
         if (ready == false)
         {
             ready = true;
-            sendStatus(new PlayerInfo(PlayerStatus.READY));
+            sendStatus(new PlayerInfo(PlayerStatus.READY, TCPConnection.instance.selfNumber));
             return;
         }
         else
         {
             ready = false;
-            sendStatus(new PlayerInfo(PlayerStatus.NOTREADY));
+            sendStatus(new PlayerInfo(PlayerStatus.NOTREADY, TCPConnection.instance.selfNumber));
         }
 
     }
@@ -55,5 +56,7 @@ public class ConnectionScreenLogic : MonoBehaviour
         }).Start();
 
     }
+
+    
 
 }

@@ -17,8 +17,9 @@ public class UDPClient
             IPAddress.Parse(UDPServerConfig.getIp()),
             UDPServerConfig.getPort()
         );
-        //Debug.Log(remoteEndPoint.Port);
         client = new UdpClient();
+        client.Client.SendBufferSize = 8192;
+        client.Client.ReceiveBufferSize = 8192;
         client.Client.ReceiveTimeout = 4000;
         client.Client.SendTimeout = 2000;
     }

@@ -8,8 +8,7 @@ public enum TerrainEnum
     island,
     mountains,
     desert,
-    oasis,
     canyon,
-    taiga,
-    swamp
+    polar
+    
 }

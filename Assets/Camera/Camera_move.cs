@@ -8,16 +8,18 @@ public class Camera_move : MonoBehaviour
     public Camera cam;
     public float camera_speed = 20f;
     public float scroll_speed = 20f;
-    public float maxY = 120f, minY = 0f;
+    public float maxY = 12f, minY = 4f;
     public GameObject pivot;
     const float height = 40f;
     Vector2 moveMulti;
     float cameraRotation = 0;
     public float cameraRotationSpeed;
+    public int mapSize;
     void Update()
     {
         QualitySettings.shadowDistance = 100;
-        Vector2 panlimit = new Vector2(100 * 2f, 100 * 2f);
+        Vector2 panlimitX = new Vector2(-10, mapSize * 1.5f);
+        Vector2 panlimitZ = new Vector2(-10, mapSize * 1.5f);
         float border = Screen.height / 6f;
         Vector2 cursorPoz = new Vector2(Mathf.Abs(Input.mousePosition.x - Screen.width / 2f), Mathf.Abs(Input.mousePosition.y - Screen.height / 2f));
         if (Input.GetMouseButton(2))
@@ -29,7 +31,8 @@ public class Camera_move : MonoBehaviour
             else if (Input.mousePosition.x - Screen.width / 2f < 0)
                 cameraRotation -= cameraRotationSpeed;
         }
-        else
+        else if(IsMouseOverGameWindow)
+        {
             moveMulti = new Vector2(1, 1);
 
             Vector3 pos = cam.transform.position;
@@ -52,14 +55,16 @@ public class Camera_move : MonoBehaviour
             }
 
             float scroll = Input.GetAxis("Mouse ScrollWheel");
-            pos.y -= scroll * scroll_speed * Time.deltaTime * 100f;
+            cam.orthographicSize -= scroll * scroll_speed * Time.deltaTime * 100f;
 
-            pos.x = Mathf.Clamp(pos.x, -panlimit.x, panlimit.x);
-            pos.z = Mathf.Clamp(pos.z, -panlimit.y, panlimit.y);
-            pos.y = Mathf.Clamp(pos.y, minY, maxY);
+            pos.x = Mathf.Clamp(pos.x, panlimitX.x, panlimitX.y);
+            pos.z = Mathf.Clamp(pos.z, panlimitZ.x, panlimitZ.y);
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minY, maxY);
             transform.position = pos;
-        
         }
+    }
+
+    bool IsMouseOverGameWindow { get { return !(0 > Input.mousePosition.x || 0 > Input.mousePosition.y || Screen.width < Input.mousePosition.x || Screen.height < Input.mousePosition.y); } }
 
 
 }

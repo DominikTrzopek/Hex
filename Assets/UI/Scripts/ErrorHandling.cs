@@ -35,6 +35,12 @@ public class ErrorHandling : MonoBehaviour
             case ResponseType.BADADDRESS:
                 setView(currentView, "Bad UDP socket address!");
                 break;
+            case ResponseType.FILENOTFOUND:
+                setView(currentView, "Map file not found! Put image inside game folder");
+                break;
+            case ResponseType.MAPSIZETOLARGE:
+                setView(currentView, "Map array is to large! Set smaller map size");
+                break;
         }
     }
 

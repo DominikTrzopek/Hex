@@ -9,11 +9,8 @@ public class CustomMapLogic
     public static Texture2D Load(string filePath)
     {
 
-        Debug.Log(Application.dataPath);
-
-        //only in editor
-        //in game -> name of file
-        filePath = Application.dataPath + "/Resources/Maps/" + filePath;
+        if(Application.isEditor)
+            filePath = Application.dataPath + "/Resources/Maps/" + filePath;
 
         Texture2D tex = null;
         byte[] fileData;
@@ -23,6 +20,10 @@ public class CustomMapLogic
             fileData = File.ReadAllBytes(filePath);
             tex = new Texture2D(2, 2);
             tex.LoadImage(fileData);
+        }
+        else
+        {
+            throw new FileNotFoundException();
         }
         return tex;
     }
@@ -188,17 +189,17 @@ public class CustomMapLogic
         return newPixels;
     }
 
-    public static int[] convertToTerrainLevelMap(float[] map, int levels)
+    public static System.Int16[] convertToTerrainLevelMap(float[] map, int levels)
     {
-        int[] result = new int[map.Length];
+        System.Int16[] result = new System.Int16[map.Length];
         for(int i = 0; i < map.Length; i++)
         {
-            result[i] = (int)(map[i] * levels);
+            result[i] = (System.Int16)(map[i] * levels);
         }
         return result;
     }
 
-    public static float[] convertToNoiseMap(int[] map, int levels)
+    public static float[] convertToNoiseMap(System.Int16[] map, int levels)
     {
         float[] result = new float[map.Length];
         float level = 1f / levels;
@@ -209,11 +210,11 @@ public class CustomMapLogic
         return result;
     }
 
-    public static int[] compressData(int[] data)
+    public static System.Int16[] compressData(System.Int16[] data)
     {
-        List<int> tmp = new List<int>();
-        int count = 0;
-        int val = data[0];
+        List<System.Int16> tmp = new List<System.Int16>();
+        System.Int16 count = 0;
+        System.Int16 val = data[0];
         for(int i = 1; i < data.Length; i++)
         {   
             if(data[i - 1] == data[i])
@@ -234,7 +235,7 @@ public class CustomMapLogic
         tmp.Add(val);
         tmp.Add(count);
 
-        int[] result = new int[tmp.Count];
+        System.Int16[] result = new System.Int16[tmp.Count];
         for(int i = 0; i < tmp.Count; i++)
         {
             result[i] = tmp[i];
@@ -242,14 +243,14 @@ public class CustomMapLogic
         return result;
     }
 
-    public static int[] decompressData(int[] data)
+    public static System.Int16[] decompressData(System.Int16[] data)
     {
         int dataLength = 0;
         for(int i = 0; i < data.Length - 1; i += 2)
         {
             dataLength += data[i + 1];
         }
-        int[] result = new int[dataLength];
+        System.Int16[] result = new System.Int16[dataLength];
 
         int iter = 0;
         for(int i = 0; i < data.Length - 1; i += 2)

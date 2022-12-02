@@ -11,7 +11,7 @@ public class TCPServerInfo
     public int seed;
     public string mapType;
     public int mapSize;
-    public int[] customMap;
+    public System.Int16[] customMap;
     public string ip;
     public int[] ports;
     public int connections;
@@ -26,7 +26,7 @@ public class TCPServerInfo
 
     public TCPServerInfo(string creatorId, string serverName,
     string password, int numberOfPlayers, int numberOfTurns,
-    int seed, string mapType, int mapSize, int[] customMap, int connections)
+    int seed, string mapType, int mapSize, System.Int16[] customMap, int connections)
     {
         this.creatorId = creatorId;
         this.serverName = serverName;
