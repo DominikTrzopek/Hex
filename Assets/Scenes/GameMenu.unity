@@ -14335,13 +14335,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: desert
       m_Image: {fileID: 0}
-    - m_Text: oasis
+    - m_Text: crater
       m_Image: {fileID: 0}
-    - m_Text: canyon
-      m_Image: {fileID: 0}
-    - m_Text: taiga
-      m_Image: {fileID: 0}
-    - m_Text: swamp
+    - m_Text: glacier
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

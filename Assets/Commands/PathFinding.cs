@@ -123,7 +123,6 @@ public class PathFinding : MonoBehaviour
             {
                 obj.GetComponent<CustomTag>().range = 1000;
                 obj.GetComponent<CustomTag>().pathTag = PathTag.none;
-                obj.GetComponent<CustomTag>().spawn = false;
                 // obj.transform.GetChild(0).gameObject.SetActive(false);
                 // if (!obj.GetComponent<CustomTag>().HasTag(CellTag.structure))
                 //     obj.GetComponent<CustomTag>().in_base_range = false;

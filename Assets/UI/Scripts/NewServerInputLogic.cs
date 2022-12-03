@@ -50,15 +50,16 @@ public class NewServerInputLogic : MonoBehaviour
                 ErrorHandling.handle(ResponseType.FILENOTFOUND, this.gameObject);
                 return null;
             }
-            level = CustomMapLogic.scaled(level, size, size);
-            float[] levelVal = CustomMapLogic.getGreyScale(level, size);
-            System.Int16[] levelMap = CustomMapLogic.convertToTerrainLevelMap(levelVal, TerrainType.levels);
-            if(levelMap.Length * sizeof(System.Int16) > 4096)
+            level = CustomMapLogic.Scale(level, size, size);
+            float[] levelVal = CustomMapLogic.GetGreyScale(level, size);
+            System.Int16[] levelMap = CustomMapLogic.ConvertToTerrainLevelMap(levelVal, TerrainType.levels);
+            if(levelMap.Length * sizeof(System.Int16) > 8192)
             {
+                Debug.Log(levelMap.Length);
                 ErrorHandling.handle(ResponseType.MAPSIZETOLARGE, this.gameObject);
                 return null;
             }
-            return CustomMapLogic.compressData(levelMap);
+            return CustomMapLogic.CompressData(levelMap);
         }
         return null;
     }

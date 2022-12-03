@@ -14,9 +14,9 @@ public class Camera_move : MonoBehaviour
     Vector2 moveMulti;
     float cameraRotation = 0;
     public float cameraRotationSpeed;
-    public int mapSize;
     void Update()
     {
+        int mapSize = TCPConnection.instance.serverInfo.mapSize;
         QualitySettings.shadowDistance = 100;
         Vector2 panlimitX = new Vector2(-10, mapSize * 1.5f);
         Vector2 panlimitZ = new Vector2(-10, mapSize * 1.5f);

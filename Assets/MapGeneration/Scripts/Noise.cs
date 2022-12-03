@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class Noise
 {
@@ -36,7 +34,6 @@ public static class Noise
 
                     amplitude *= persistance;
                     frequency *= lacunarity;
-                    //Debug.Log(amplitude);
                 }
                 if (noiseHeight > maxHeight)
                     maxHeight = noiseHeight;
@@ -46,7 +43,7 @@ public static class Noise
             }
         }
 
-        return applyLevelsAndFallOff(levels, size, usefalloff, noiseMap, maxHeight, minHeight);
+        return ApplyLevelsAndFallOff(levels, size, usefalloff, noiseMap, maxHeight, minHeight);
     }
 
     public static float[,] GenerateFromCustomMap(float[] customMap, int size, int levels, int usefalloff)
@@ -67,10 +64,10 @@ public static class Noise
             }
         }
 
-        return applyLevelsAndFallOff(levels, size, usefalloff, noiseMap, maxHeight, minHeight);
+        return ApplyLevelsAndFallOff(levels, size, usefalloff, noiseMap, maxHeight, minHeight);
     }
 
-    private static float[,] applyLevelsAndFallOff(int levels, int size, int usefalloff, float[,] noiseMap, float maxHeight, float minHeight)
+    private static float[,] ApplyLevelsAndFallOff(int levels, int size, int usefalloff, float[,] noiseMap, float maxHeight, float minHeight)
     {
         float level_height = 1f / levels;
         float[,] falloff = new float[size, size];

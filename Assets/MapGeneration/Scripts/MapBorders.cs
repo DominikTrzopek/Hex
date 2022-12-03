@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MapBorders : MonoBehaviour
@@ -9,8 +7,7 @@ public class MapBorders : MonoBehaviour
         Vector3 scale = border.transform.localScale;
         float diff = scale.x / 2f;
 
-
-        Vector3 start = HexGrid.hexArray[0,0].transform.position;
+        Vector3 start = HexGrid.hexArray[0, 0].transform.position;
         Vector3 end = HexGrid.hexArray[size - 1, size - 1].transform.position;
         //down
         Instantiate(border, new Vector3(start.x - diff, -0.99f, start.z), Quaternion.Euler(new Vector3(0, 0, 0)));

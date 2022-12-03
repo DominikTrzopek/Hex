@@ -306,7 +306,7 @@ MonoBehaviour:
     octaves: 4
     instantiateHeight: 4
     treeDensity: 0.7
-    oreDensity: 0.8
+    oreDensity: 0.85
     tree: {fileID: 5011693752218651942, guid: 4358a373ba521384883e136ffde69db7, type: 3}
     animationCurve:
       serializedVersion: 2
@@ -389,8 +389,8 @@ MonoBehaviour:
     octaves: 4
     instantiateHeight: 4
     treeDensity: 0.85
-    oreDensity: 0.8
-    tree: {fileID: 5011693752218651942, guid: 4358a373ba521384883e136ffde69db7, type: 3}
+    oreDensity: 0.85
+    tree: {fileID: 5011693752218651942, guid: 3366f6ffaddc01a44a76618c36d7148b, type: 3}
     animationCurve:
       serializedVersion: 2
       m_Curve:
@@ -472,7 +472,7 @@ MonoBehaviour:
     octaves: 4
     instantiateHeight: 4
     treeDensity: 0.7
-    oreDensity: 0.8
+    oreDensity: 0.85
     tree: {fileID: 5011693752218651942, guid: 4358a373ba521384883e136ffde69db7, type: 3}
     animationCurve:
       serializedVersion: 2
@@ -521,6 +521,255 @@ MonoBehaviour:
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - terrains:
+    - name: 0
+      regionColour: {r: 0.18039216, g: 0.42352945, b: 0.47058827, a: 0}
+    - name: 0
+      regionColour: {r: 0.33610713, g: 0.8584906, b: 0.8533755, a: 0}
+    - name: 1
+      regionColour: {r: 0.95294124, g: 0.9450981, b: 0.4901961, a: 0}
+    - name: 1
+      regionColour: {r: 0.95294124, g: 0.9450981, b: 0.4901961, a: 0}
+    - name: 1
+      regionColour: {r: 0.49411768, g: 0.9215687, b: 0.4901961, a: 0}
+    - name: 1
+      regionColour: {r: 0.49411768, g: 0.9215687, b: 0.4901961, a: 0}
+    - name: 1
+      regionColour: {r: 0.29411766, g: 0.7176471, b: 0.28627452, a: 0}
+    - name: 2
+      regionColour: {r: 0.5943396, g: 0.462856, b: 0.40650585, a: 0}
+    - name: 2
+      regionColour: {r: 0.59607846, g: 0.46274513, b: 0.40784317, a: 0}
+    - name: 2
+      regionColour: {r: 0.4339623, g: 0.33101565, b: 0.28862587, a: 0}
+    name: 2
+    standardColor: {r: 0.49411768, g: 0.9215687, b: 0.4901961, a: 0}
+    falloff: -1
+    persistance: 0.4
+    lacunarity: 2
+    scale: 6
+    octaves: 4
+    instantiateHeight: 4
+    treeDensity: 0.8
+    oreDensity: 0.85
+    tree: {fileID: 5011693752218651942, guid: e446a35a421c7bc41a6b111395d131fe, type: 3}
+    animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.102236606
+        value: 0.102236606
+        inSlope: -0.019321894
+        outSlope: -0.019321894
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.10949741
+      - serializedVersion: 3
+        time: 0.70029825
+        value: 0.101475835
+        inSlope: 0.020695996
+        outSlope: 0.020695996
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.1384891
+      - serializedVersion: 3
+        time: 0.84002393
+        value: 1.1049592
+        inSlope: 3.5193331
+        outSlope: 3.5193331
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.0224437
+        value: 1.2877787
+        inSlope: 0.04664601
+        outSlope: 0.04664601
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.40757948
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - terrains:
+    - name: 0
+      regionColour: {r: 0.18039216, g: 0.42352945, b: 0.47058827, a: 0}
+    - name: 0
+      regionColour: {r: 0.33610713, g: 0.8584906, b: 0.8533755, a: 0}
+    - name: 1
+      regionColour: {r: 0.95294124, g: 0.9450981, b: 0.4901961, a: 0}
+    - name: 1
+      regionColour: {r: 0.95294124, g: 0.9450981, b: 0.4901961, a: 0}
+    - name: 1
+      regionColour: {r: 0.8588236, g: 0.6117647, b: 0.38431376, a: 0}
+    - name: 1
+      regionColour: {r: 0.8588236, g: 0.6117647, b: 0.38431376, a: 0}
+    - name: 1
+      regionColour: {r: 0.79215693, g: 0.47450984, b: 0.18431373, a: 0}
+    - name: 2
+      regionColour: {r: 0.5943396, g: 0.462856, b: 0.40650585, a: 0}
+    - name: 2
+      regionColour: {r: 0.59607846, g: 0.46274513, b: 0.40784317, a: 0}
+    - name: 2
+      regionColour: {r: 0.4339623, g: 0.33101565, b: 0.28862587, a: 0}
+    name: 4
+    standardColor: {r: 0.8588236, g: 0.6117647, b: 0.38431376, a: 0}
+    falloff: -1
+    persistance: 0.3
+    lacunarity: 3
+    scale: 7
+    octaves: 4
+    instantiateHeight: 4
+    treeDensity: 0.85
+    oreDensity: 0.85
+    tree: {fileID: 5011693752218651942, guid: 3366f6ffaddc01a44a76618c36d7148b, type: 3}
+    animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.102236606
+        value: 0.102236606
+        inSlope: -0.019321894
+        outSlope: -0.019321894
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.10949741
+      - serializedVersion: 3
+        time: 0.70029825
+        value: 0.101475835
+        inSlope: 0.020695996
+        outSlope: 0.020695996
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.1384891
+      - serializedVersion: 3
+        time: 0.84002393
+        value: 1.1049592
+        inSlope: 3.5193331
+        outSlope: 3.5193331
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.0224437
+        value: 1.2877787
+        inSlope: 0.04664601
+        outSlope: 0.04664601
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.40757948
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - terrains:
+    - name: 0
+      regionColour: {r: 0.18039216, g: 0.42352945, b: 0.47058827, a: 0}
+    - name: 0
+      regionColour: {r: 0.13333334, g: 0.74509805, b: 0.6784314, a: 0}
+    - name: 1
+      regionColour: {r: 0.6745728, g: 0.8773585, b: 0.8535013, a: 0.21176471}
+    - name: 1
+      regionColour: {r: 0.6745098, g: 0.87843144, b: 0.854902, a: 0.14901961}
+    - name: 1
+      regionColour: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 0}
+    - name: 1
+      regionColour: {r: 0.75294125, g: 0.8117648, b: 0.6156863, a: 0}
+    - name: 1
+      regionColour: {r: 0.9058824, g: 0.9058824, b: 0.9058824, a: 0}
+    - name: 2
+      regionColour: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
+    - name: 2
+      regionColour: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - name: 2
+      regionColour: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
+    name: 5
+    standardColor: {r: 0.7530592, g: 0.8113208, b: 0.61614454, a: 0.5254902}
+    falloff: 1
+    persistance: 0.3
+    lacunarity: 3
+    scale: 5
+    octaves: 3
+    instantiateHeight: 3
+    treeDensity: 0.85
+    oreDensity: 0.85
+    tree: {fileID: 5011693752218651942, guid: e446a35a421c7bc41a6b111395d131fe, type: 3}
+    animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.102236606
+        value: 0.102236606
+        inSlope: -0.019321894
+        outSlope: -0.019321894
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.10949741
+      - serializedVersion: 3
+        time: 0.70029825
+        value: 0.101475835
+        inSlope: 0.020695996
+        outSlope: 0.020695996
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.1384891
+      - serializedVersion: 3
+        time: 0.84002393
+        value: 1.1049592
+        inSlope: 3.5193331
+        outSlope: 3.5193331
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.0224437
+        value: 1.2877787
+        inSlope: 0.04664601
+        outSlope: 0.04664601
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.40757948
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -739,7 +988,7 @@ MonoBehaviour:
   minY: 5
   pivot: {fileID: 1206989676}
   cameraRotationSpeed: 0.6
-  mapSize: 64
+  mapSize: 32
 --- !u!1 &1206989676
 GameObject:
   m_ObjectHideFlags: 0

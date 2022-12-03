@@ -8,7 +8,7 @@ public enum TerrainEnum
     island,
     mountains,
     desert,
-    canyon,
-    polar
+    crater,
+    glacier
     
 }

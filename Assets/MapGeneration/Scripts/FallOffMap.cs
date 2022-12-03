@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public static class FallOffMap
@@ -35,6 +33,6 @@ public static class FallOffMap
 
     static float EvaluateReverseFallOff(float x, float a, float b)
     {
-        return Mathf.Pow(x, a) / (Mathf.Pow(x, a) - (Mathf.Pow(b - b * x, a)));
+        return Mathf.Pow(-x, a) / (Mathf.Pow(x, a) + (Mathf.Pow(b - b * x, a)));
     }
 }

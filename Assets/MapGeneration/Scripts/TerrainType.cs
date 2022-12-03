@@ -26,8 +26,8 @@ public class TerrainType
             { "island", TerrainEnum.island },
             { "mountains", TerrainEnum.mountains },
             { "desert", TerrainEnum.desert },
-            { "canyon", TerrainEnum.canyon},
-            { "taiga", TerrainEnum.polar }
+            { "crater", TerrainEnum.crater},
+            { "glacier", TerrainEnum.glacier }
         };
         return dict[value];
     }
