@@ -28,72 +28,6 @@ public class CustomMapLogic
         return tex;
     }
 
-    public static float[] Resize(Texture2D tex, int size)
-    {
-        float[] newPixels = new float[size * size];
-        Color[] pixels = tex.GetPixels(0);
-
-        int width = tex.width;
-        int height = tex.height;
-
-        int scaleX = width / size;
-        int scaleY = height / size;
-
-        if (scaleX <= 1 || scaleY <= 1)
-            throw new Exception();
-
-        int chunkCount = 0;
-        int pixelCount = 0;
-        int rowCount = 0;
-        int chunkSize = scaleX * scaleY;
-        Color[] chunk = new Color[chunkSize];
-
-        int num = 0;
-        int iter = 0;
-
-        while (rowCount * scaleY + scaleY < height)
-        {
-            while (num != chunkSize)
-            {
-                for (int i = 0; i < scaleX; i++)
-                {
-                    chunk[num] = pixels[iter];
-                    num++;
-                    iter++;
-                }
-                iter += width - scaleX;
-            }
-            num = 0;
-            if (pixelCount >= size * size)
-            {
-                return newPixels;
-            }
-            newPixels[pixelCount] = CalculateAvgInGrayScale(chunk, chunkSize);
-            pixelCount++;
-            chunkCount++;
-
-            if (chunkCount == size)
-            {
-                rowCount++;
-                chunkCount = 0;
-            }
-            iter = rowCount * scaleY * width + chunkCount * scaleX;
-        }
-        return newPixels;
-    }
-
-    private static float CalculateAvgInGrayScale(Color[] arr, int chunkSize)
-    {
-        float r = 0, g = 0, b = 0;
-        foreach (Color pixel in arr)
-        {
-            r += pixel.r;
-            g += pixel.g;
-            b += pixel.b;
-        }
-        return (r + g + b) / (chunkSize * 3f);
-    }
-
     public static Texture2D Scale(Texture2D src, int width, int height, FilterMode mode = FilterMode.Trilinear)
     {
         Rect texR = new Rect(0, 0, width, height);
@@ -124,7 +58,7 @@ public class CustomMapLogic
         int i = 0;
         foreach (Color pixel in tex.GetPixels())
         {
-            newPixels[i] = (pixel.r + pixel.g + pixel.b) / 3f;
+            newPixels[i] = pixel.grayscale;
             i++;
         }
         return newPixels;
@@ -151,9 +85,9 @@ public class CustomMapLogic
         return result;
     }
 
-    public static System.Int16[] CompressData(System.Int16[] data)
+    public static string[] CompressData(System.Int16[] data)
     {
-        List<System.Int16> tmp = new List<System.Int16>();
+        List<string> tmp = new List<string>();
         System.Int16 count = 0;
         System.Int16 val = data[0];
         for (int i = 1; i < data.Length; i++)
@@ -161,17 +95,15 @@ public class CustomMapLogic
             count++;
             if (data[i - 1] != data[i])
             {
-                tmp.Add(val);
-                tmp.Add(count);
+                AddToList(tmp, val, count);
                 count = 0;
                 val = data[i];
             }
         }
         count++;
-        tmp.Add(val);
-        tmp.Add(count);
+        AddToList(tmp, val, count);
 
-        System.Int16[] result = new System.Int16[tmp.Count];
+        string[] result = new string[tmp.Count];
         for (int i = 0; i < tmp.Count; i++)
         {
             result[i] = tmp[i];
@@ -179,24 +111,55 @@ public class CustomMapLogic
         return result;
     }
 
-    public static System.Int16[] DecompressData(System.Int16[] data)
+    private static void AddToList(List<string> tmp, System.Int16 val, System.Int16 count)
     {
-        int dataLength = 0;
-        for (int i = 0; i < data.Length - 1; i += 2)
+        if(count > 1)
+            tmp.Add(val + ":" + count);
+        else
+            tmp.Add(val.ToString());
+    }
+
+    public static System.Int16[] DecompressData(string str)
+    {
+        string[] data = str.Split(",");
+        
+        Int32 dataLength = 0;
+        for (int i = 0; i < data.Length; i += 1)
         {
-            dataLength += data[i + 1];
+            string[] splited = data[i].Split(":");
+            if(splited.Length == 1)
+                dataLength += 1;
+            else
+                dataLength += Int32.Parse(splited[1]);
         }
         System.Int16[] result = new System.Int16[dataLength];
 
         int iter = 0;
-        for (int i = 0; i < data.Length - 1; i += 2)
+        for (int i = 0; i < data.Length; i += 1)
         {
-            for (int j = 0; j < data[i + 1]; j++)
+            int lenght;
+            string[] splited = data[i].Split(":");
+            if(splited.Length == 1)
+                lenght = 1;
+            else
+                lenght = Int16.Parse(splited[1]);
+            for (int j = 0; j < lenght; j++)
             {
-                result[iter] = data[i];
+                result[iter] = Int16.Parse(splited[0]);
                 iter++;
             }
         }
         return result;
     }
+
+    public static string SerializeToString(string[] array)
+    {
+        string result = "";
+        foreach(string elem in array)
+        {
+            result += elem + ",";
+        }
+        return result.Remove(result.Length - 1);
+    }
+
 }

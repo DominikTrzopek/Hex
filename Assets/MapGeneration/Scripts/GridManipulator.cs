@@ -27,7 +27,7 @@ public class GridManipulator : MonoBehaviour
         List<GameObject> bases = SpawnBase(basePrefab, spawnPoints, yPosition, hex, biome);
         SpawnOre(ore, spawnPoints, biome, yPosition);
         bool validatation = ValidateMap(bases, yPosition);
-        //setIds(bases);
+        SetIds(bases);
         return validatation;
     }
 

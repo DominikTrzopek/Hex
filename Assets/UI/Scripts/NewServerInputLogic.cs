@@ -35,7 +35,7 @@ public class NewServerInputLogic : MonoBehaviour
     private TCPServerInfo serverInfo;
     private ResponseType responseCode;
 
-    private System.Int16[] GetCustomMap(int size)
+    private string GetCustomMap(int size)
     {
         if (useCustomMap.isOn) 
         {
@@ -53,18 +53,20 @@ public class NewServerInputLogic : MonoBehaviour
             level = CustomMapLogic.Scale(level, size, size);
             float[] levelVal = CustomMapLogic.GetGreyScale(level, size);
             System.Int16[] levelMap = CustomMapLogic.ConvertToTerrainLevelMap(levelVal, TerrainType.levels);
-            if(levelMap.Length * sizeof(System.Int16) > 8192)
+            String[] compressed = CustomMapLogic.CompressData(levelMap);
+            string stringMap = CustomMapLogic.SerializeToString(compressed);
+            if(stringMap.Length * sizeof(Char) > 4092)
             {
                 Debug.Log(levelMap.Length);
                 ErrorHandling.handle(ResponseType.MAPSIZETOLARGE, this.gameObject);
                 return null;
             }
-            return CustomMapLogic.CompressData(levelMap);
+            return stringMap;
         }
         return null;
     }
 
-    private TCPServerInfo setServerInfo(int seed, System.Int16[] customMap)
+    private TCPServerInfo setServerInfo(int seed, string customMap)
     {
         return new TCPServerInfo(
             UDPServerConfig.getSecretId(),
@@ -84,7 +86,7 @@ public class NewServerInputLogic : MonoBehaviour
     public void RequestNewGameServer()
     {
         int seed = UnityEngine.Random.Range(-10000, 10000);
-        System.Int16[] customMap = GetCustomMap(int.Parse(mapSize.options[mapSize.value].text));
+        string customMap = GetCustomMap(int.Parse(mapSize.options[mapSize.value].text));
         if (useCustomMap.isOn && customMap == null)
             return;
         serverInfo = setServerInfo(seed, customMap);
