@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5638386266146987825}
   - component: {fileID: 3845748318442909445}
   - component: {fileID: 7764543156932923287}
+  - component: {fileID: -3754619004012075483}
   m_Layer: 0
   m_Name: ore
   m_TagString: hex
@@ -203,6 +204,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6316605384368997673, guid: f59b06e67ca68fb4388c1c7edc86b482, type: 3}
+--- !u!114 &-3754619004012075483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6142749499175370468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa46ea4999ae37145a622002c257c548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeCellColor: {r: 0, g: 1, b: 1, a: 1}
+  selectedCellColor: {r: 0, g: 0.26000893, b: 0.764151, a: 1}
 --- !u!1 &6144762155479515563
 GameObject:
   m_ObjectHideFlags: 0

@@ -164,7 +164,22 @@ public class HexGrid : MonoBehaviour
 
     void Start()
     {
-        TCPServerInfo serverInfo = TCPConnection.instance.serverInfo;
+        //TCPServerInfo serverInfo = TCPConnection.instance.serverInfo;
+
+        TCPServerInfo serverInfo = new TCPServerInfo
+        (
+            "this.creatorId = creatorId;",
+            "this.serverName = serverName;",
+            "this.password = password;",
+            4,
+            20,
+            10340,
+            "island",
+            45,
+            null,
+            2
+        );
+
         CreateMap(serverInfo);
         MapBorders.makeBorder(serverInfo.mapSize, border);
     }

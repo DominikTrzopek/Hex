@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d512f58a98821494c9202a9942a932e0, type: 3}
-  m_Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 6813348763691003123}
   - component: {fileID: 2732740827307547847}
   - component: {fileID: 8895524235882708053}
+  - component: {fileID: 7062273824269475724}
   m_Layer: 0
   m_Name: tree2
   m_TagString: hex
@@ -203,6 +204,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6316605384368997673, guid: f59b06e67ca68fb4388c1c7edc86b482, type: 3}
+--- !u!114 &7062273824269475724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011693752218651942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa46ea4999ae37145a622002c257c548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeCellColor: {r: 0, g: 1, b: 1, a: 1}
+  selectedCellColor: {r: 0, g: 0.26000893, b: 0.764151, a: 1}
 --- !u!1 &7424523278153412821
 GameObject:
   m_ObjectHideFlags: 0

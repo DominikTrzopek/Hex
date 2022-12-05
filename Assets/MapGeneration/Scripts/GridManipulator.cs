@@ -63,7 +63,9 @@ public class GridManipulator : MonoBehaviour
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
             GameObject toReplace = HexGrid.hexArray[spawnPoint.x, spawnPoint.y];
-            spawned.Add(ReplaceTile(HexGrid.hexArray[spawnPoint.x, spawnPoint.y], basePrefab, Color.grey, yPosition));
+            GameObject playerBase = ReplaceTile(HexGrid.hexArray[spawnPoint.x, spawnPoint.y], basePrefab, biome.standardColor, yPosition);
+            playerBase.GetComponent<NetworkId>().position = spawnPoint;
+            spawned.Add(playerBase);
         }
         ClearCellsAroundObjs(spawned, hex, biome.standardColor, yPosition);
         return spawned;
@@ -105,8 +107,12 @@ public class GridManipulator : MonoBehaviour
         for (int i = 0; i < bases.Count; i++)
         {
             bases[i].GetComponent<CustomTag>().Rename(0, CellTag.structure);
-            bases[i].GetComponent<NetworkId>().setIds(conn.playerInfo[i].id, conn.playerInfo[i].id);
-            bases[i].GetComponent<Renderer>().material.color = conn.playerInfo[i].color;
+            //bases[i].GetComponent<NetworkId>().setIds(conn.playerInfo[i].id, conn.playerInfo[i].id);
+            bases[i].GetComponent<NetworkId>().setIds(UDPServerConfig.getId(), UDPServerConfig.getId());
+            //Color color = conn.playerInfo[i].color;
+            Color color = Color.blue;
+            color.a = 0.2f;
+            bases[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
         }
     }
 

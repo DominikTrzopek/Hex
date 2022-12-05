@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1417885596170501669}
   - component: {fileID: 7551431257475452433}
   - component: {fileID: 3914745027928927875}
+  - component: {fileID: -7635507407522625375}
   m_Layer: 0
   m_Name: stone
   m_TagString: hex
@@ -105,15 +106,6 @@ MonoBehaviour:
   taken: 0
   range: 1000
   coordinates: {x: 0, y: 0}
-  in_base_range: 0
-  noise: 1
-  has_tree: 0
-  has_ore: 0
-  is_safe: 0
-  spawn_chance: 0
-  spawn: 0
-  distance_from_HQ: 1000
-  taken_by_player: 0
 --- !u!64 &3914745027928927875
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -128,6 +120,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6316605384368997673, guid: f59b06e67ca68fb4388c1c7edc86b482, type: 3}
+--- !u!114 &-7635507407522625375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625344076351086576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa46ea4999ae37145a622002c257c548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeCellColor: {r: 0, g: 1, b: 1, a: 1}
+  selectedCellColor: {r: 0, g: 0.26000893, b: 0.764151, a: 1}
 --- !u!1 &1131866299530250722
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +375,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d512f58a98821494c9202a9942a932e0, type: 3}
-  m_Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

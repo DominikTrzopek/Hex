@@ -1,0 +1,11 @@
+public enum CommandEnum
+{
+    ENDTURN,
+    INSTANTIANE_UNIT,
+    INSTANTIANE_STRUCTURE,
+    UPGRADE_UNIT,
+    UPGRADE_STRUCTURE,
+    MOVE,
+    ATTACK,
+    DEFEND
+}

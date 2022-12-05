@@ -9,6 +9,7 @@ public class CustomTag : MonoBehaviour
     public bool taken;
     public int range = 1000;
     public Vector2Int coordinates;
+    public bool active;
 
     public bool HasTag(CellTag tag)
     {
@@ -45,7 +46,8 @@ public enum CellTag
     obstruction,
     mainBase,
     tree,
-    ore
+    ore,
+    player
 }
 
 public enum PathTag

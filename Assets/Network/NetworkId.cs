@@ -6,6 +6,7 @@ public class NetworkId : MonoBehaviour
 {
     public string ownerId;
     public string objectId;
+    public Vector2Int position;
 
     public void setIds(string ownerId, string objectId)
     {

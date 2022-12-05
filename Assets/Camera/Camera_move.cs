@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Camera_move : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class Camera_move : MonoBehaviour
     public float cameraRotationSpeed;
     void Update()
     {
-        int mapSize = TCPConnection.instance.serverInfo.mapSize;
+        //int mapSize = TCPConnection.instance.serverInfo.mapSize;
+        int mapSize = 50;
         QualitySettings.shadowDistance = 100;
         Vector2 panlimitX = new Vector2(-10, mapSize * 1.5f);
         Vector2 panlimitZ = new Vector2(-10, mapSize * 1.5f);
@@ -31,7 +33,7 @@ public class Camera_move : MonoBehaviour
             else if (Input.mousePosition.x - Screen.width / 2f < 0)
                 cameraRotation -= cameraRotationSpeed;
         }
-        else if(IsMouseOverGameWindow)
+        else if(IsMouseOverGameWindow && !EventSystem.current.IsPointerOverGameObject())
         {
             moveMulti = new Vector2(1, 1);
 

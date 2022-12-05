@@ -5,6 +5,5 @@ using UnityEngine;
 public interface ITCPMsg
 {
     public string saveToString();
-    public static ConnectMsg fromString(string json) => new ConnectMsg();
-    
+
 }
