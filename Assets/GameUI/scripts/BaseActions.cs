@@ -5,11 +5,24 @@ using UnityEngine.EventSystems;
 
 public class BaseActions : MonoBehaviour
 {
-    public static GameObject obj;
-    public static GameObject uiImage;
+    public static BaseActions instance { get; private set; }
+    public GameObject obj;
+    public GameObject uiImage;
 
     private List<GameObject> cells = new List<GameObject>();
     private List<GameObject> icons = new List<GameObject>();
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     public void InstantiateUnit()
     {
@@ -40,7 +53,6 @@ public class BaseActions : MonoBehaviour
     {   
         if(obj.GetComponent<CustomTag>().taken == false)
         {
-            Debug.Log(obj.gameObject.name);
             cells.Add(obj);
         }
     }
@@ -61,7 +73,9 @@ public class BaseActions : MonoBehaviour
                 //Debug.Log("destroyed");
             };
             
-        }cells.Clear();
+        }
+        cells.Clear();
+        SelectPlayerObj.command = CommandEnum.NONE;
     }
 
 }

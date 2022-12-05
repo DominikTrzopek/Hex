@@ -1,5 +1,6 @@
 public enum CommandEnum
 {
+    NONE,
     ENDTURN,
     INSTANTIANE_UNIT,
     INSTANTIANE_STRUCTURE,

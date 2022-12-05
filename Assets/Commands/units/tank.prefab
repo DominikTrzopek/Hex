@@ -10,7 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 263772398907060496}
   - component: {fileID: 1650162247171279573}
-  m_Layer: 0
+  - component: {fileID: 1729703491014760695}
+  - component: {fileID: 7395492339215165745}
+  - component: {fileID: 1239069330173308370}
+  - component: {fileID: -6720036101626792847}
+  m_Layer: 7
   m_Name: tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,6 +56,73 @@ MonoBehaviour:
   ownerId: 
   objectId: 
   position: {x: 0, y: 0}
+--- !u!65 &1729703491014760695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640297529574435754}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.2220716, y: 0.87935454, z: 2.286468}
+  m_Center: {x: 0.45797014, y: 0.5260919, z: 0.04122901}
+--- !u!114 &7395492339215165745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640297529574435754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139601b644f5da5428adc24718a2efee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags: 08000000
+  pathTag: 0
+  taken: 0
+  range: 1000
+  coordinates: {x: 0, y: 0}
+  active: 0
+--- !u!114 &1239069330173308370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640297529574435754}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55adb0decd7ff5b4b88d09b7a755dd1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxrange: 5
+  maxvelocity: 1
+  path: []
+  path_selected: 0
+  start_selected: 0
+  moving: 0
+  click_count: 0
+  speed: 5
+--- !u!54 &-6720036101626792847
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640297529574435754}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &2376492606435592296
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,7 +134,7 @@ GameObject:
   - component: {fileID: 5119459135790748484}
   - component: {fileID: 7063685830435535857}
   - component: {fileID: 7332531964977861149}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +217,7 @@ GameObject:
   - component: {fileID: 3743095246049471}
   - component: {fileID: 6243309104456708412}
   - component: {fileID: 2615688023459996204}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +300,7 @@ GameObject:
   - component: {fileID: 4861846787883295049}
   - component: {fileID: 7674645331839170342}
   - component: {fileID: 6466925952009147062}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: viewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6228054508736272870}
   - component: {fileID: 1332223593014249664}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +397,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7937656833256938255}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.991, y: 0.146, z: 0}
+  m_LocalPosition: {x: -1.991, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -356,9 +427,8 @@ GameObject:
   - component: {fileID: 4361771755909238614}
   - component: {fileID: 2982415972363185531}
   - component: {fileID: 8042237328336041194}
-  - component: {fileID: 5661833838657592654}
   - component: {fileID: 5313042142885801000}
-  - component: {fileID: 4950994171740536494}
+  - component: {fileID: 1546670229143598201}
   m_Layer: 7
   m_Name: chasis
   m_TagString: Untagged
@@ -431,19 +501,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5661833838657592654
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9004333252646950635}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.04046224, y: 0.0098, z: 0.02185943}
-  m_Center: {x: 0.0035657696, y: 0.01, z: -0.00000014482066}
 --- !u!114 &5313042142885801000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,21 +513,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526ce68c9ce70b04b9edcafed04ed1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4950994171740536494
-MonoBehaviour:
+--- !u!65 &1546670229143598201
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9004333252646950635}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139601b644f5da5428adc24718a2efee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags: 00000000
-  pathTag: 0
-  taken: 0
-  range: 1000
-  coordinates: {x: 0, y: 0}
-  active: 0
+  serializedVersion: 2
+  m_Size: {x: 0.04046224, y: 0.0098, z: 0.02185943}
+  m_Center: {x: 0.0035657696, y: 0.01, z: -0.00000014482066}

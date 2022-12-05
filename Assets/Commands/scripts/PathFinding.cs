@@ -27,7 +27,6 @@ public class PathFinding : MonoBehaviour
             }
             objectsInRange.AddRange(listOfCells);
         }
-        Debug.Log(objectsInRange.Count);
         return objectsInRange;
     }
 
