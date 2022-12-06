@@ -43,6 +43,7 @@ public class TankMovement : MonoBehaviour
 
     public void setPath(List<GameObject> objects)
     {
+        Debug.Log("path set");
         path = objects;
     }
 
@@ -59,20 +60,15 @@ public class TankMovement : MonoBehaviour
         //-----------------------------------------------------------------------------------
         if (start_selected == true && path.Count > 0)
         {
-            click_count++;
-            if(click_count == 1)
-            {
-                PathFinding.ClearDistance(obj_in_range);
-                obj_in_range.Clear();
-                end = path[path.Count - 1];
-                end.GetComponent<CustomTag>().taken = true;
-                // end.GetComponent<CustomTag>().taken_by_player = true;
-                // Str_container.taken.Add(end);
-                moving = true;
-                path_selected = true;
-                start_rotating = true;
-            }
-
+            PathFinding.ClearDistance(obj_in_range);
+            obj_in_range.Clear();
+            end = path[path.Count - 1];
+            end.GetComponent<CustomTag>().taken = true;
+            // end.GetComponent<CustomTag>().taken_by_player = true;
+            // Str_container.taken.Add(end);
+            moving = true;
+            path_selected = true;
+            start_rotating = true;
         }
         //-----------------------------------------------------------------------------------
         if (start_rotating == true)
@@ -100,7 +96,6 @@ public class TankMovement : MonoBehaviour
             if(obj.velocity.magnitude < maxvelocity)
             {
                 obj.AddForce(direction * speed);
-                Debug.Log(direction);
             }
             else if(current_distance > distance)
             {
@@ -122,6 +117,7 @@ public class TankMovement : MonoBehaviour
         if(path_selected == true && moving == false)
         {
             var script = obj.GetComponent<TankMovement>();
+            start_selected = false;
             script.enabled = false;
         }
     }

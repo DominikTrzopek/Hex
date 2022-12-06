@@ -17,4 +17,5 @@ public class SelectCell : MonoBehaviour
     {
         this.transform.GetChild(1).GetComponent<SpriteRenderer>().color = activeCellColor;
     }
+
 }

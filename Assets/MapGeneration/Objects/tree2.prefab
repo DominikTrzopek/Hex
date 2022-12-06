@@ -190,6 +190,7 @@ MonoBehaviour:
   taken: 0
   range: 1000
   coordinates: {x: 0, y: 0}
+  active: 0
 --- !u!64 &8895524235882708053
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa46ea4999ae37145a622002c257c548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeCellColor: {r: 0, g: 1, b: 1, a: 1}
+  activeCellColor: {r: 0, g: 1, b: 1, a: 0.5019608}
   selectedCellColor: {r: 0, g: 0.26000893, b: 0.764151, a: 1}
 --- !u!1 &7424523278153412821
 GameObject:

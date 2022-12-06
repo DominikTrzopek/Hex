@@ -26,6 +26,8 @@ public class BaseActions : MonoBehaviour
 
     public void InstantiateUnit()
     {
+        SelectPlayerObj.command = CommandEnum.INSTANTIANE_UNIT;
+
         Vector2Int coordinates = obj.GetComponent<CustomTag>().coordinates;
         if (coordinates.y % 2 != 0)
         {
@@ -63,7 +65,6 @@ public class BaseActions : MonoBehaviour
         {
             cell.transform.GetChild(1).gameObject.SetActive(false);
             cell.GetComponent<CustomTag>().active = false;
-            obj = null;
             try
             {
                 Object.Destroy(cell.transform.GetChild(2).gameObject);
@@ -75,7 +76,6 @@ public class BaseActions : MonoBehaviour
             
         }
         cells.Clear();
-        SelectPlayerObj.command = CommandEnum.NONE;
     }
 
 }

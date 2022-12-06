@@ -23,6 +23,14 @@ public class UnitActions : MonoBehaviour
 
     public void MoveUnit()
     {
+
+        if(obj.GetComponent<TankMovement>().moving == true)
+        {
+            Debug.Log("Unit is moveing");
+            return;
+        }
+        SelectPlayerObj.command = CommandEnum.MOVE;
+
         Vector2Int position = obj.GetComponent<NetworkId>().position;
         GameObject takenHex = HexGrid.hexArray[position.x, position.y];
         objInRange = PathFinding.SetRange(5, takenHex);
@@ -36,7 +44,12 @@ public class UnitActions : MonoBehaviour
 
     public void CancelAction()
     {
-        
-        SelectPlayerObj.command = CommandEnum.NONE;
+        PathFinding.ClearDistance(objInRange);
+
+        foreach(GameObject cell in objInRange)
+        {
+            cell.transform.GetChild(1).gameObject.SetActive(false);
+            cell.GetComponent<CustomTag>().active = false;
+        }
     }
 }

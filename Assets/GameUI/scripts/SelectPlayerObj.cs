@@ -11,6 +11,7 @@ public class SelectPlayerObj : MonoBehaviour
     public GameObject unitUiPanel;
     private Vector3 basePosition;
     public static CommandEnum command = CommandEnum.NONE;
+    private GameObject obj;
 
     LayerMask layerPlayer, layerHex;
     private void Start()
@@ -24,14 +25,9 @@ public class SelectPlayerObj : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhitStart, Mathf.Infinity, layerPlayer))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhitStart, Mathf.Infinity, layerPlayer) && command == CommandEnum.NONE)
             {
-                GameObject obj = rayhitStart.collider.transform.parent.gameObject;
-                
-                if(command == CommandEnum.INSTANTIANE_UNIT)
-                    BaseActions.instance.CancelAction();
-                else if(command == CommandEnum.MOVE)
-                    UnitActions.instance.CancelAction();
+                obj = rayhitStart.collider.transform.parent.gameObject;
 
                 if (obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
                 {
@@ -41,15 +37,15 @@ public class SelectPlayerObj : MonoBehaviour
 
                         BaseActions.instance.obj = obj;
                         BaseActions.instance.uiImage = uiImage;
+                        unitUiPanel.SetActive(false);
                         baseUiPanel.SetActive(true);
                         basePosition = obj.transform.position;
-                        command = CommandEnum.INSTANTIANE_UNIT;
                     }
                     else if(obj.GetComponent<CustomTag>().HasTag(CellTag.player))
                     {
                         UnitActions.instance.obj = obj;
+                        baseUiPanel.SetActive(false);
                         unitUiPanel.SetActive(true);
-                        command = CommandEnum.MOVE;
                     }
                 }
             }
@@ -88,6 +84,9 @@ public class SelectPlayerObj : MonoBehaviour
                 obj.GetComponent<CustomTag>().active = false;
                 obj.GetComponent<CustomTag>().taken = true;
                 Object.Destroy(obj.transform.GetChild(2).gameObject);
+
+                BaseActions.instance.CancelAction();
+                command = CommandEnum.NONE;
             }
         }
     }
@@ -96,17 +95,28 @@ public class SelectPlayerObj : MonoBehaviour
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhitEnd, Mathf.Infinity, layerHex))
         {
-            GameObject obj = rayhitEnd.collider.transform.gameObject;
-            if (obj.GetComponent<CustomTag>().active == true && obj.GetComponent<CustomTag>().taken == false)
+            GameObject end = rayhitEnd.collider.transform.gameObject;
+            if (end.GetComponent<CustomTag>().active == true && end.GetComponent<CustomTag>().taken == false)
             {
-                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.takenHex, obj);
-                foreach(GameObject cell in path)
-                {
-                    cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.blue;
-                }
-                UnitActions.instance.obj.GetComponent<TankMovement>().enabled = true;
-                UnitActions.instance.obj.GetComponent<TankMovement>().setPath(path);
-                UnitActions.instance.obj.GetComponent<TankMovement>().start_selected = true;
+                
+                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.takenHex, end);
+                Debug.Log(path.Count);
+                // foreach(GameObject cell in path)
+                // {
+                //     cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.blue;
+                // }
+                obj.GetComponent<TankMovement>().start_selected = true;
+                obj.GetComponent<TankMovement>().setPath(path);
+                obj.GetComponent<TankMovement>().enabled = true;
+                
+                
+                Vector2Int newPosition = path[path.Count - 1].GetComponent<CustomTag>().coordinates;
+                path[path.Count - 1].GetComponent<CustomTag>().taken = true;
+                path[0].GetComponent<CustomTag>().taken = false;
+                obj.GetComponent<NetworkId>().position = newPosition;
+
+                UnitActions.instance.CancelAction();
+                command = CommandEnum.NONE;
 
             }
         }

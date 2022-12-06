@@ -6,9 +6,13 @@ public class HighlightCell : MonoBehaviour
 {
     GameObject cellOutline;
 
-    void OnMouseOver()
+    void OnMouseEnter()
     {
-        Vector2Int position = this.transform.parent.GetComponent<NetworkId>().position;
+        Vector2Int position;
+        if(this.transform.GetComponent<NetworkId>() != null)
+            position = this.transform.GetComponent<NetworkId>().position;
+        else
+            position = this.transform.parent.GetComponent<NetworkId>().position;
         cellOutline = HexGrid.hexArray[position.x, position.y].transform.GetChild(1).gameObject;
         cellOutline.SetActive(true);
         cellOutline.GetComponent<SpriteRenderer>().color = Color.blue;
