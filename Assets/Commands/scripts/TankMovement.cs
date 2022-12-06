@@ -4,125 +4,87 @@ using UnityEngine;
 
 public class TankMovement : MonoBehaviour
 {
-
-    //****************************************************************************************************************
-
-
-    static public void Move(GameObject player)
-    {
-        //-----------------------------------------------------------------------------------
-        Rigidbody obj = player.GetComponent<Rigidbody>();
-        GameObject global_pivot = player.transform.GetChild(0).gameObject;
-        Vector3 direction = (global_pivot.transform.position - player.transform.position).normalized;
-        //-----------------------------------------------------------------------------------
-        obj.AddForce(direction);   
-    }
-
-    //****************************************************************************************************************
-
-    public int maxrange = 5;
-    public float maxvelocity = 1;
-    List<GameObject> list_dup = new List<GameObject>();
-    public List<GameObject> path = new List<GameObject>();
-    List<GameObject> obj_in_range = new List<GameObject>();
-    public bool path_selected = false;
-    public bool start_selected = false;
-    public bool moving = false;
-    LayerMask layer_start, layer_end;
-    GameObject start, end;
-    bool start_moving = false;
-    bool start_rotating = false;
-    public int click_count;
+    public float maxVelocity = 1;
     public float speed;
-    
-    private void Start()
-    {
-        layer_start = LayerMask.GetMask("Player");
-        layer_end = LayerMask.GetMask("Default");      
-    }
+    public bool pathSelected = false;
+    public bool startSelected = false;
+    public bool moving = false;
+    List<GameObject> path = new List<GameObject>();
+    GameObject end;
+    bool startMoving = false;
+    bool startRotating = false;
 
-    public void setPath(List<GameObject> objects)
+    public void setPath(List<GameObject> selectedPath)
     {
-        Debug.Log("path set");
-        path = objects;
+        path = selectedPath;
     }
-
-    //****************************************************************************************************************
 
     private void Update()
     {
-        //-----------------------------------------------------------------------------------
         Rigidbody obj = gameObject.GetComponent<Rigidbody>();
-        GameObject global_pivot = gameObject.transform.GetChild(0).gameObject;
-        Vector3 direction = (global_pivot.transform.position - gameObject.transform.position).normalized;
-        //-----------------------------------------------------------------------------------
+        GameObject pivot = gameObject.transform.GetChild(0).gameObject;
+        Vector3 direction = (pivot.transform.position - gameObject.transform.position).normalized;
 
-        //-----------------------------------------------------------------------------------
-        if (start_selected == true && path.Count > 0)
+        if (startSelected == true && path.Count > 0)
         {
-            PathFinding.ClearDistance(obj_in_range);
-            obj_in_range.Clear();
             end = path[path.Count - 1];
             end.GetComponent<CustomTag>().taken = true;
-            // end.GetComponent<CustomTag>().taken_by_player = true;
-            // Str_container.taken.Add(end);
             moving = true;
-            path_selected = true;
-            start_rotating = true;
+            pathSelected = true;
+            startRotating = true;
         }
-        //-----------------------------------------------------------------------------------
-        if (start_rotating == true)
+
+        if (startRotating == true)
         {
-            Vector3 current_position = path[0].transform.position - path[1].transform.position;
-            current_position = new Vector3(current_position.x, 0, current_position.z);
-            float rotation = HexMetrics.GetRotation(current_position);
-            Quaternion to = Quaternion.Euler (0, rotation, 0);
-            if(Vector3.Distance(transform.eulerAngles, to.eulerAngles) > 0.01f)
+            Vector3 currentPosition = path[0].transform.position - path[1].transform.position;
+            currentPosition.y = 0f;
+            float rotation = HexMetrics.GetRotation(currentPosition);
+            Quaternion to = Quaternion.Euler(0, rotation, 0);
+            if (Vector3.Distance(transform.eulerAngles, to.eulerAngles) > 0.01f)
             {
                 obj.velocity = new Vector3(0, 0, 0);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, to, 1);
             }
             else
             {
-                start_rotating = false;
-                start_moving = true;      
+                startRotating = false;
+                startMoving = true;
             }
         }
-        //-----------------------------------------------------------------------------------
-        if (start_moving == true)
+
+        if (startMoving == true)
         {
             float distance = HexMetrics.innerRadious * 4;
             float current_distance = CalculateDistance(gameObject, path[0]);
-            if(obj.velocity.magnitude < maxvelocity)
+            if (obj.velocity.magnitude < maxVelocity)
             {
                 obj.AddForce(direction * speed);
             }
-            else if(current_distance > distance)
+            if (current_distance > distance)
             {
+                obj.transform.position = path[1].transform.position;
                 path.Remove(path[0]);
-                if(path.Count > 1)
+                if (path.Count > 1)
                 {
-                    start_rotating = true;
+                    startRotating = true;
                 }
                 else
                 {
                     obj.velocity = new Vector3(0, 0, 0);
                 }
-                start_moving = false;   
-            } 
+                startMoving = false;
+            }
         }
-        if(end != null)
+        if (end != null)
             if (path.Count <= 1)
                 moving = false;
-        if(path_selected == true && moving == false)
+        if (pathSelected == true && moving == false)
         {
             var script = obj.GetComponent<TankMovement>();
-            start_selected = false;
+            startSelected = false;
             script.enabled = false;
         }
     }
-
-    //****************************************************************************************************************
 
     static float CalculateDistance(GameObject a, GameObject b)
     {
@@ -130,7 +92,4 @@ public class TankMovement : MonoBehaviour
         float y = a.transform.position.z - b.transform.position.z;
         return (Mathf.Sqrt(x * x + y * y));
     }
-
-    //****************************************************************************************************************
-
 }

@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BaseActions : MonoBehaviour
+public class BaseActions : MonoBehaviour, IActionsHandler
 {
     public static BaseActions instance { get; private set; }
-    public GameObject obj;
+    GameObject obj;
     public GameObject uiImage;
 
     private List<GameObject> cells = new List<GameObject>();
     private List<GameObject> icons = new List<GameObject>();
+
+    public void setObj(GameObject toSet)
+    {
+        obj = toSet;
+    }
+
+    public Vector3 getObjPosition()
+    {
+        return obj.transform.position;
+    }
 
     private void Awake()
     {
@@ -52,8 +62,8 @@ public class BaseActions : MonoBehaviour
     }
 
     private void AddToActiveList(GameObject obj)
-    {   
-        if(obj.GetComponent<CustomTag>().taken == false)
+    {
+        if (obj.GetComponent<CustomTag>().taken == false)
         {
             cells.Add(obj);
         }
@@ -69,11 +79,8 @@ public class BaseActions : MonoBehaviour
             {
                 Object.Destroy(cell.transform.GetChild(2).gameObject);
             }
-            catch
-            {
-                //Debug.Log("destroyed");
-            };
-            
+            catch { };
+
         }
         cells.Clear();
     }

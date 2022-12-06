@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class SelectPlayerObj : MonoBehaviour
 {
-    public GameObject uiImage;
+    public List<GameObject> uiPanels;
     public GameObject unit;
-    public GameObject mainUiPanel;
-    public GameObject baseUiPanel;
-    public GameObject unitUiPanel;
-    private Vector3 basePosition;
     public static CommandEnum command = CommandEnum.NONE;
     private GameObject obj;
 
@@ -25,53 +21,90 @@ public class SelectPlayerObj : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhitStart, Mathf.Infinity, layerPlayer) && command == CommandEnum.NONE)
+            Collider rayhit = getRaycast(layerPlayer);
+            if (rayhit != null && command == CommandEnum.NONE)
             {
-                obj = rayhitStart.collider.transform.parent.gameObject;
+                obj = rayhit.transform.parent.gameObject;
 
                 if (obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
                 {
-                    Debug.Log(obj.name);
-                    if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
-                    {
-
-                        BaseActions.instance.obj = obj;
-                        BaseActions.instance.uiImage = uiImage;
-                        unitUiPanel.SetActive(false);
-                        baseUiPanel.SetActive(true);
-                        basePosition = obj.transform.position;
-                    }
-                    else if(obj.GetComponent<CustomTag>().HasTag(CellTag.player))
-                    {
-                        UnitActions.instance.obj = obj;
-                        baseUiPanel.SetActive(false);
-                        unitUiPanel.SetActive(true);
-                    }
+                    checkObjActions();
                 }
             }
-
-            if(command == CommandEnum.INSTANTIANE_UNIT)
-                HandleInstantiateUnitCommand();
-            else if(command == CommandEnum.MOVE)
-                HandleMoveUnitCommand();
-            
-
+            enableActionHandler();
         }
     }
 
+    private void enableActionHandler()
+    {
+        if(command == CommandEnum.INSTANTIANE_UNIT)
+            HandleInstantiateUnitCommand();
+        else if(command == CommandEnum.MOVE)
+            HandleMoveUnitCommand();
+    }
+
+    private void checkObjActions()
+    {
+        if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
+            prepareUi(BaseActions.instance, "BaseActions");
+        else if(obj.GetComponent<CustomTag>().HasTag(CellTag.player))
+            prepareUi(UnitActions.instance, "UnitActions");
+    }
+
+    private void disableUiPlanels()
+    {
+        foreach(GameObject panel in uiPanels)
+        {
+            panel.SetActive(false);
+        }
+    }
+
+    private Collider getRaycast(LayerMask layer)
+    {
+        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhit, Mathf.Infinity, layer))
+            return rayhit.collider;
+        return null;
+    }
+
+    private void prepareUi(IActionsHandler instance, string panelName)
+    {
+        instance.setObj(obj);
+        disableUiPlanels();
+        uiPanels.Find(item => item.name == panelName).SetActive(true);
+
+    }
 
     private void HandleInstantiateUnitCommand()
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhitEnd, Mathf.Infinity, layerHex))
+        Collider rayhit = getRaycast(layerHex);
+        if (rayhit != null)
         {
-            GameObject obj = rayhitEnd.collider.transform.gameObject;
+            GameObject obj = rayhit.transform.gameObject;
             if (obj.GetComponent<CustomTag>().active == true && obj.GetComponent<CustomTag>().taken == false)
             {
-                float rotation = HexMetrics.GetRotation(basePosition - obj.transform.position);
+                float rotation = HexMetrics.GetRotation(BaseActions.instance.getObjPosition() - obj.transform.position);
+
+
+                //*******************************************************************************************************
+                CommandBuilder builder = new CommandBuilder
+                (
+                    System.Guid.NewGuid().ToString().Substring(0,18),
+                    CommandEnum.INSTANTIANE_UNIT,
+                    new List<string>{
+                        obj.transform.position.ToString(),
+                        rotation.ToString()
+                    }
+                );
+
+                Debug.Log(builder.saveToString());
+
+                //*******************************************************************************************************
+
                 GameObject newObj = Instantiate(unit, obj.transform.position, Quaternion.Euler(new Vector3(0, rotation, 0)));
-                //newObj.GetComponent<NetworkId>().setIds()
                 newObj.GetComponent<NetworkId>().position = obj.GetComponent<CustomTag>().coordinates;
+                //TODO: poprawić
                 newObj.GetComponent<NetworkId>().setIds(UDPServerConfig.getId(), UDPServerConfig.getId());
+                //
                 foreach (Transform child in newObj.transform)
                 {
                     try
@@ -93,22 +126,33 @@ public class SelectPlayerObj : MonoBehaviour
 
     private void HandleMoveUnitCommand()
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhitEnd, Mathf.Infinity, layerHex))
+        Collider rayhit = getRaycast(layerHex);
+        if (rayhit != null)
         {
-            GameObject end = rayhitEnd.collider.transform.gameObject;
+            GameObject end = rayhit.transform.gameObject;
             if (end.GetComponent<CustomTag>().active == true && end.GetComponent<CustomTag>().taken == false)
             {
-                
-                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.takenHex, end);
-                Debug.Log(path.Count);
-                // foreach(GameObject cell in path)
-                // {
-                //     cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.blue;
-                // }
-                obj.GetComponent<TankMovement>().start_selected = true;
+
+                //*******************************************************************************************************
+                CommandBuilder builder = new CommandBuilder
+                (
+                    obj.GetComponent<NetworkId>().objectId,
+                    CommandEnum.MOVE,
+                    new List<string>{
+                        end.transform.position.ToString(),
+                    }
+                );
+
+                Debug.Log(builder.saveToString());
+
+                //*******************************************************************************************************
+
+
+               
+                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.getTakenHex(), end);
+                obj.GetComponent<TankMovement>().startSelected = true;
                 obj.GetComponent<TankMovement>().setPath(path);
                 obj.GetComponent<TankMovement>().enabled = true;
-                
                 
                 Vector2Int newPosition = path[path.Count - 1].GetComponent<CustomTag>().coordinates;
                 path[path.Count - 1].GetComponent<CustomTag>().taken = true;

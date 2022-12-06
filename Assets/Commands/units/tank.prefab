@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1239069330173308370}
   - component: {fileID: -6720036101626792847}
   - component: {fileID: 5238357264860553751}
+  - component: {fileID: 4778458462698033246}
   m_Layer: 7
   m_Name: tank
   m_TagString: Untagged
@@ -122,8 +123,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526ce68c9ce70b04b9edcafed04ed1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onEnterCellColor: {r: 0, g: 0.25882354, b: 0.76470596, a: 1}
-  onExitCellColor: {r: 0, g: 1, b: 1, a: 0.5019608}
+--- !u!114 &4778458462698033246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640297529574435754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2dcfbdbc7ef9942bc5fdd466595381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 3
+  attackPoints: 2
+  moveRange: 5
+  attackRange: 10
 --- !u!1 &2376492606435592296
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,8 +432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526ce68c9ce70b04b9edcafed04ed1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onEnterCellColor: {r: 0, g: 0, b: 0, a: 0}
-  onExitCellColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &9004333252646950635
 GameObject:
   m_ObjectHideFlags: 0

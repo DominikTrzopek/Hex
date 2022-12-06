@@ -7,7 +7,7 @@ public class ConnectMsg : ITCPMsg
     public string password;
     public ResponseType code;
 
-    public ConnectMsg(){}
+    public ConnectMsg() { }
 
     public ConnectMsg(PlayerInfo info)
     {
@@ -25,7 +25,8 @@ public class ConnectMsg : ITCPMsg
         return JsonUtility.ToJson(this);
     }
 
-    public static ConnectMsg fromString(string json){
+    public static ConnectMsg fromString(string json)
+    {
         return JsonUtility.FromJson<ConnectMsg>(json);
     }
 

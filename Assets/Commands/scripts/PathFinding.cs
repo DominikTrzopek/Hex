@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class PathFinding : MonoBehaviour
 {
-
-    //****************************************************************************************************************
-
     static public List<GameObject> SetRange(int range, GameObject start)
     {
         List<GameObject> objectsInRange = new List<GameObject>();
-        List<GameObject> listOfCells = new List<GameObject>{start};
+        List<GameObject> listOfCells = new List<GameObject> { start };
         LayerMask layer = LayerMask.GetMask("Default");
         int currentRange = 0;
 
@@ -21,7 +18,7 @@ public class PathFinding : MonoBehaviour
         {
             currentRange++;
             listOfCells = SetNext(listOfCells, currentRange, layer);
-            if(listOfCells.Count == 0)
+            if (listOfCells.Count == 0)
             {
                 return objectsInRange;
             }
@@ -29,8 +26,6 @@ public class PathFinding : MonoBehaviour
         }
         return objectsInRange;
     }
-
-    //****************************************************************************************************************
 
     static List<GameObject> SetNext(List<GameObject> listOfCells, int currentRange, LayerMask layer)
     {
@@ -61,7 +56,6 @@ public class PathFinding : MonoBehaviour
 
     //****************************************************************************************************************
 
-
     static GameObject FindNext(GameObject current_obj, int currentRange)
     {
         LayerMask layer = LayerMask.GetMask("Default");
@@ -76,8 +70,6 @@ public class PathFinding : MonoBehaviour
         }
         return current_obj;
     }
-
-    //****************************************************************************************************************
 
     public static List<GameObject> FindPath(GameObject start, GameObject end)
     {
@@ -111,8 +103,6 @@ public class PathFinding : MonoBehaviour
             {
                 obj.GetComponent<CustomTag>().range = 1000;
                 obj.GetComponent<CustomTag>().pathTag = PathTag.none;
-                // if (obj.GetComponent<CustomTag>().in_base_range == false)
-                //     obj.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
         else
@@ -122,12 +112,7 @@ public class PathFinding : MonoBehaviour
             {
                 obj.GetComponent<CustomTag>().range = 1000;
                 obj.GetComponent<CustomTag>().pathTag = PathTag.none;
-                // obj.transform.GetChild(0).gameObject.SetActive(false);
-                // if (!obj.GetComponent<CustomTag>().HasTag(CellTag.structure))
-                //     obj.GetComponent<CustomTag>().in_base_range = false;
             }
         }
     }
-
-    //****************************************************************************************************************
 }
