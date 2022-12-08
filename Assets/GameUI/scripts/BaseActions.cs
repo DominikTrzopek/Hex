@@ -8,7 +8,6 @@ public class BaseActions : ActionsAbstract, IPlayerObjectHandler
     public static BaseActions instance { get; private set; }
     GameObject obj;
     public GameObject uiImage;
-    public GameObject structure;
 
     public void SetObj(GameObject toSet)
     {

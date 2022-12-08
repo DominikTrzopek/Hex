@@ -36,7 +36,13 @@ public class InitStructureCommand : ICommand
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
         CreateRoad.Create(path, road);
         endPath.GetComponent<CustomTag>().Rename(0, CellTag.obstruction);
-
+        if (endPath.GetComponent<CustomTag>().HasTag(CellTag.tree))
+        {
+            Object.Destroy(endPath.transform.GetChild(2).gameObject);
+            endPath.GetComponent<CustomTag>().Rename(1, CellTag.structure);
+        }
+        else
+            endPath.GetComponent<CustomTag>().Add(CellTag.structure);
         creatorObj.GetComponent<StructureStats>().addConnected(newObj);
 
     }

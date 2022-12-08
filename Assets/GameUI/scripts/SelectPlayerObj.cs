@@ -5,7 +5,6 @@ using UnityEngine;
 public class SelectPlayerObj : MonoBehaviour
 {
     public List<GameObject> uiPanels;
-    public GameObject unit;
     public static CommandEnum command = CommandEnum.NONE;
     private GameObject obj;
 
@@ -20,21 +19,21 @@ public class SelectPlayerObj : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || command == CommandEnum.MAKE_BANK)
         {
-            Collider rayhit = getRaycast(layerPlayer);
+            Collider rayhit = GetRaycast(layerPlayer);
             if (rayhit != null && command == CommandEnum.NONE)
             {
                 obj = rayhit.transform.parent.gameObject;
 
                 if (obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
                 {
-                    checkObjActions();
+                    CheckObjActions();
                 }
             }
-            enableActionHandler();
+            EnableActionHandler();
         }
     }
 
-    private void enableActionHandler()
+    private void EnableActionHandler()
     {
         if (command == CommandEnum.INSTANTIANE_UNIT)
             HandleInstantiateUnitCommand();
@@ -46,15 +45,17 @@ public class SelectPlayerObj : MonoBehaviour
             HandleInstantiateStructureCommand();
     }
 
-    private void checkObjActions()
+    private void CheckObjActions()
     {
         if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
-            prepareUi(BaseActions.instance, "BaseActions");
+            PrepareUi(BaseActions.instance, "BaseActions");
         else if (obj.GetComponent<CustomTag>().HasTag(CellTag.player))
-            prepareUi(UnitActions.instance, "UnitActions");
+            PrepareUi(UnitActions.instance, "UnitActions");
+        else if (obj.GetComponent<CustomTag>().HasTag(CellTag.building))
+            PrepareUi(StructureActions.instance, "StructureActions");
     }
 
-    private void disableUiPlanels()
+    private void DisableUiPlanels()
     {
         foreach (GameObject panel in uiPanels)
         {
@@ -62,17 +63,17 @@ public class SelectPlayerObj : MonoBehaviour
         }
     }
 
-    private Collider getRaycast(LayerMask layer)
+    private Collider GetRaycast(LayerMask layer)
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhit, Mathf.Infinity, layer))
             return rayhit.collider;
         return null;
     }
 
-    private void prepareUi(IPlayerObjectHandler instance, string panelName)
+    private void PrepareUi(IPlayerObjectHandler instance, string panelName)
     {
         instance.SetObj(obj);
-        disableUiPlanels();
+        DisableUiPlanels();
         uiPanels.Find(item => item.name == panelName).SetActive(true);
 
     }
@@ -81,7 +82,7 @@ public class SelectPlayerObj : MonoBehaviour
 
     private void HandleInstantiateUnitCommand()
     {
-        Collider rayhit = getRaycast(layerHex);
+        Collider rayhit = GetRaycast(layerHex);
         if (rayhit != null)
         {
             GameObject obj = rayhit.transform.gameObject;
@@ -130,7 +131,7 @@ public class SelectPlayerObj : MonoBehaviour
 
     private void HandleInstantiateStructureCommand()
     {
-        Collider rayhit = getRaycast(layerHex);
+        Collider rayhit = GetRaycast(layerHex);
         if (rayhit != null)
         {
             GameObject end = rayhit.transform.gameObject;
@@ -155,7 +156,10 @@ public class SelectPlayerObj : MonoBehaviour
                 Debug.Log(builder.saveToString());
                 //wysłanie danych na serwer
                 //*************************************
-                BaseActions.instance.CancelAction();
+                if(obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
+                    BaseActions.instance.CancelAction();
+                else
+                    StructureActions.instance.CancelAction();
             }
         }
     }
@@ -164,7 +168,7 @@ public class SelectPlayerObj : MonoBehaviour
     
     private void HandleMoveUnitCommand()
     {
-        Collider rayhit = getRaycast(layerHex);
+        Collider rayhit = GetRaycast(layerHex);
         if (rayhit != null)
         {
             GameObject end = rayhit.transform.gameObject;

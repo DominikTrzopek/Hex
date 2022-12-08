@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139601b644f5da5428adc24718a2efee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags: 0400000007000000
+  tags: 0400000008000000
   pathTag: 0
   taken: 0
   range: 1000

@@ -26,6 +26,11 @@ public class CustomTag : MonoBehaviour
         tags[index] = tagName;
     }
 
+    public void Add(CellTag tagName)
+    {
+        tags.Add(tagName);
+    }
+
     public CellTag GetAtIndex(int index)
     {
         return tags[index];
@@ -45,6 +50,7 @@ public enum CellTag
     structure,
     obstruction,
     mainBase,
+    building,
     tree,
     ore,
     player

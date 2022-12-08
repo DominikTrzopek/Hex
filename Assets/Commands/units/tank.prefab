@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139601b644f5da5428adc24718a2efee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags: 08000000
+  tags: 09000000
   pathTag: 0
   taken: 0
   range: 1000
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55adb0decd7ff5b4b88d09b7a755dd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocity: 2
+  maxVelocity: 1.5
   speed: 5
   pathSelected: 0
   startSelected: 0
