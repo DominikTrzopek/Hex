@@ -71,9 +71,8 @@ public class PathFinding : MonoBehaviour
         return current_obj;
     }
 
-    public static List<GameObject> FindPath(GameObject start, GameObject end)
+    public static List<GameObject> FindPath(GameObject end)
     {
-        //SetRange(range, start);
         List<GameObject> list = new List<GameObject>();
         GameObject pom;
         int obj_range = end.GetComponent<CustomTag>().range;
@@ -101,8 +100,11 @@ public class PathFinding : MonoBehaviour
         {
             foreach (GameObject obj in objectsInRange)
             {
-                obj.GetComponent<CustomTag>().range = 1000;
-                obj.GetComponent<CustomTag>().pathTag = PathTag.none;
+                if(obj != null)
+                {
+                    obj.GetComponent<CustomTag>().range = 1000;
+                    obj.GetComponent<CustomTag>().pathTag = PathTag.none;
+                }
             }
         }
         else

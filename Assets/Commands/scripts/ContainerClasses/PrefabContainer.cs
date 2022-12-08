@@ -6,6 +6,8 @@ public class PrefabContainer : MonoBehaviour
 {
     public static PrefabContainer container;
     public GameObject playerUnitPrefab;
+    public GameObject structurePrefab;
+    public GameObject roadPrefab;
 
     private void Awake()
     {

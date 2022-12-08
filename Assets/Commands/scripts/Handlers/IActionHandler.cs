@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IActionsHandler
+public interface IActionHandler
 {
-    public void setObj(GameObject toSet);
+    public void MakeAction();
     public void CancelAction();
 }

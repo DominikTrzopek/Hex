@@ -29,6 +29,12 @@ public class CommandExecutionHandler : MonoBehaviour
                     case CommandEnum.MOVE:
                         invoker.ExecuteCommand(new MoveCommand(builder));
                         break;
+                    case CommandEnum.MAKE_BANK:
+                        invoker.ExecuteCommand(new MakeBankCommand(builder));
+                        break;
+                    case CommandEnum.INSTANTIANE_STRUCTURE:
+                        invoker.ExecuteCommand(new InitStructureCommand(builder));
+                        break;
                 }
             }
             catch (ArgumentException err)

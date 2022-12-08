@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 1104465351034913180}
   - component: {fileID: 1371981383537257347}
   - component: {fileID: -3739134386625472499}
+  - component: {fileID: 4464421561836754681}
   m_Layer: 0
   m_Name: base
   m_TagString: hex
@@ -235,6 +236,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeCellColor: {r: 0, g: 0.25882354, b: 0.76470596, a: 1}
   selectedCellColor: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &4464421561836754681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3579664208746967279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2013493823358374097fb96be58068e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 10
+  takenRange: 5
+  level: 2
 --- !u!1 &9063656371728345822
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +401,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 898a54a0cb733c2498f6fd464bd1a259, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 4cb2c054c82d53e40ab071842d6075a5, type: 2}
+      objectReference: {fileID: -1705368790045107700, guid: 898a54a0cb733c2498f6fd464bd1a259, type: 3}
     - target: {fileID: 919132149155446097, guid: 898a54a0cb733c2498f6fd464bd1a259, type: 3}
       propertyPath: m_Name
       value: base
@@ -426,8 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526ce68c9ce70b04b9edcafed04ed1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onEnterCellColor: {r: 0, g: 0.25882354, b: 0.76470596, a: 0.5019608}
-  onExitCellColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!4 &7734886735935113002 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 898a54a0cb733c2498f6fd464bd1a259, type: 3}

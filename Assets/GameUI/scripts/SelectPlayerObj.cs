@@ -14,12 +14,11 @@ public class SelectPlayerObj : MonoBehaviour
     {
         layerPlayer = LayerMask.GetMask("Player");
         layerHex = LayerMask.GetMask("Default");
-
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || command == CommandEnum.MAKE_BANK)
         {
             Collider rayhit = getRaycast(layerPlayer);
             if (rayhit != null && command == CommandEnum.NONE)
@@ -41,6 +40,10 @@ public class SelectPlayerObj : MonoBehaviour
             HandleInstantiateUnitCommand();
         else if (command == CommandEnum.MOVE)
             HandleMoveUnitCommand();
+        else if (command == CommandEnum.MAKE_BANK)
+            HandleMakeBankCommand();
+        else if (command == CommandEnum.INSTANTIANE_STRUCTURE)
+            HandleInstantiateStructureCommand();
     }
 
     private void checkObjActions()
@@ -66,13 +69,15 @@ public class SelectPlayerObj : MonoBehaviour
         return null;
     }
 
-    private void prepareUi(IActionsHandler instance, string panelName)
+    private void prepareUi(IPlayerObjectHandler instance, string panelName)
     {
-        instance.setObj(obj);
+        instance.SetObj(obj);
         disableUiPlanels();
         uiPanels.Find(item => item.name == panelName).SetActive(true);
 
     }
+
+    //*******************************************************************************************************************
 
     private void HandleInstantiateUnitCommand()
     {
@@ -82,7 +87,7 @@ public class SelectPlayerObj : MonoBehaviour
             GameObject obj = rayhit.transform.gameObject;
             if (obj.GetComponent<CustomTag>().active == true && obj.GetComponent<CustomTag>().taken == false)
             {
-                float rotation = HexMetrics.GetRotation(BaseActions.instance.getObjPosition() - obj.transform.position);
+                float rotation = HexMetrics.GetRotation(BaseActions.instance.GetObjPosition() - obj.transform.position);
                 Vector2Int position = obj.GetComponent<CustomTag>().coordinates;
 
                 CommandBuilder builder = new CommandBuilder
@@ -103,11 +108,60 @@ public class SelectPlayerObj : MonoBehaviour
 
                 //************************************
                 BaseActions.instance.CancelAction();
-                command = CommandEnum.NONE;
             }
         }
     }
 
+    private void HandleMakeBankCommand()
+    {
+        CommandBuilder builder = new CommandBuilder
+        (
+            obj.GetComponent<NetworkId>().objectId,
+            CommandEnum.MAKE_BANK,
+            null
+        );
+        //************************************
+
+        TCPConnection.instance.messageQueue.Add(builder.saveToString());
+        //wysłanie danych na serwer
+        //*************************************
+        BaseActions.instance.CancelAction();
+    }
+
+    private void HandleInstantiateStructureCommand()
+    {
+        Collider rayhit = getRaycast(layerHex);
+        if (rayhit != null)
+        {
+            GameObject end = rayhit.transform.gameObject;
+            if (end.GetComponent<CustomTag>().active == true && end.GetComponent<CustomTag>().taken == false)
+            {
+                List<GameObject> path = PathFinding.FindPath(end);
+                List<string> cellsInPath = new List<string>();
+                cellsInPath.Add(obj.GetComponent<NetworkId>().objectId);
+                for (int i = 0; i < path.Count; i++)
+                {
+                    cellsInPath.Add(path[i].GetComponent<CustomTag>().coordinates.ToString());
+                }
+                CommandBuilder builder = new CommandBuilder
+                (
+                    System.Guid.NewGuid().ToString().Substring(0, 18),
+                    CommandEnum.INSTANTIANE_STRUCTURE,
+                    cellsInPath
+                );
+                //************************************
+
+                TCPConnection.instance.messageQueue.Add(builder.saveToString());
+                Debug.Log(builder.saveToString());
+                //wysłanie danych na serwer
+                //*************************************
+                BaseActions.instance.CancelAction();
+            }
+        }
+    }
+
+    //****************************************************************************************************
+    
     private void HandleMoveUnitCommand()
     {
         Collider rayhit = getRaycast(layerHex);
@@ -116,7 +170,7 @@ public class SelectPlayerObj : MonoBehaviour
             GameObject end = rayhit.transform.gameObject;
             if (end.GetComponent<CustomTag>().active == true && end.GetComponent<CustomTag>().taken == false)
             {
-                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.getTakenHex(), end);
+                List<GameObject> path = PathFinding.FindPath(end);
                 List<string> cellsInPath = new List<string>();
                 for (int i = 0; i < path.Count; i++)
                 {
@@ -133,15 +187,12 @@ public class SelectPlayerObj : MonoBehaviour
                 TCPConnection.instance.messageQueue.Add(builder.saveToString());
 
                 //wysłanie danych na serwer
-                //*******************************************************************************************************
+                //*************************************
                 UnitActions.instance.CancelAction();
-                command = CommandEnum.NONE;
 
             }
         }
     }
-
-
 
 
 }

@@ -6,6 +6,7 @@ public enum CommandEnum
     INSTANTIANE_STRUCTURE,
     UPGRADE_UNIT,
     UPGRADE_STRUCTURE,
+    MAKE_BANK,
     MOVE,
     ATTACK,
     DEFEND

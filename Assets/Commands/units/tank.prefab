@@ -87,14 +87,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55adb0decd7ff5b4b88d09b7a755dd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxrange: 5
-  maxvelocity: 1
-  path: []
-  path_selected: 0
-  start_selected: 0
-  moving: 0
-  click_count: 0
+  maxVelocity: 2
   speed: 5
+  pathSelected: 0
+  startSelected: 0
+  moving: 0
 --- !u!54 &-6720036101626792847
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -109,7 +106,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &5238357264860553751
 MonoBehaviour:

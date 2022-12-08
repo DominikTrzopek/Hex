@@ -5,7 +5,6 @@ public class HexGrid : MonoBehaviour
 {
     private float multiplayer = 1f;
     private Vector2 offset = new Vector2(1, 1);
-    private float fixedYPosition;
     public GameObject hex;
     public GameObject basePrefab;
     public GameObject[] stone;
@@ -13,6 +12,7 @@ public class HexGrid : MonoBehaviour
     public GameObject ore;
     public GameObject border;
     public static GameObject[,] hexArray;
+    public static float fixedYPosition;
     const float baseLevel = 0.2f;
     const int oreStoneRatio = 3;
 
