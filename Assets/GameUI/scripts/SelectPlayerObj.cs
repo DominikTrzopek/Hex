@@ -37,9 +37,9 @@ public class SelectPlayerObj : MonoBehaviour
 
     private void enableActionHandler()
     {
-        if(command == CommandEnum.INSTANTIANE_UNIT)
+        if (command == CommandEnum.INSTANTIANE_UNIT)
             HandleInstantiateUnitCommand();
-        else if(command == CommandEnum.MOVE)
+        else if (command == CommandEnum.MOVE)
             HandleMoveUnitCommand();
     }
 
@@ -47,13 +47,13 @@ public class SelectPlayerObj : MonoBehaviour
     {
         if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
             prepareUi(BaseActions.instance, "BaseActions");
-        else if(obj.GetComponent<CustomTag>().HasTag(CellTag.player))
+        else if (obj.GetComponent<CustomTag>().HasTag(CellTag.player))
             prepareUi(UnitActions.instance, "UnitActions");
     }
 
     private void disableUiPlanels()
     {
-        foreach(GameObject panel in uiPanels)
+        foreach (GameObject panel in uiPanels)
         {
             panel.SetActive(false);
         }
@@ -61,7 +61,7 @@ public class SelectPlayerObj : MonoBehaviour
 
     private Collider getRaycast(LayerMask layer)
     {
-        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhit, Mathf.Infinity, layer))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhit, Mathf.Infinity, layer))
             return rayhit.collider;
         return null;
     }
@@ -83,41 +83,25 @@ public class SelectPlayerObj : MonoBehaviour
             if (obj.GetComponent<CustomTag>().active == true && obj.GetComponent<CustomTag>().taken == false)
             {
                 float rotation = HexMetrics.GetRotation(BaseActions.instance.getObjPosition() - obj.transform.position);
+                Vector2Int position = obj.GetComponent<CustomTag>().coordinates;
 
-
-                //*******************************************************************************************************
                 CommandBuilder builder = new CommandBuilder
                 (
-                    System.Guid.NewGuid().ToString().Substring(0,18),
+                    System.Guid.NewGuid().ToString().Substring(0, 18),
                     CommandEnum.INSTANTIANE_UNIT,
                     new List<string>{
-                        obj.transform.position.ToString(),
+                        position.x.ToString(),
+                        position.y.ToString(),
                         rotation.ToString()
                     }
                 );
+                //************************************
 
-                Debug.Log(builder.saveToString());
+                TCPConnection.instance.messageQueue.Add(builder.saveToString());
 
-                //*******************************************************************************************************
+                //wysłanie danych na serwer
 
-                GameObject newObj = Instantiate(unit, obj.transform.position, Quaternion.Euler(new Vector3(0, rotation, 0)));
-                newObj.GetComponent<NetworkId>().position = obj.GetComponent<CustomTag>().coordinates;
-                //TODO: poprawić
-                newObj.GetComponent<NetworkId>().setIds(UDPServerConfig.getId(), UDPServerConfig.getId());
-                //
-                foreach (Transform child in newObj.transform)
-                {
-                    try
-                    {
-                        child.GetComponent<Renderer>().material.color = Color.blue;
-                    }
-                    catch { }
-                }
-                obj.transform.GetChild(1).gameObject.SetActive(false);
-                obj.GetComponent<CustomTag>().active = false;
-                obj.GetComponent<CustomTag>().taken = true;
-                Object.Destroy(obj.transform.GetChild(2).gameObject);
-
+                //************************************
                 BaseActions.instance.CancelAction();
                 command = CommandEnum.NONE;
             }
@@ -132,33 +116,24 @@ public class SelectPlayerObj : MonoBehaviour
             GameObject end = rayhit.transform.gameObject;
             if (end.GetComponent<CustomTag>().active == true && end.GetComponent<CustomTag>().taken == false)
             {
-
-                //*******************************************************************************************************
+                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.getTakenHex(), end);
+                List<string> cellsInPath = new List<string>();
+                for (int i = 0; i < path.Count; i++)
+                {
+                    cellsInPath.Add(path[i].GetComponent<CustomTag>().coordinates.ToString());
+                }
                 CommandBuilder builder = new CommandBuilder
                 (
                     obj.GetComponent<NetworkId>().objectId,
                     CommandEnum.MOVE,
-                    new List<string>{
-                        end.transform.position.ToString(),
-                    }
+                    cellsInPath
                 );
+                //************************************
 
-                Debug.Log(builder.saveToString());
+                TCPConnection.instance.messageQueue.Add(builder.saveToString());
 
+                //wysłanie danych na serwer
                 //*******************************************************************************************************
-
-
-               
-                List<GameObject> path = PathFinding.FindPath(UnitActions.instance.getTakenHex(), end);
-                obj.GetComponent<TankMovement>().startSelected = true;
-                obj.GetComponent<TankMovement>().setPath(path);
-                obj.GetComponent<TankMovement>().enabled = true;
-                
-                Vector2Int newPosition = path[path.Count - 1].GetComponent<CustomTag>().coordinates;
-                path[path.Count - 1].GetComponent<CustomTag>().taken = true;
-                path[0].GetComponent<CustomTag>().taken = false;
-                obj.GetComponent<NetworkId>().position = newPosition;
-
                 UnitActions.instance.CancelAction();
                 command = CommandEnum.NONE;
 

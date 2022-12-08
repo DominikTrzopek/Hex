@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Invoker : MonoBehaviour
+public class Invoker
 {
     public static List<ICommand> commands = new List<ICommand>();
     int current = 0;

@@ -23,8 +23,8 @@ public class CommandBuilder
         return JsonUtility.ToJson(this);
     }
 
-    public static ConnectMsg fromString(string json)
+    public static CommandBuilder fromString(string json)
     {
-        return JsonUtility.FromJson<ConnectMsg>(json);
+        return JsonUtility.FromJson<CommandBuilder>(json);
     }
 }
