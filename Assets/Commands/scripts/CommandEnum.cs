@@ -2,11 +2,14 @@ public enum CommandEnum
 {
     NONE,
     ENDTURN,
+    UPGRADE_HP,
+    UPGRADE_MR,
+    UPGRADE_AP,
+    UPGRADE_VR,
+    UPGRADE_AR,
+    MAKE_BANK,
     INSTANTIANE_UNIT,
     INSTANTIANE_STRUCTURE,
-    UPGRADE_UNIT,
-    UPGRADE_STRUCTURE,
-    MAKE_BANK,
     MOVE,
     ATTACK,
     DEFEND

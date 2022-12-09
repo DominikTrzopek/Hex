@@ -2,21 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StructureStats : MonoBehaviour
+public class StructureStats : StatsAbstract
 {
-    [SerializeField]
-    private int healthPoints;
     [SerializeField]
     private int takenRange;
     [SerializeField]
     private int level;
     
     private List<GameObject> connected = new List<GameObject>();
-
-    public int getHP()
-    {
-        return healthPoints;
-    }
 
     public int getLevel()
     {

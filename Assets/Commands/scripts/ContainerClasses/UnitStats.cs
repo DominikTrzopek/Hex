@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitStats : MonoBehaviour
+public class UnitStats : StatsAbstract
 {
-    [SerializeField]
-    private int healthPoints;
     [SerializeField]
     private int attackPoints;
     [SerializeField]
@@ -13,10 +11,6 @@ public class UnitStats : MonoBehaviour
     [SerializeField]
     private int attackRange;
 
-    public int getHP()
-    {
-        return healthPoints;
-    }
     public int getAP()
     {
         return attackPoints;
@@ -29,4 +23,18 @@ public class UnitStats : MonoBehaviour
     {
         return attackRange;
     }
+ 
+    public void upgradeAP()
+    {
+        attackPoints++;
+    }
+    public void upgradeMR()
+    {
+        moveRange++;
+    }
+    public void upgradeAR()
+    {
+        attackRange++;
+    }
+
 }

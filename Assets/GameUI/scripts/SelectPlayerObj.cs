@@ -17,7 +17,7 @@ public class SelectPlayerObj : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) || command == CommandEnum.MAKE_BANK)
+        if (Input.GetMouseButtonDown(0) || ((int)command >= 2  && (int)command <= 7))
         {
             Collider rayhit = GetRaycast(layerPlayer);
             if (rayhit != null && command == CommandEnum.NONE)
@@ -43,6 +43,8 @@ public class SelectPlayerObj : MonoBehaviour
             HandleMakeBankCommand();
         else if (command == CommandEnum.INSTANTIANE_STRUCTURE)
             HandleInstantiateStructureCommand();
+        else if ((int)command >= 2  && (int)command <= 6)
+            HandleUpgradeCommand(command);
     }
 
     private void CheckObjActions()
@@ -196,6 +198,23 @@ public class SelectPlayerObj : MonoBehaviour
 
             }
         }
+    }
+
+    private void HandleUpgradeCommand(CommandEnum upgrade)
+    {
+        CommandBuilder builder = new CommandBuilder
+        (
+            obj.GetComponent<NetworkId>().objectId,
+            upgrade,
+            null
+        );
+        //************************************
+
+        TCPConnection.instance.messageQueue.Add(builder.saveToString());
+        Debug.Log(builder.saveToString());
+        //wysłanie danych na serwer
+        //*************************************
+        BaseActions.instance.CancelAction();
     }
 
 
