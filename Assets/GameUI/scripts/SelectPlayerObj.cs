@@ -17,7 +17,8 @@ public class SelectPlayerObj : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) || ((int)command >= 2  && (int)command <= 7))
+        Debug.Log(Resources.tempIncome);
+        if (Input.GetMouseButtonDown(0) || ((int)command >= 2 && (int)command <= 7))
         {
             Collider rayhit = GetRaycast(layerPlayer);
             if (rayhit != null && command == CommandEnum.NONE)
@@ -43,7 +44,7 @@ public class SelectPlayerObj : MonoBehaviour
             HandleMakeBankCommand();
         else if (command == CommandEnum.INSTANTIANE_STRUCTURE)
             HandleInstantiateStructureCommand();
-        else if ((int)command >= 2  && (int)command <= 6)
+        else if ((int)command >= 2 && (int)command <= 6)
             HandleUpgradeCommand(command);
     }
 
@@ -103,6 +104,7 @@ public class SelectPlayerObj : MonoBehaviour
                         rotation.ToString()
                     }
                 );
+                Resources.Spend(Costs.container.initUnit);
                 //************************************
 
                 TCPConnection.instance.messageQueue.Add(builder.saveToString());
@@ -123,6 +125,8 @@ public class SelectPlayerObj : MonoBehaviour
             CommandEnum.MAKE_BANK,
             null
         );
+        Resources.Spend(Costs.container.makeBank);
+        Resources.ChangePassiveIncome(1);
         //************************************
 
         TCPConnection.instance.messageQueue.Add(builder.saveToString());
@@ -152,13 +156,15 @@ public class SelectPlayerObj : MonoBehaviour
                     CommandEnum.INSTANTIANE_STRUCTURE,
                     cellsInPath
                 );
+                Resources.Spend(Costs.container.initStructure);
+                Resources.ChangePassiveIncome(2);
                 //************************************
 
                 TCPConnection.instance.messageQueue.Add(builder.saveToString());
                 Debug.Log(builder.saveToString());
                 //wysłanie danych na serwer
                 //*************************************
-                if(obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
+                if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
                     BaseActions.instance.CancelAction();
                 else
                     StructureActions.instance.CancelAction();
@@ -167,7 +173,7 @@ public class SelectPlayerObj : MonoBehaviour
     }
 
     //****************************************************************************************************
-    
+
     private void HandleMoveUnitCommand()
     {
         Collider rayhit = GetRaycast(layerHex);
@@ -188,6 +194,8 @@ public class SelectPlayerObj : MonoBehaviour
                     CommandEnum.MOVE,
                     cellsInPath
                 );
+                if (end.GetComponent<CustomTag>().getResources == true)
+                    Resources.ChangeTmpIncome(1);
                 //************************************
 
                 TCPConnection.instance.messageQueue.Add(builder.saveToString());
@@ -208,6 +216,24 @@ public class SelectPlayerObj : MonoBehaviour
             upgrade,
             null
         );
+        switch (upgrade)
+        {
+            case CommandEnum.UPGRADE_CHASIS:
+                Resources.Spend(Costs.container.upgradeChasis);
+                break;
+            case CommandEnum.UPGRADE_ENGINE:
+                Resources.Spend(Costs.container.upgradeEngine);
+                break;
+            case CommandEnum.UPGRADE_GUN:
+                Resources.Spend(Costs.container.upgradeGun);
+                break;
+            case CommandEnum.UPGRADE_RADIO:
+                Resources.Spend(Costs.container.upgradeRadio);
+                break;
+            case CommandEnum.UPGRADE_STRUCTURE:
+                Resources.Spend(Costs.container.upgradeStructure);
+                break;
+        }
         //************************************
 
         TCPConnection.instance.messageQueue.Add(builder.saveToString());

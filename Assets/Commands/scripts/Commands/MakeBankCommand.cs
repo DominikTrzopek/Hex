@@ -15,7 +15,6 @@ public class MakeBankCommand : ICommand
     public void Execute()
     {
         GameObject obj = FindNetworkObject.FindObj(objectId);
-        Debug.Log(obj.name);
         if (obj == null)
             return;
         obj.GetComponent<StructureStats>().upgrade();

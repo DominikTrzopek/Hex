@@ -35,20 +35,20 @@ public class CommandExecutionHandler : MonoBehaviour
                     case CommandEnum.INSTANTIANE_STRUCTURE:
                         invoker.ExecuteCommand(new InitStructureCommand(builder));
                         break;
-                    case CommandEnum.UPGRADE_AP:
-                        invoker.ExecuteCommand(new UpgradeAPCommand(builder));
+                    case CommandEnum.UPGRADE_GUN:
+                        invoker.ExecuteCommand(new UpgradeGunCommand(builder));
                         break;
-                    case CommandEnum.UPGRADE_AR:
-                        invoker.ExecuteCommand(new UpgradeAPCommand(builder));
-                        break;
-                    case CommandEnum.UPGRADE_HP:
+                    case CommandEnum.UPGRADE_STRUCTURE:
                         invoker.ExecuteCommand(new UpgradeHPCommand(builder));
                         break;
-                    case CommandEnum.UPGRADE_MR:
-                        invoker.ExecuteCommand(new UpgradeMRCommand(builder));
+                    case CommandEnum.UPGRADE_CHASIS:
+                        invoker.ExecuteCommand(new UpgradeHPCommand(builder));
                         break;
-                    case CommandEnum.UPGRADE_VR:
-                        invoker.ExecuteCommand(new UpgradeVRCommand(builder));
+                    case CommandEnum.UPGRADE_ENGINE:
+                        invoker.ExecuteCommand(new UpgradeEngineCommand(builder));
+                        break;
+                    case CommandEnum.UPGRADE_RADIO:
+                        invoker.ExecuteCommand(new UpgradeRadioCommand(builder));
                         break;
                 }
             }

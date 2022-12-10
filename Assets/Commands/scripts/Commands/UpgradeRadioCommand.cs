@@ -1,12 +1,12 @@
 
 using UnityEngine;
 
-public class UpgradeVRCommand : ICommand
+public class UpgradeRadioCommand : ICommand
 {
     string ownerId;
     string objectId;
 
-    public UpgradeVRCommand(CommandBuilder command)
+    public UpgradeRadioCommand(CommandBuilder command)
     {
         this.ownerId = command.ownerId;
         this.objectId = command.networkId;
@@ -18,7 +18,7 @@ public class UpgradeVRCommand : ICommand
         Debug.Log(obj.name);
         if (obj == null)
             return;
-        obj.GetComponent<UnitStats>().upgradeVR();
+        obj.GetComponent<StatsAbstract>().upgradeVR();
     }
 
 

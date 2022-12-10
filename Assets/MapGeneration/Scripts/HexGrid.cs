@@ -13,6 +13,7 @@ public class HexGrid : MonoBehaviour
     public GameObject border;
     public static GameObject[,] hexArray;
     public static float fixedYPosition;
+    public GameObject uiImage;
     const float baseLevel = 0.2f;
     const int oreStoneRatio = 3;
 
@@ -73,6 +74,8 @@ public class HexGrid : MonoBehaviour
 
         if (!GridManipulator.PrepareGrid(size, numberOfPlayers, basePrefab, hex, ore, fixedYPosition, biome, border))
             Patch(border, size, numberOfPlayers);
+
+        SetOreCells.SetCells(uiImage);
     }
 
     private void Patch(int border, int size, int numberOfPlayers)

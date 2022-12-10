@@ -30,5 +30,10 @@ public class MoveCommand : ICommand
         path[path.Count - 1].GetComponent<CustomTag>().taken = true;
         path[0].GetComponent<CustomTag>().taken = false;
         obj.GetComponent<NetworkId>().position = newPosition;
+
+        if(path[path.Count - 1].GetComponent<CustomTag>().getResources == true && obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+            Resources.ChangeTmpIncome(1);
+
+        
     }
 }

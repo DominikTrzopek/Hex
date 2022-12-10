@@ -26,8 +26,11 @@ public class StructureActions : ActionsAbstract, IPlayerObjectHandler
 
     public void InstantiateStructure()
     {
-        SelectPlayerObj.command = CommandEnum.INSTANTIANE_STRUCTURE;
-        PerformAction(new InitStructureHandler(obj));
+        if (CheckRequirements(Costs.container.initStructure))
+        {
+            SelectPlayerObj.command = CommandEnum.INSTANTIANE_STRUCTURE;
+            PerformAction(new InitStructureHandler(obj));
+        }
     }
 
 }

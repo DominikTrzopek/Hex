@@ -1,12 +1,12 @@
 
 using UnityEngine;
 
-public class UpgradeMRCommand : ICommand
+public class UpgradeEngineCommand : ICommand
 {
     string ownerId;
     string objectId;
 
-    public UpgradeMRCommand(CommandBuilder command)
+    public UpgradeEngineCommand(CommandBuilder command)
     {
         this.ownerId = command.ownerId;
         this.objectId = command.networkId;
@@ -19,6 +19,7 @@ public class UpgradeMRCommand : ICommand
         if (obj == null)
             return;
         obj.GetComponent<UnitStats>().upgradeMR();
+        obj.GetComponent<UnitStats>().upgradeVR();
     }
 
 

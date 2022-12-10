@@ -47,15 +47,4 @@ public class InitStructureCommand : ICommand
 
     }
 
-    // public void Execute()
-    // {
-    //     List<GameObject> path = ArgsParser.makePathFromCoordinates(coordinateList);
-    //     GameObject endPath = path[path.Count - 1];
-    //     Vector2Int endCoordinates = endPath.GetComponent<CustomTag>().coordinates;
-    //     Vector3 structurePosition = HexGrid.hexArray[endCoordinates.x, endCoordinates.y].transform.position;
-    //     GameObject newObj = GridManipulator.ReplaceTile(endPath, structure, endPath.GetComponent<Renderer>().material.color, HexGrid.fixedYPosition);
-    //     newObj.GetComponent<NetworkId>().position = endCoordinates;
-    //     newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
-    //     CreateRoad.Create(path, road);
-    // }
 }

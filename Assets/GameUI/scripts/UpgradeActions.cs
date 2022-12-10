@@ -24,33 +24,48 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
         }
     }
 
-    public void UpgradeAttackPoints()
+    public void UpgradeUnitAttack()
     {
-        SelectPlayerObj.command = CommandEnum.UPGRADE_AP;
-        PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_AP));
+        if (CheckRequirements(Costs.container.upgradeGun))
+        {
+            SelectPlayerObj.command = CommandEnum.UPGRADE_GUN;
+            PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_GUN));
+        }
     }
 
-    public void UpgradeAttackRange()
+    public void UpgradeUnitHealthPoints()
     {
-        SelectPlayerObj.command = CommandEnum.UPGRADE_AR;
-        PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_AR));
+        if (CheckRequirements(Costs.container.upgradeChasis))
+        {
+            SelectPlayerObj.command = CommandEnum.UPGRADE_CHASIS;
+            PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_CHASIS));
+        }
     }
 
-    public void UpgradeHealthPoints()
+    public void UpgradeStructureHealthPoints()
     {
-        SelectPlayerObj.command = CommandEnum.UPGRADE_HP;
-        PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_HP));
+        if (CheckRequirements(Costs.container.upgradeStructure))
+        {
+            SelectPlayerObj.command = CommandEnum.UPGRADE_STRUCTURE;
+            PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_STRUCTURE));
+        }
     }
 
-    public void UpgradeMoveRange()
+    public void UpgradeUnitMovement()
     {
-        SelectPlayerObj.command = CommandEnum.UPGRADE_MR;
-        PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_MR));
+        if (CheckRequirements(Costs.container.upgradeEngine))
+        {
+            SelectPlayerObj.command = CommandEnum.UPGRADE_ENGINE;
+            PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_ENGINE));
+        }
     }
 
-    public void UpgradeViewRange()
+    public void UpgradeStructureViewRange()
     {
-        SelectPlayerObj.command = CommandEnum.UPGRADE_VR;
-        PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_VR));
+        if (CheckRequirements(Costs.container.upgradeRadio))
+        {
+            SelectPlayerObj.command = CommandEnum.UPGRADE_RADIO;
+            PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_RADIO));
+        }
     }
 }

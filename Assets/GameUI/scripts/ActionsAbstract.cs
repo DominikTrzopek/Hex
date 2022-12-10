@@ -20,4 +20,9 @@ public abstract class ActionsAbstract : MonoBehaviour
             handler.CancelAction();
         SelectPlayerObj.command = CommandEnum.NONE;
     }
+
+    protected bool CheckRequirements(int requirement)
+    {
+        return Resources.GetCoins() > requirement ? true : false;
+    }
 }

@@ -9,7 +9,7 @@ public class HighlightCell : MonoBehaviour
     void OnMouseEnter()
     {
         Vector2Int position;
-        if(this.transform.GetComponent<NetworkId>() != null)
+        if (this.transform.GetComponent<NetworkId>() != null)
             position = this.transform.GetComponent<NetworkId>().position;
         else
             position = this.transform.parent.GetComponent<NetworkId>().position;
@@ -21,6 +21,9 @@ public class HighlightCell : MonoBehaviour
     void OnMouseExit()
     {
         cellOutline.SetActive(false);
-        cellOutline.GetComponent<SpriteRenderer>().color = Color.cyan;
+        if (cellOutline.GetComponent<SelectCell>())
+            cellOutline.GetComponent<SpriteRenderer>().color = cellOutline.GetComponent<SelectCell>().activeCellColor;
+        else
+            cellOutline.GetComponent<SpriteRenderer>().color = Color.cyan;
     }
 }

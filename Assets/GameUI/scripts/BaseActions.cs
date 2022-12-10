@@ -33,20 +33,29 @@ public class BaseActions : ActionsAbstract, IPlayerObjectHandler
 
     public void InstantiateUnit()
     {
-        SelectPlayerObj.command = CommandEnum.INSTANTIANE_UNIT;
-        PerformAction(new InitUnitHandler(obj, uiImage));
+        if (CheckRequirements(Costs.container.initUnit))
+        {
+            SelectPlayerObj.command = CommandEnum.INSTANTIANE_UNIT;
+            PerformAction(new InitUnitHandler(obj, uiImage));
+        }
     }
 
     public void MakeBank()
     {
-        SelectPlayerObj.command = CommandEnum.MAKE_BANK;
-        PerformAction(new MakeBankHandler(obj));
+        if (CheckRequirements(Costs.container.makeBank))
+        {
+            SelectPlayerObj.command = CommandEnum.MAKE_BANK;
+            PerformAction(new MakeBankHandler(obj));
+        }
     }
 
     public void InstantiateStructure()
     {
-        SelectPlayerObj.command = CommandEnum.INSTANTIANE_STRUCTURE;
-        PerformAction(new InitStructureHandler(obj));
+        if (CheckRequirements(Costs.container.initStructure))
+        {
+            SelectPlayerObj.command = CommandEnum.INSTANTIANE_STRUCTURE;
+            PerformAction(new InitStructureHandler(obj));
+        }
     }
 
 }

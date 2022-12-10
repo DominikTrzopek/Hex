@@ -1,12 +1,12 @@
 
 using UnityEngine;
 
-public class UpgradeAPCommand : ICommand
+public class UpgradeGunCommand : ICommand
 {
     string ownerId;
     string objectId;
 
-    public UpgradeAPCommand(CommandBuilder command)
+    public UpgradeGunCommand(CommandBuilder command)
     {
         this.ownerId = command.ownerId;
         this.objectId = command.networkId;
@@ -19,6 +19,7 @@ public class UpgradeAPCommand : ICommand
         if (obj == null)
             return;
         obj.GetComponent<UnitStats>().upgradeAP();
+        obj.GetComponent<UnitStats>().upgradeAR();
     }
 
 

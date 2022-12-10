@@ -7,6 +7,7 @@ public class MoveHandler : IActionHandler
 
     GameObject obj;
     List<GameObject> objInRange;
+    Color oldColor;
 
     public MoveHandler(GameObject obj)
     {
@@ -27,8 +28,20 @@ public class MoveHandler : IActionHandler
 
         foreach (GameObject cell in objInRange)
         {
-            cell.transform.GetChild(1).gameObject.SetActive(true);
-            cell.GetComponent<CustomTag>().active = true;
+            if(cell.GetComponent<CustomTag>().range != 0)
+            {
+                cell.transform.GetChild(1).gameObject.SetActive(true);
+                cell.GetComponent<CustomTag>().active = true;
+
+                if(cell.transform.Find("shovelIcon(Clone)"))
+                {
+                    cell.transform.GetChild(cell.transform.childCount - 1).gameObject.SetActive(true);
+                    oldColor = cell.GetComponent<SelectCell>().activeCellColor;
+                    cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.yellow;
+                    cell.GetComponent<SelectCell>().activeCellColor = Color.yellow;
+                }
+            }
+
         }
     }
 
@@ -42,6 +55,14 @@ public class MoveHandler : IActionHandler
             {
                 cell.transform.GetChild(1).gameObject.SetActive(false);
                 cell.GetComponent<CustomTag>().active = false;
+
+                if(cell.transform.Find("shovelIcon(Clone)"))
+                {
+                    cell.transform.GetChild(cell.transform.childCount - 1).gameObject.SetActive(false);
+                    cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.yellow;
+                    cell.GetComponent<SelectCell>().activeCellColor = oldColor;
+                    cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = oldColor;
+                }
             }
         }
 
