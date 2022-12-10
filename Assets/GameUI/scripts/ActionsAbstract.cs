@@ -23,6 +23,6 @@ public abstract class ActionsAbstract : MonoBehaviour
 
     protected bool CheckRequirements(int requirement)
     {
-        return Resources.GetCoins() > requirement ? true : false;
+        return Resources.GetCoins() >= requirement ? true : false;
     }
 }

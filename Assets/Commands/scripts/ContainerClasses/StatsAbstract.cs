@@ -29,4 +29,9 @@ public abstract class StatsAbstract : MonoBehaviour
     {
         viewRange++;
     }
+
+    public void applyAttackPoints(int value)
+    {
+        healthPoints -= value;
+    }
 }

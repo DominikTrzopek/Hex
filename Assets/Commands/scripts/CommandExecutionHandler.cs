@@ -35,6 +35,9 @@ public class CommandExecutionHandler : MonoBehaviour
                     case CommandEnum.INSTANTIANE_STRUCTURE:
                         invoker.ExecuteCommand(new InitStructureCommand(builder));
                         break;
+                    case CommandEnum.ATTACK:
+                        invoker.ExecuteCommand(new AttackCommand(builder));
+                        break;
                     case CommandEnum.UPGRADE_GUN:
                         invoker.ExecuteCommand(new UpgradeGunCommand(builder));
                         break;

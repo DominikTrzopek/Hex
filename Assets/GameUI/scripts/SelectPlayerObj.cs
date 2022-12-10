@@ -17,7 +17,7 @@ public class SelectPlayerObj : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(Resources.tempIncome);
+
         if (Input.GetMouseButtonDown(0) || ((int)command >= 2 && (int)command <= 7))
         {
             Collider rayhit = GetRaycast(layerPlayer);
@@ -44,6 +44,8 @@ public class SelectPlayerObj : MonoBehaviour
             HandleMakeBankCommand();
         else if (command == CommandEnum.INSTANTIANE_STRUCTURE)
             HandleInstantiateStructureCommand();
+        else if (command == CommandEnum.ATTACK)
+            HandleAttackCommand();
         else if ((int)command >= 2 && (int)command <= 6)
             HandleUpgradeCommand(command);
     }
@@ -204,6 +206,36 @@ public class SelectPlayerObj : MonoBehaviour
                 //*************************************
                 UnitActions.instance.CancelAction();
 
+            }
+        }
+    }
+
+    private void HandleAttackCommand()
+    {
+        Collider rayhit = GetRaycast(layerPlayer);
+        if (rayhit != null)
+        {
+            GameObject end = rayhit.transform.gameObject;
+            Vector2Int endPosition = end.transform.parent.GetComponent<NetworkId>().position;
+            GameObject cell = HexGrid.hexArray[endPosition.x, endPosition.y];
+            if (cell.GetComponent<CustomTag>().active == true)
+            {
+                CommandBuilder builder = new CommandBuilder
+                (
+                    obj.GetComponent<NetworkId>().objectId,
+                    CommandEnum.ATTACK,
+                    new List<string>{
+                        end.transform.parent.GetComponent<NetworkId>().objectId
+                    }
+                );
+                Debug.Log(builder.saveToString());
+                //************************************
+
+                TCPConnection.instance.messageQueue.Add(builder.saveToString());
+
+                //wysłanie danych na serwer
+                //*************************************
+                UnitActions.instance.CancelAction();
             }
         }
     }

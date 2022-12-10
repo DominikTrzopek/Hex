@@ -26,7 +26,7 @@ public class InitUnitCommand : ICommand
         newObj.GetComponent<NetworkId>().position = coordinates;
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
         HexGrid.hexArray[coordinates.x, coordinates.y].GetComponent<CustomTag>().taken = true;
-        foreach (Transform child in newObj.transform)
+        foreach (Transform child in newObj.GetComponentsInChildren<Transform>())
         {
             try
             {

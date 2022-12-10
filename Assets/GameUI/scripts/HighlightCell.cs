@@ -14,13 +14,19 @@ public class HighlightCell : MonoBehaviour
         else
             position = this.transform.parent.GetComponent<NetworkId>().position;
         cellOutline = HexGrid.hexArray[position.x, position.y].transform.GetChild(1).gameObject;
-        cellOutline.SetActive(true);
+        if(cellOutline.transform.parent.GetComponent<CustomTag>().active == false)
+        {
+            cellOutline.SetActive(true);
+        }
         cellOutline.GetComponent<SpriteRenderer>().color = Color.blue;
     }
 
     void OnMouseExit()
     {
-        cellOutline.SetActive(false);
+        if(cellOutline.transform.parent.GetComponent<CustomTag>().active == false)
+        {
+            cellOutline.SetActive(false);
+        }
         if (cellOutline.GetComponent<SelectCell>())
             cellOutline.GetComponent<SpriteRenderer>().color = cellOutline.GetComponent<SelectCell>().activeCellColor;
         else
