@@ -7,6 +7,9 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
     public static UpgradeActions instance { get; private set; }
     GameObject obj;
 
+    public GameObject tooltip;
+    public TMPro.TextMeshProUGUI textMeshPro;
+
     public void SetObj(GameObject toSet)
     {
         obj = toSet;
@@ -31,6 +34,8 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.UPGRADE_GUN;
             PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_GUN));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
     public void UpgradeUnitHealthPoints()
@@ -40,6 +45,8 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.UPGRADE_CHASIS;
             PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_CHASIS));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
     public void UpgradeStructureHealthPoints()
@@ -49,6 +56,8 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.UPGRADE_STRUCTURE;
             PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_STRUCTURE));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
     public void UpgradeUnitMovement()
@@ -58,6 +67,8 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.UPGRADE_ENGINE;
             PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_ENGINE));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
     public void UpgradeStructureViewRange()
@@ -67,5 +78,7 @@ public class UpgradeActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.UPGRADE_RADIO;
             PerformAction(new UpgradeHandler(obj, CommandEnum.UPGRADE_RADIO));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 }

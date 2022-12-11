@@ -5,14 +5,26 @@ using UnityEngine;
 public abstract class StatsAbstract : MonoBehaviour
 {
     [SerializeField]
-    private int healthPoints;
-
+    protected int healthPoints;
     [SerializeField]
-    private int viewRange;
+    protected int viewRange;
+    protected int maxHealthPoints;
+    protected int level;
+
+    public void Start()
+    {
+        maxHealthPoints = healthPoints;
+        level = 1;
+    }
 
     public int getHP()
     {
         return healthPoints;
+    }
+
+    public int getMaxHP()
+    {
+        return maxHealthPoints;
     }
 
     public int getVR()
@@ -23,6 +35,7 @@ public abstract class StatsAbstract : MonoBehaviour
     public void upgradeHP()
     {
         healthPoints++;
+        maxHealthPoints++;
     }
 
     public void upgradeVR()
@@ -34,4 +47,16 @@ public abstract class StatsAbstract : MonoBehaviour
     {
         healthPoints -= value;
     }
+
+    public int getLevel()
+    {
+        return level;
+    }
+
+    public void upgrade()
+    {
+        level++;
+    }
+
+
 }

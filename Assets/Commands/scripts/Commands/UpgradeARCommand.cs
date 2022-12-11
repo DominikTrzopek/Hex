@@ -19,6 +19,7 @@ public class UpgradeARCommand : ICommand
         if (obj == null)
             return;
         obj.GetComponent<UnitStats>().upgradeAR();
+        obj.GetComponent<StatsAbstract>().upgrade();
     }
 
 

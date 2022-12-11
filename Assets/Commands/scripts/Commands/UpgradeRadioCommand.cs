@@ -19,6 +19,7 @@ public class UpgradeRadioCommand : ICommand
         if (obj == null)
             return;
         obj.GetComponent<StatsAbstract>().upgradeVR();
+        obj.GetComponent<StatsAbstract>().upgrade();
     }
 
 

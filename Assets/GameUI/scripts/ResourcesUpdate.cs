@@ -7,6 +7,7 @@ public class ResourcesUpdate : MonoBehaviour
     public TMPro.TextMeshProUGUI text;
     void Update()
     {
-        text.text = "Coins:  " + Resources.GetCoins().ToString();
+        int income = Resources.passiveIncome + Resources.tempIncome;
+        text.text = "Coins:  " + Resources.GetCoins().ToString() + " (+" + income + ")";
     }
 }

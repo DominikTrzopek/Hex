@@ -14,6 +14,7 @@ public class HighlightCell : MonoBehaviour
         else
             position = this.transform.parent.GetComponent<NetworkId>().position;
         cellOutline = HexGrid.hexArray[position.x, position.y].transform.GetChild(1).gameObject;
+        this.transform.root.Find("Canvas").gameObject.SetActive(true);
         if(cellOutline.transform.parent.GetComponent<CustomTag>().active == false)
         {
             cellOutline.SetActive(true);
@@ -23,6 +24,7 @@ public class HighlightCell : MonoBehaviour
 
     void OnMouseExit()
     {
+        this.transform.root.Find("Canvas").gameObject.SetActive(false);
         if(cellOutline.transform.parent.GetComponent<CustomTag>().active == false)
         {
             cellOutline.SetActive(false);

@@ -7,6 +7,9 @@ public class StructureActions : ActionsAbstract, IPlayerObjectHandler
     public static StructureActions instance { get; private set; }
     GameObject obj;
 
+    public GameObject tooltip;
+    public TMPro.TextMeshProUGUI textMeshPro;
+
     public void SetObj(GameObject toSet)
     {
         obj = toSet;
@@ -31,6 +34,8 @@ public class StructureActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.INSTANTIANE_STRUCTURE;
             PerformAction(new InitStructureHandler(obj));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
 }

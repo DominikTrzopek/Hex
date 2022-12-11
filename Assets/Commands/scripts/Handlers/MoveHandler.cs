@@ -16,12 +16,6 @@ public class MoveHandler : IActionHandler
 
     public void MakeAction()
     {
-        if (obj.GetComponent<TankMovement>().moving == true)
-        {
-            Debug.Log("Unit is moving");
-            return;
-        }
-
         Vector2Int position = obj.GetComponent<NetworkId>().position;
         GameObject takenHex = HexGrid.hexArray[position.x, position.y];
         objInRange = PathFinding.SetRange(obj.GetComponent<UnitStats>().getMR(), takenHex);

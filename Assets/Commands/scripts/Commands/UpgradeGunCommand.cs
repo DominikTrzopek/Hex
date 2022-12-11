@@ -20,6 +20,7 @@ public class UpgradeGunCommand : ICommand
             return;
         obj.GetComponent<UnitStats>().upgradeAP();
         obj.GetComponent<UnitStats>().upgradeAR();
+        obj.GetComponent<StatsAbstract>().upgrade();
     }
 
 

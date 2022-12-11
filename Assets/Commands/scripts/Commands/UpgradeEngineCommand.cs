@@ -20,6 +20,7 @@ public class UpgradeEngineCommand : ICommand
             return;
         obj.GetComponent<UnitStats>().upgradeMR();
         obj.GetComponent<UnitStats>().upgradeVR();
+        obj.GetComponent<StatsAbstract>().upgrade();
     }
 
 

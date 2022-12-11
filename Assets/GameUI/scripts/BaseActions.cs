@@ -9,6 +9,9 @@ public class BaseActions : ActionsAbstract, IPlayerObjectHandler
     GameObject obj;
     public GameObject uiImage;
 
+    public GameObject tooltip;
+    public TMPro.TextMeshProUGUI textMeshPro;
+
     public void SetObj(GameObject toSet)
     {
         obj = toSet;
@@ -38,6 +41,8 @@ public class BaseActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.INSTANTIANE_UNIT;
             PerformAction(new InitUnitHandler(obj, uiImage));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
     public void MakeBank()
@@ -47,6 +52,8 @@ public class BaseActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.MAKE_BANK;
             PerformAction(new MakeBankHandler(obj));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
     public void InstantiateStructure()
@@ -56,6 +63,8 @@ public class BaseActions : ActionsAbstract, IPlayerObjectHandler
             SelectPlayerObj.command = CommandEnum.INSTANTIANE_STRUCTURE;
             PerformAction(new InitStructureHandler(obj));
         }
+        else
+            textMeshPro.text = "Not enough resources!";
     }
 
 }

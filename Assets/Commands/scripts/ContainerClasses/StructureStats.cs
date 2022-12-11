@@ -6,15 +6,8 @@ public class StructureStats : StatsAbstract
 {
     [SerializeField]
     private int takenRange;
-    [SerializeField]
-    private int level;
-    
-    private List<GameObject> connected = new List<GameObject>();
 
-    public int getLevel()
-    {
-        return level;
-    }
+    private List<GameObject> connected = new List<GameObject>();
 
     public int getTakenRange()
     {
@@ -24,11 +17,6 @@ public class StructureStats : StatsAbstract
     public void addConnected(GameObject obj)
     {
         connected.Add(obj);
-    }
-
-    public void upgrade()
-    {
-        level++;
     }
 
 }

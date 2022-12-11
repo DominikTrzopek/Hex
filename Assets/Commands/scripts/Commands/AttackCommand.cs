@@ -29,7 +29,7 @@ public class AttackCommand : ICommand
         playerUnit.GetComponent<TankAttack>().SetEnemy(enemy);
         playerUnit.GetComponent<TankAttack>().enabled = true;
 
-        int attackPoints = playerUnit.GetComponent<UnitStats>().getAP();
-        enemy.GetComponent<StatsAbstract>().applyAttackPoints(attackPoints);
+        // int attackPoints = playerUnit.GetComponent<UnitStats>().getAP();
+        // enemy.GetComponent<StatsAbstract>().applyAttackPoints(attackPoints);
     }
 }
