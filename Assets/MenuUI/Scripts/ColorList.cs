@@ -12,4 +12,6 @@ public static class ColorList
         Color.yellow,
         Color.cyan
     };
+
+    public static float alpha = 0.2f;
 }

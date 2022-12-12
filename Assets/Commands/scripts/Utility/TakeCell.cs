@@ -6,14 +6,13 @@ public class TakeCell : MonoBehaviour
 {
     public int range;
     public List<Collider> takenCells;
-    void Awake()
+    public void MarkCells()
     {
         takenCells = new List<Collider>(takenCells);
         LayerMask layer = LayerMask.GetMask("Default");
         Vector3 center = new Vector3(this.transform.position.x, 0, this.transform.position.z);
-        //TODO: set color
-        Color playerColor = Color.blue;
-        playerColor.a = 0.25f;
+        Color playerColor = PlayerColor.GetColor(this.transform.root.GetComponent<NetworkId>().ownerId);
+        playerColor.a = ColorList.alpha;
 
         Collider[] cells = Physics.OverlapSphere(center, range * HexMetrics.outerRadious, layer);
         foreach (Collider coll in cells)
@@ -24,7 +23,6 @@ public class TakeCell : MonoBehaviour
                 takenCells.Add(coll);
                 tags.takenBy = UDPServerConfig.getId();
                 coll.transform.GetChild(0).GetComponent<SpriteRenderer>().color = playerColor;
-                //     coll.GetComponent<Renderer>().material.color = playerColor;
             }
         }
     }

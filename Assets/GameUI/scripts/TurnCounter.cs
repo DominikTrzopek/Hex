@@ -9,6 +9,6 @@ public class TurnCounter : MonoBehaviour
     void Update()
     {
         int income = Resources.passiveIncome + Resources.tempIncome;
-        text.text = "Turns " + TurnActions.instance.GetCurrentTurn();
+        text.text = "Turns " + TurnActions.instance.GetCurrentTurn() + "/" + TCPConnection.instance.serverInfo.numberOfTurns;
     }
 }

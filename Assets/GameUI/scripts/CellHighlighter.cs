@@ -7,18 +7,17 @@ public class CellHighlighter : MonoBehaviour
     void OnMouseEnter()
     {
         Vector2Int position;
-        if (this.transform.GetComponent<NetworkId>() != null)
-            position = this.transform.GetComponent<NetworkId>().position;
-        else
-            position = this.transform.parent.GetComponent<NetworkId>().position;
+        NetworkId networkId = this.transform.root.GetComponent<NetworkId>();
+        if (networkId == null)
+            return;
+        position = networkId.position;
         cellOutline = HexGrid.hexArray[position.x, position.y].transform.GetChild(1).gameObject;
         this.transform.root.Find("Canvas").gameObject.SetActive(true);
         if (cellOutline.transform.parent.GetComponent<CustomTag>().active == false)
         {
             cellOutline.SetActive(true);
         }
-        //TODO: ustawić kolor dla innych graczy
-        cellOutline.GetComponent<SpriteRenderer>().color = Color.blue;
+        cellOutline.GetComponent<SpriteRenderer>().color = PlayerColor.GetColor(networkId.ownerId);
     }
 
     void OnMouseExit()

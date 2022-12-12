@@ -25,12 +25,12 @@ public class InitUnitCommand : ICommand
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
         HexGrid.hexArray[coordinates.x, coordinates.y].GetComponent<CustomTag>().taken = true;
 
+        Color color = PlayerColor.GetColor(ownerId);
         foreach (Transform child in newObj.GetComponentsInChildren<Transform>())
         {
             try
             {
-                //TODO: set player color
-                child.GetComponent<Renderer>().material.color = Color.blue;
+                child.GetComponent<Renderer>().material.color = color;
             }
             catch { }
         }

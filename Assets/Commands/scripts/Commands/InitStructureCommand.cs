@@ -34,6 +34,7 @@ public class InitStructureCommand : ICommand
         newObj.GetComponent<NetworkId>().position = endCoordinates;
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
         creatorObj.GetComponent<StructureStats>().AddConnected(newObj);
+        newObj.GetComponent<TakeCell>().MarkCells();
 
         CreateRoad.Create(path, road);
 

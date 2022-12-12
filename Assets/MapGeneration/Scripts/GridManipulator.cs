@@ -63,16 +63,15 @@ public class GridManipulator : MonoBehaviour
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
             GameObject toReplace = HexGrid.hexArray[spawnPoint.x, spawnPoint.y];
-            ClearCellsAroundObjs(toReplace, hex, biome.standardColor, yPosition);
+            ClearCellsAroundObj(toReplace, hex, biome.standardColor, yPosition);
             GameObject playerBase = ReplaceTile(HexGrid.hexArray[spawnPoint.x, spawnPoint.y], basePrefab, biome.standardColor, yPosition);
             playerBase.GetComponent<NetworkId>().position = spawnPoint;
             spawned.Add(playerBase);
         }
-        //ClearCellsAroundObjs(spawned, hex, biome.standardColor, yPosition);
         return spawned;
     }
 
-    private static void ClearCellsAroundObjs(GameObject obj, GameObject toReplace, Color color, float yPosition)
+    private static void ClearCellsAroundObj(GameObject obj, GameObject toReplace, Color color, float yPosition)
     {
         LayerMask layer = LayerMask.GetMask("Default");
         Collider[] neighbours = Physics.OverlapSphere(new Vector3(obj.transform.position.x, 0, obj.transform.position.z), HexMetrics.outerRadious * 3, layer);
@@ -105,12 +104,11 @@ public class GridManipulator : MonoBehaviour
         for (int i = 0; i < bases.Count; i++)
         {
             bases[i].GetComponent<CustomTag>().Rename(0, CellTag.structure);
-            //bases[i].GetComponent<NetworkId>().setIds(conn.playerInfo[i].id, conn.playerInfo[i].id);
-            bases[i].GetComponent<NetworkId>().setIds(UDPServerConfig.getId(), UDPServerConfig.getId());
-            //Color color = conn.playerInfo[i].color;
-            Color color = Color.blue;
-            color.a = 0.2f;
+            bases[i].GetComponent<NetworkId>().setIds(conn.playerInfo[i].id, conn.playerInfo[i].id);
+            Color color = conn.playerInfo[i].color;
+            color.a = ColorList.alpha;
             bases[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+            bases[i].GetComponent<TakeCell>().MarkCells();
         }
     }
 

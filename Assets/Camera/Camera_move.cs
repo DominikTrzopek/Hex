@@ -17,8 +17,7 @@ public class Camera_move : MonoBehaviour
     public float cameraRotationSpeed;
     void Update()
     {
-        //int mapSize = TCPConnection.instance.serverInfo.mapSize;
-        int mapSize = 50;
+        int mapSize = TCPConnection.instance.serverInfo.mapSize;
         QualitySettings.shadowDistance = 100;
         Vector2 panlimitX = new Vector2(-10, mapSize * 1.5f);
         Vector2 panlimitZ = new Vector2(-10, mapSize * 1.5f);
