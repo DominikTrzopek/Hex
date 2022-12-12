@@ -63,27 +63,25 @@ public class GridManipulator : MonoBehaviour
         foreach (Vector2Int spawnPoint in spawnPoints)
         {
             GameObject toReplace = HexGrid.hexArray[spawnPoint.x, spawnPoint.y];
+            ClearCellsAroundObjs(toReplace, hex, biome.standardColor, yPosition);
             GameObject playerBase = ReplaceTile(HexGrid.hexArray[spawnPoint.x, spawnPoint.y], basePrefab, biome.standardColor, yPosition);
             playerBase.GetComponent<NetworkId>().position = spawnPoint;
             spawned.Add(playerBase);
         }
-        ClearCellsAroundObjs(spawned, hex, biome.standardColor, yPosition);
+        //ClearCellsAroundObjs(spawned, hex, biome.standardColor, yPosition);
         return spawned;
     }
 
-    private static void ClearCellsAroundObjs(List<GameObject> targetObj, GameObject toReplace, Color color, float yPosition)
+    private static void ClearCellsAroundObjs(GameObject obj, GameObject toReplace, Color color, float yPosition)
     {
-        foreach (GameObject obj in targetObj)
-        {
-            LayerMask layer = LayerMask.GetMask("Default");
-            Collider[] neighbours = Physics.OverlapSphere(new Vector3(obj.transform.position.x, 0, obj.transform.position.z), HexMetrics.outerRadious * 3, layer);
+        LayerMask layer = LayerMask.GetMask("Default");
+        Collider[] neighbours = Physics.OverlapSphere(new Vector3(obj.transform.position.x, 0, obj.transform.position.z), HexMetrics.outerRadious * 3, layer);
 
-            foreach (Collider neighbour in neighbours)
-            {
-                if (!neighbour.gameObject.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
-                    ReplaceTile(neighbour.gameObject, toReplace, color, yPosition);
-            }
-        }
+        foreach (Collider neighbour in neighbours)
+        {
+            if (!neighbour.gameObject.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
+                ReplaceTile(neighbour.gameObject, toReplace, color, yPosition);
+        } 
     }
 
     private static bool ValidateMap(List<GameObject> bases, float yPosition)

@@ -144,7 +144,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &8055242664123485986
 MonoBehaviour:
@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: -3739134386625472499}
   - component: {fileID: 4464421561836754681}
   - component: {fileID: 8987403459287514835}
+  - component: {fileID: 4381991593627353991}
   m_Layer: 0
   m_Name: base
   m_TagString: hex
@@ -311,6 +312,7 @@ MonoBehaviour:
   coordinates: {x: 0, y: 0}
   active: 0
   getResources: 0
+  takenBy: 
 --- !u!64 &1104465351034913180
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -381,6 +383,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372e86670279ad489cb72a36ade5833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4381991593627353991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3579664208746967279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e95118e2d9a1a146b829dbbc95da217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 5
+  takenCells: []
 --- !u!1 &9063656371728345822
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +471,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ca8444f438718d6438787eff222e3a43, type: 3}
-  m_Color: {r: 0, g: 0.4890669, b: 0.8490566, a: 0.57254905}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.57254905}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

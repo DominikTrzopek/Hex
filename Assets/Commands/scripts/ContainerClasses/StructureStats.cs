@@ -19,4 +19,13 @@ public class StructureStats : StatsAbstract
         connected.Add(obj);
     }
 
+    public void DestroyAllConnected()
+    {
+        foreach(GameObject obj in connected)
+        {
+            if(obj != null)
+                Destroy(obj);
+        }
+    }
+
 }

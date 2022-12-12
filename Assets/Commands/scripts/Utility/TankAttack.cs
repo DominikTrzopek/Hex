@@ -3,6 +3,8 @@ using System;
 
 public class TankAttack : MonoBehaviour
 {
+    public bool madeMove = false;
+
     const float threshold = 0.00001f;
     public GameObject pivot;
     public LineRenderer lineRenderer;
@@ -32,6 +34,11 @@ public class TankAttack : MonoBehaviour
         this.enemy = newEnemy;
         newRotation = turret.transform.rotation.y + 10f;
         start = true;
+        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+        {
+            madeMove = true;
+            this.gameObject.GetComponent<TankMovement>().madeMove = true;
+        }
     }
 
     void FixedUpdate()
@@ -107,8 +114,5 @@ public class TankAttack : MonoBehaviour
     private void SetBoolsAfterAttack()
     {
         inAction = false;
-        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
-            this.enabled = false;
-        this.gameObject.GetComponent<TankMovement>().enabled = false;
     }
 }

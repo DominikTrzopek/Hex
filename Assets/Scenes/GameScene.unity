@@ -5953,7 +5953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7524af8a11394524587e41bada2895d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 1168859029}
+  scores: []
   scorePrefab: {fileID: 4079490048633594684, guid: 62b50eb471fec034e85c852cb00bf14e, type: 3}
 --- !u!1 &1199479876
 GameObject:
@@ -6366,9 +6366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916caed8522951248bfb493f8f550ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiImage: {fileID: 5497794332048691643, guid: b573907a9ca3f1c4fa2991ffe058a41f, type: 3}
-  tooltip: {fileID: 484444921}
   textMeshPro: {fileID: 1968634111}
+  uiImage: {fileID: 5497794332048691643, guid: b573907a9ca3f1c4fa2991ffe058a41f, type: 3}
 --- !u!114 &1227031006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6381,9 +6380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fddfe7f48858ff448a2da77b5e8204c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 896384771}
-  tooltip: {fileID: 484444921}
   textMeshPro: {fileID: 1968634111}
+  controller: {fileID: 896384771}
 --- !u!114 &1227031007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6396,7 +6394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b32e8676eabb149b3ffbb00d22fbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 484444921}
   textMeshPro: {fileID: 1968634111}
 --- !u!114 &1227031008
 MonoBehaviour:
@@ -6410,7 +6407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e6d5baa9128de45bdfe87b3e09520c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 484444921}
   textMeshPro: {fileID: 1968634111}
 --- !u!1 &1243777739
 GameObject:
@@ -6900,7 +6896,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1336052982}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2007716352}
+        m_TargetAssemblyTypeName: TurnActions, Assembly-CSharp
+        m_MethodName: NextTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1336052982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7234,6 +7242,7 @@ GameObject:
   - component: {fileID: 1357839341}
   - component: {fileID: 1357839343}
   - component: {fileID: 1357839342}
+  - component: {fileID: 1357839344}
   m_Layer: 5
   m_Name: Turns
   m_TagString: Untagged
@@ -7358,6 +7367,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357839340}
   m_CullTransparentMesh: 1
+--- !u!114 &1357839344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357839340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0aa65883a67082479f2223e0f00247f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1357839342}
+  bottomPanel: {fileID: 0}
 --- !u!1 &1362080625
 GameObject:
   m_ObjectHideFlags: 0
@@ -9623,6 +9646,7 @@ GameObject:
   - component: {fileID: 2007716348}
   - component: {fileID: 2007716350}
   - component: {fileID: 2007716351}
+  - component: {fileID: 2007716352}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -9690,6 +9714,7 @@ MonoBehaviour:
   playerUnitPrefab: {fileID: 640297529574435754, guid: d9584feb34019f74a84c8c0ba7b038a5, type: 3}
   structurePrefab: {fileID: 2896637420692342140, guid: 4691daa356fc73047bab8735ed07c13e, type: 3}
   roadPrefab: {fileID: 4982215186583176076, guid: 9f40f766c726a2946a330c42dc63cb61, type: 3}
+  bottomPanel: {fileID: 1227031001}
 --- !u!114 &2007716350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9724,6 +9749,19 @@ MonoBehaviour:
   upgradeEngine: 5
   upgradeRadio: 3
   upgradeStructure: 5
+--- !u!114 &2007716352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007716344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7c57b6f8252a04ea183ea575863c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshPro: {fileID: 1968634111}
 --- !u!1 &2095616984
 GameObject:
   m_ObjectHideFlags: 0

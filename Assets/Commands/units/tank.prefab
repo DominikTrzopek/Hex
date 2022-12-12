@@ -79,6 +79,7 @@ MonoBehaviour:
   coordinates: {x: 0, y: 0}
   active: 0
   getResources: 0
+  takenBy: 
 --- !u!114 &1239069330173308370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55adb0decd7ff5b4b88d09b7a755dd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  madeMove: 0
   maxVelocity: 1.5
   speed: 5
   pathSelected: 0
@@ -153,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2591425893bc84341ba2d27570562d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  madeMove: 0
   pivot: {fileID: 7937656833256938255}
   lineRenderer: {fileID: 215969183930627810}
   gunPivot: {fileID: 7656252455111878045}
@@ -977,7 +980,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &6300712780833952295
 MonoBehaviour:

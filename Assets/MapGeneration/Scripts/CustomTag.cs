@@ -11,6 +11,7 @@ public class CustomTag : MonoBehaviour
     public Vector2Int coordinates;
     public bool active;
     public bool getResources;
+    public string takenBy;
 
     public bool HasTag(CellTag tag)
     {

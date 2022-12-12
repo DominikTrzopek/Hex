@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankMovement : MonoBehaviour
 {
+    public bool madeMove = false;
+
     public float maxVelocity = 1;
     public float speed;
     public bool pathSelected = false;
@@ -18,10 +20,13 @@ public class TankMovement : MonoBehaviour
     {
         path = selectedPath;
         startSelected = true;
+        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+            madeMove = true;
     }
 
     private void Update()
     {
+        Debug.Log(madeMove);
         Rigidbody obj = gameObject.GetComponent<Rigidbody>();
         GameObject pivot = gameObject.transform.GetChild(0).gameObject;
         Vector3 direction = (pivot.transform.position - gameObject.transform.position).normalized;
@@ -83,8 +88,6 @@ public class TankMovement : MonoBehaviour
         {
             var script = obj.GetComponent<TankMovement>();
             startSelected = false;
-            if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
-                script.enabled = false;
         }
     }
 

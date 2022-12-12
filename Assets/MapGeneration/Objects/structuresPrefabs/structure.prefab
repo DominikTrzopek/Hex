@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 2285505250397170590}
   - component: {fileID: 1021302746141154575}
   - component: {fileID: 2675312589931568496}
+  - component: {fileID: 3579928953218387769}
   m_Layer: 7
   m_Name: structure
   m_TagString: Untagged
@@ -223,6 +224,7 @@ MonoBehaviour:
   coordinates: {x: 0, y: 0}
   active: 0
   getResources: 0
+  takenBy: 
 --- !u!114 &2675312589931568496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +237,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372e86670279ad489cb72a36ade5833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3579928953218387769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896637420692342140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e95118e2d9a1a146b829dbbc95da217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 5
+  takenCells: []
 --- !u!1 &6257820320783981614
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +311,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &8365319077981507295
 MonoBehaviour:

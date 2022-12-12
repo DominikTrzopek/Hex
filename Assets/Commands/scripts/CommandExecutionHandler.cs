@@ -51,6 +51,9 @@ public class CommandExecutionHandler : MonoBehaviour
                     case CommandEnum.UPGRADE_RADIO:
                         invoker.ExecuteCommand(new UpgradeRadioCommand(builder));
                         break;
+                    case CommandEnum.ENDTURN:
+                        invoker.ExecuteCommand(new EndTurnCommand(builder));
+                        break;
                 }
             }
             catch (ArgumentException err)
