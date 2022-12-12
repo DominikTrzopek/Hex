@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class UpgradeHPCommand : ICommand
@@ -17,9 +16,7 @@ public class UpgradeHPCommand : ICommand
         GameObject obj = FindNetworkObject.FindObj(objectId);
         if (obj == null)
             return;
-        obj.GetComponent<StatsAbstract>().upgradeHP();
-        obj.GetComponent<StatsAbstract>().upgrade();
+        obj.GetComponent<StatsAbstract>().UpgradeHP();
+        obj.GetComponent<StatsAbstract>().Upgrade();
     }
-
-
 }

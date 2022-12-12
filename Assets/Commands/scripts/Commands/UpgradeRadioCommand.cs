@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class UpgradeRadioCommand : ICommand
@@ -18,9 +17,7 @@ public class UpgradeRadioCommand : ICommand
         Debug.Log(obj.name);
         if (obj == null)
             return;
-        obj.GetComponent<StatsAbstract>().upgradeVR();
-        obj.GetComponent<StatsAbstract>().upgrade();
+        obj.GetComponent<StatsAbstract>().UpgradeVR();
+        obj.GetComponent<StatsAbstract>().Upgrade();
     }
-
-
 }

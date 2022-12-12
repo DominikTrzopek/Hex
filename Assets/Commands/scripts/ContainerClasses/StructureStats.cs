@@ -9,12 +9,12 @@ public class StructureStats : StatsAbstract
 
     private List<GameObject> connected = new List<GameObject>();
 
-    public int getTakenRange()
+    public int GetTakenRange()
     {
         return takenRange;
     }
 
-    public void addConnected(GameObject obj)
+    public void AddConnected(GameObject obj)
     {
         connected.Add(obj);
     }

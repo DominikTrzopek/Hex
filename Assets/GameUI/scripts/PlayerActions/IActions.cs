@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPlayerObjectHandler
+public interface IActions
 {
     public void SetObj(GameObject toSet);
     public void CancelAction();

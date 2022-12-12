@@ -17,6 +17,7 @@ public class TankMovement : MonoBehaviour
     public void setPath(List<GameObject> selectedPath)
     {
         path = selectedPath;
+        startSelected = true;
     }
 
     private void Update()

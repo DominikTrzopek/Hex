@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StatsAbstract : MonoBehaviour
@@ -10,6 +8,7 @@ public abstract class StatsAbstract : MonoBehaviour
     protected int viewRange;
     protected int maxHealthPoints;
     protected int level;
+    protected int receivedAttackPoints;
 
     public void Start()
     {
@@ -17,45 +16,55 @@ public abstract class StatsAbstract : MonoBehaviour
         level = 1;
     }
 
-    public int getHP()
+    public int GetHP()
     {
         return healthPoints;
     }
 
-    public int getMaxHP()
+    public int GetMaxHP()
     {
         return maxHealthPoints;
     }
 
-    public int getVR()
+    public int GetVR()
     {
         return viewRange;
     }
 
-    public void upgradeHP()
+    public void UpgradeHP()
     {
         healthPoints++;
         maxHealthPoints++;
     }
 
-    public void upgradeVR()
+    public void UpgradeVR()
     {
         viewRange++;
     }
 
-    public void applyAttackPoints(int value)
+    public void ApplyAttackPoints(int value)
     {
         healthPoints -= value;
     }
 
-    public int getLevel()
+    public void ApplyReceivedAttack()
+    {
+        healthPoints -= receivedAttackPoints;
+    }
+
+    public int GetLevel()
     {
         return level;
     }
 
-    public void upgrade()
+    public void Upgrade()
     {
         level++;
+    }
+
+    public void AddToReceived(int value)
+    {
+        receivedAttackPoints += value;
     }
 
 

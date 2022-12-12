@@ -18,7 +18,7 @@ public class MoveHandler : IActionHandler
     {
         Vector2Int position = obj.GetComponent<NetworkId>().position;
         GameObject takenHex = HexGrid.hexArray[position.x, position.y];
-        objInRange = PathFinding.SetRange(obj.GetComponent<UnitStats>().getMR(), takenHex);
+        objInRange = PathFinding.SetRange(obj.GetComponent<UnitStats>().GetMR(), takenHex);
 
         foreach (GameObject cell in objInRange)
         {
@@ -30,9 +30,9 @@ public class MoveHandler : IActionHandler
                 if(cell.transform.Find("shovelIcon(Clone)"))
                 {
                     cell.transform.GetChild(cell.transform.childCount - 1).gameObject.SetActive(true);
-                    oldColor = cell.GetComponent<SelectCell>().activeCellColor;
+                    oldColor = cell.GetComponent<CellSelector>().activeCellColor;
                     cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.yellow;
-                    cell.GetComponent<SelectCell>().activeCellColor = Color.yellow;
+                    cell.GetComponent<CellSelector>().activeCellColor = Color.yellow;
                 }
             }
 
@@ -54,7 +54,7 @@ public class MoveHandler : IActionHandler
                 {
                     cell.transform.GetChild(cell.transform.childCount - 1).gameObject.SetActive(false);
                     cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.yellow;
-                    cell.GetComponent<SelectCell>().activeCellColor = oldColor;
+                    cell.GetComponent<CellSelector>().activeCellColor = oldColor;
                     cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = oldColor;
                 }
             }

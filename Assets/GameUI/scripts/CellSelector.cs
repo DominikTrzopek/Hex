@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectCell : MonoBehaviour
+public class CellSelector : MonoBehaviour
 {
 
     public Color activeCellColor;

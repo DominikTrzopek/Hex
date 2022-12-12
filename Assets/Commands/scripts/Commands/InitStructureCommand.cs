@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +21,6 @@ public class InitStructureCommand : ICommand
 
     public void Execute()
     {
-
         GameObject creatorObj = FindNetworkObject.FindObj(creatorObjectId);
         if (creatorObj == null)
             return;
@@ -31,10 +29,14 @@ public class InitStructureCommand : ICommand
         GameObject endPath = path[path.Count - 1];
         Vector2Int endCoordinates = endPath.GetComponent<CustomTag>().coordinates;
         Vector3 structurePosition = HexGrid.hexArray[endCoordinates.x, endCoordinates.y].transform.position;
+
         GameObject newObj = Object.Instantiate(structure, structurePosition, Quaternion.Euler(new Vector3(0, Random.Range(0, 6) * 60, 0)));
         newObj.GetComponent<NetworkId>().position = endCoordinates;
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
+        creatorObj.GetComponent<StructureStats>().AddConnected(newObj);
+
         CreateRoad.Create(path, road);
+
         endPath.GetComponent<CustomTag>().Rename(0, CellTag.obstruction);
         if (endPath.GetComponent<CustomTag>().HasTag(CellTag.tree))
         {
@@ -43,8 +45,5 @@ public class InitStructureCommand : ICommand
         }
         else
             endPath.GetComponent<CustomTag>().Add(CellTag.structure);
-        creatorObj.GetComponent<StructureStats>().addConnected(newObj);
-
     }
-
 }

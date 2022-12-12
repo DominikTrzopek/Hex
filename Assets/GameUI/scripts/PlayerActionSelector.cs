@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectPlayerObj : MonoBehaviour
+public class PlayerActionSelector : MonoBehaviour
 {
     public List<GameObject> uiPanels;
     public static CommandEnum command = CommandEnum.NONE;
@@ -75,7 +75,7 @@ public class SelectPlayerObj : MonoBehaviour
         return null;
     }
 
-    private void PrepareUi(IPlayerObjectHandler instance, string panelName)
+    private void PrepareUi(IActions instance, string panelName)
     {
         instance.SetObj(obj);
         DisableUiPlanels();

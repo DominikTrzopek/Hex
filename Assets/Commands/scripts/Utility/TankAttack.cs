@@ -16,11 +16,13 @@ public class TankAttack : MonoBehaviour
     bool start = false;
     bool attack = false;
     bool increment = true;
+    public bool attacking = false;
     float newRotation;
 
 
     public void SetEnemy(GameObject enemy)
     {
+        attacking = true;
         this.enemy = enemy;
         turret = this.transform.Find("turret").gameObject;
         newRotation = turret.transform.rotation.y + 10f;
@@ -64,12 +66,12 @@ public class TankAttack : MonoBehaviour
                 attack = false;
                 increment = true;
                 iteration = 1;
-                enemy.GetComponent<StatsAbstract>().applyAttackPoints(this.GetComponent<UnitStats>().getAP());
+                enemy.GetComponent<StatsAbstract>().ApplyAttackPoints(this.GetComponent<UnitStats>().GetAP());
             }
             lineRenderer.startWidth = width;
             lineRenderer.endWidth = width;
         }
-        else if (start == false && attack == false)
+        else if (start == false && attack == false && attacking == true)
         {
             float singleStep = speed * Time.deltaTime;
             target = pivot.transform.position - turret.transform.position;
@@ -77,7 +79,11 @@ public class TankAttack : MonoBehaviour
             Vector3 rotation = Vector3.RotateTowards(turret.transform.forward, target, singleStep, 0.0f);
             turret.transform.rotation = Quaternion.LookRotation(rotation);
             if (Mathf.Abs(turret.transform.rotation.y - newRotation) <= 0.0001f)
+            {
+                attacking = false;
                 this.enabled = false;
+                this.gameObject.GetComponent<TankMovement>().enabled = false;
+            }
             newRotation = turret.transform.rotation.y;
         }
 

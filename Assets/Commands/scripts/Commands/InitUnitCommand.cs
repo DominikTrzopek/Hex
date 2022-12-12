@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InitUnitCommand : ICommand
@@ -26,10 +24,12 @@ public class InitUnitCommand : ICommand
         newObj.GetComponent<NetworkId>().position = coordinates;
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
         HexGrid.hexArray[coordinates.x, coordinates.y].GetComponent<CustomTag>().taken = true;
+
         foreach (Transform child in newObj.GetComponentsInChildren<Transform>())
         {
             try
             {
+                //TODO: set player color
                 child.GetComponent<Renderer>().material.color = Color.blue;
             }
             catch { }

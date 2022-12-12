@@ -6,7 +6,7 @@ public class PlayerScores : MonoBehaviour
 {
     public List<TMPro.TextMeshProUGUI> scores;
     public GameObject scorePrefab;
-
+    //TODO implement
     void Awake()
     {
         // TCPConnection conn = TCPConnection.instance;

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class UpgradeEngineCommand : ICommand
@@ -18,10 +17,8 @@ public class UpgradeEngineCommand : ICommand
         Debug.Log(obj.name);
         if (obj == null)
             return;
-        obj.GetComponent<UnitStats>().upgradeMR();
-        obj.GetComponent<UnitStats>().upgradeVR();
-        obj.GetComponent<StatsAbstract>().upgrade();
+        obj.GetComponent<UnitStats>().UpgradeMR();
+        obj.GetComponent<UnitStats>().UpgradeVR();
+        obj.GetComponent<StatsAbstract>().Upgrade();
     }
-
-
 }

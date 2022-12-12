@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class UpgradeARCommand : ICommand
@@ -18,9 +17,7 @@ public class UpgradeARCommand : ICommand
         Debug.Log(obj.name);
         if (obj == null)
             return;
-        obj.GetComponent<UnitStats>().upgradeAR();
-        obj.GetComponent<StatsAbstract>().upgrade();
+        obj.GetComponent<UnitStats>().UpgradeAR();
+        obj.GetComponent<StatsAbstract>().Upgrade();
     }
-
-
 }

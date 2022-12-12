@@ -23,7 +23,7 @@ public class AttackHandler : IActionHandler
 
     public void MakeAction()
     {
-        float range = unit.GetComponent<UnitStats>().getAR() * HexMetrics.outerRadious;
+        float range = unit.GetComponent<UnitStats>().GetAR() * HexMetrics.outerRadious;
         enemyObjects = Physics.OverlapSphere(new Vector3(unit.transform.position.x, 0, unit.transform.position.z), range, layer);
         foreach (Collider enemy in enemyObjects)
         {
@@ -43,9 +43,9 @@ public class AttackHandler : IActionHandler
                         cell.transform.GetChild(1).gameObject.SetActive(true);
                         cells.Add(cell);
 
-                        oldColor = cell.GetComponent<SelectCell>().activeCellColor;
+                        oldColor = cell.GetComponent<CellSelector>().activeCellColor;
                         cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.red;
-                        cell.GetComponent<SelectCell>().activeCellColor = Color.red;
+                        cell.GetComponent<CellSelector>().activeCellColor = Color.red;
 
                         Vector3 startPointTransform = new Vector3(unit.transform.position.x, .3f, unit.transform.position.z);
 
@@ -66,7 +66,7 @@ public class AttackHandler : IActionHandler
         foreach (GameObject cell in cells)
         {
             cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = oldColor;
-            cell.GetComponent<SelectCell>().activeCellColor = oldColor;
+            cell.GetComponent<CellSelector>().activeCellColor = oldColor;
             cell.transform.GetChild(1).gameObject.SetActive(false);
             cell.GetComponent<CustomTag>().active = false;
             linePoints.Clear();

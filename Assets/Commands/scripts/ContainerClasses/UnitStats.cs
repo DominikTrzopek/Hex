@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitStats : StatsAbstract
@@ -11,28 +9,28 @@ public class UnitStats : StatsAbstract
     [SerializeField]
     private int attackRange;
 
-    public int getAP()
+    public int GetAP()
     {
         return attackPoints;
     }
-    public int getMR()
+    public int GetMR()
     {
         return moveRange;
     }
-    public int getAR()
+    public int GetAR()
     {
         return attackRange;
     }
  
-    public void upgradeAP()
+    public void UpgradeAP()
     {
         attackPoints++;
     }
-    public void upgradeMR()
+    public void UpgradeMR()
     {
         moveRange++;
     }
-    public void upgradeAR()
+    public void UpgradeAR()
     {
         attackRange++;
     }

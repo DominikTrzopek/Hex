@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackCommand : ICommand
@@ -17,7 +15,6 @@ public class AttackCommand : ICommand
 
     public void Execute()
     {
-
         GameObject enemy = FindNetworkObject.FindObj(enemyId);
         if (enemy == null)
             return;
@@ -27,9 +24,8 @@ public class AttackCommand : ICommand
             return;
 
         playerUnit.GetComponent<TankAttack>().SetEnemy(enemy);
-        playerUnit.GetComponent<TankAttack>().enabled = true;
 
-        // int attackPoints = playerUnit.GetComponent<UnitStats>().getAP();
-        // enemy.GetComponent<StatsAbstract>().applyAttackPoints(attackPoints);
+        int attackPoints = playerUnit.GetComponent<UnitStats>().GetAP();
+        enemy.GetComponent<StatsAbstract>().AddToReceived(attackPoints);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthInfo : MonoBehaviour
@@ -13,11 +11,11 @@ public class HealthInfo : MonoBehaviour
     }
     void LateUpdate()
     {
-        string currentHp = this.transform.root.GetComponent<StatsAbstract>().getHP().ToString();
-        string maxHp = this.transform.root.GetComponent<StatsAbstract>().getMaxHP().ToString();
-        string level = this.transform.root.GetComponent<StatsAbstract>().getLevel().ToString();
+        string currentHp = this.transform.root.GetComponent<StatsAbstract>().GetHP().ToString();
+        string maxHp = this.transform.root.GetComponent<StatsAbstract>().GetMaxHP().ToString();
+        string level = this.transform.root.GetComponent<StatsAbstract>().GetLevel().ToString();
         transform.rotation = rotation;
-        if(!this.transform.root.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
+        if (!this.transform.root.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
             textMeshPro.text = "Lv: " + level + " HP: " + currentHp + "/" + maxHp;
         else
             textMeshPro.text = "HP: " + currentHp + "/" + maxHp;

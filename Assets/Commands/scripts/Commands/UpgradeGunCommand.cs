@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class UpgradeGunCommand : ICommand
@@ -18,10 +17,8 @@ public class UpgradeGunCommand : ICommand
         Debug.Log(obj.name);
         if (obj == null)
             return;
-        obj.GetComponent<UnitStats>().upgradeAP();
-        obj.GetComponent<UnitStats>().upgradeAR();
-        obj.GetComponent<StatsAbstract>().upgrade();
+        obj.GetComponent<UnitStats>().UpgradeAP();
+        obj.GetComponent<UnitStats>().UpgradeAR();
+        obj.GetComponent<StatsAbstract>().Upgrade();
     }
-
-
 }

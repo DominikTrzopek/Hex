@@ -16,7 +16,7 @@ public class InitStructureHandler : IActionHandler
     {
         Vector2Int position = obj.GetComponent<NetworkId>().position;
         GameObject takenHex = HexGrid.hexArray[position.x, position.y];
-        objInRange = PathFinding.SetRange(obj.GetComponent<StructureStats>().getTakenRange(), takenHex);
+        objInRange = PathFinding.SetRange(obj.GetComponent<StructureStats>().GetTakenRange(), takenHex);
 
         foreach (GameObject cell in objInRange)
         {

@@ -6,7 +6,7 @@ public class UnitHPManager : MonoBehaviour
 {
     void Update()
     {
-        int hp = this.GetComponent<StatsAbstract>().getHP();
+        int hp = this.GetComponent<StatsAbstract>().GetHP();
         if(hp <= 0)
         {
             Vector2Int position = this.GetComponent<NetworkId>().position;

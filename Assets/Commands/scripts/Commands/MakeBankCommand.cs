@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class MakeBankCommand : ICommand
@@ -17,8 +16,6 @@ public class MakeBankCommand : ICommand
         GameObject obj = FindNetworkObject.FindObj(objectId);
         if (obj == null)
             return;
-        obj.GetComponent<StatsAbstract>().upgrade();
+        obj.GetComponent<StatsAbstract>().Upgrade();
     }
-
-
 }

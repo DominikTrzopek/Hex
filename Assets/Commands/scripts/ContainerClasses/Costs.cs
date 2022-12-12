@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Costs : MonoBehaviour
 {
     public static Costs container;
-
     public int initUnit;
     public int initStructure;
     public int makeBank;
@@ -14,7 +11,6 @@ public class Costs : MonoBehaviour
     public int upgradeEngine;
     public int upgradeRadio;
     public int upgradeStructure;
-
 
     private void Awake()
     {
