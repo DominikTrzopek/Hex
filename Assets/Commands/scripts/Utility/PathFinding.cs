@@ -54,8 +54,6 @@ public class PathFinding : MonoBehaviour
         return list;
     }
 
-    //****************************************************************************************************************
-
     static GameObject FindNext(GameObject current_obj, int currentRange)
     {
         LayerMask layer = LayerMask.GetMask("Default");
@@ -92,8 +90,6 @@ public class PathFinding : MonoBehaviour
 
     }
 
-    //****************************************************************************************************************
-
     public static void ClearDistance(List<GameObject> objectsInRange)
     {
         if (objectsInRange != null)
@@ -109,8 +105,7 @@ public class PathFinding : MonoBehaviour
         }
         else
         {
-            GameObject[] all = GameObject.FindGameObjectsWithTag("hex");
-            foreach (GameObject obj in all)
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("hex"))
             {
                 obj.GetComponent<CustomTag>().range = 1000;
                 obj.GetComponent<CustomTag>().pathTag = PathTag.none;

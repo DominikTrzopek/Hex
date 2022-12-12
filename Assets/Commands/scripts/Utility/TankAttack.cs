@@ -1,91 +1,114 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TankAttack : MonoBehaviour
 {
+    const float threshold = 0.00001f;
     public GameObject pivot;
     public LineRenderer lineRenderer;
     public GameObject gunPivot;
+    public GameObject turret;
     GameObject enemy;
     public float speed = 1f;
     public float widthStep = 0.001f;
     public float maxWidth = 0.01f;
     Vector3 target;
-    GameObject turret;
     bool start = false;
     bool attack = false;
     bool increment = true;
-    public bool attacking = false;
+    public bool inAction = false;
     float newRotation;
+    int iteration = 1;
 
-
-    public void SetEnemy(GameObject enemy)
+    public void SetEnemy(GameObject newEnemy)
     {
-        attacking = true;
-        this.enemy = enemy;
-        turret = this.transform.Find("turret").gameObject;
+        if (attack || start)
+            enemy.GetComponent<StatsAbstract>().ApplyReceivedAttack();
+
+        inAction = true;
+        attack = false;
+        increment = true;
+        iteration = 1;
+        this.enemy = newEnemy;
         newRotation = turret.transform.rotation.y + 10f;
         start = true;
     }
 
-    int iteration = 1;
     void FixedUpdate()
     {
-        if (start == true)
-        {
-            float singleStep = speed * Time.deltaTime;
-            target = enemy.transform.position - turret.transform.position;
-            target.y = 0;
-            Vector3 rotation = Vector3.RotateTowards(turret.transform.forward, target, singleStep, 0.0f);
-            turret.transform.rotation = Quaternion.LookRotation(rotation);
-            if (Mathf.Abs(turret.transform.rotation.y - newRotation) <= 0.001f)
-            {
-                attack = true;
-                start = false;
-            }
-            newRotation = turret.transform.rotation.y;
-        }
-        else if (attack == true)
-        {
-            float width = iteration * widthStep;
-            lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, gunPivot.transform.position);
-            lineRenderer.SetPosition(1, enemy.transform.position);
-            if (width <= maxWidth && increment == true)
-            {
-                iteration++;
-            }
-            else
-            {
-                iteration--;
-                increment = false;
-            }
-            if (width == 0)
-            {
-                attack = false;
-                increment = true;
-                iteration = 1;
-                enemy.GetComponent<StatsAbstract>().ApplyAttackPoints(this.GetComponent<UnitStats>().GetAP());
-            }
-            lineRenderer.startWidth = width;
-            lineRenderer.endWidth = width;
-        }
-        else if (start == false && attack == false && attacking == true)
-        {
-            float singleStep = speed * Time.deltaTime;
-            target = pivot.transform.position - turret.transform.position;
-            target.y = 0;
-            Vector3 rotation = Vector3.RotateTowards(turret.transform.forward, target, singleStep, 0.0f);
-            turret.transform.rotation = Quaternion.LookRotation(rotation);
-            if (Mathf.Abs(turret.transform.rotation.y - newRotation) <= 0.0001f)
-            {
-                attacking = false;
-                this.enabled = false;
-                this.gameObject.GetComponent<TankMovement>().enabled = false;
-            }
-            newRotation = turret.transform.rotation.y;
-        }
+        if (start)
+            RotateTurret(SetBoolsBeforeAttack, enemy);
+        else if (attack)
+            Attack();
+        else if (!start && !attack && inAction)
+            RotateTurret(SetBoolsAfterAttack, pivot);
+    }
 
+    private void Attack()
+    {
+        float width = iteration * widthStep;
+        SetLinePoints();
+        SetIteration(width);
+        if (width == 0)
+        {
+            attack = false;
+            enemy.GetComponent<StatsAbstract>().ApplyReceivedAttack();
+        }
+        SetLineWidth(width);
+    }
+
+    private void SetLinePoints()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, gunPivot.transform.position);
+        lineRenderer.SetPosition(1, enemy.transform.position);
+    }
+
+    private void SetLineWidth(float width)
+    {
+        lineRenderer.startWidth = width;
+        lineRenderer.endWidth = width;
+    }
+
+    private void SetIteration(float width)
+    {
+        if (width <= maxWidth && increment == true)
+            iteration++;
+        else
+        {
+            iteration--;
+            increment = false;
+        }
+    }
+
+    private void RotateTurret(Action func, GameObject target)
+    {
+        Vector3 rotation = GetRotationVector(target);
+        turret.transform.rotation = Quaternion.LookRotation(rotation);
+        if (Mathf.Abs(turret.transform.rotation.y - newRotation) <= threshold)
+            func();
+        newRotation = turret.transform.rotation.y;
+    }
+
+    private Vector3 GetRotationVector(GameObject targetObj)
+    {
+        float singleStep = speed * Time.deltaTime;
+        target = targetObj.transform.position - turret.transform.position;
+        target.y = 0;
+        return Vector3.RotateTowards(turret.transform.forward, target, singleStep, 0.0f);
+    }
+
+    private void SetBoolsBeforeAttack()
+    {
+        attack = true;
+        start = false;
+    }
+
+    private void SetBoolsAfterAttack()
+    {
+        inAction = false;
+        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+            this.enabled = false;
+        this.gameObject.GetComponent<TankMovement>().enabled = false;
     }
 }

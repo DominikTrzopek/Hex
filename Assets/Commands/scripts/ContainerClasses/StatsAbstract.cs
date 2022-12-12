@@ -50,6 +50,7 @@ public abstract class StatsAbstract : MonoBehaviour
     public void ApplyReceivedAttack()
     {
         healthPoints -= receivedAttackPoints;
+        receivedAttackPoints = 0;
     }
 
     public int GetLevel()

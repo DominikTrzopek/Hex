@@ -156,10 +156,11 @@ MonoBehaviour:
   pivot: {fileID: 7937656833256938255}
   lineRenderer: {fileID: 215969183930627810}
   gunPivot: {fileID: 7656252455111878045}
+  turret: {fileID: 2270705560381235932}
   speed: 1
   widthStep: 0.002
   maxWidth: 0.05
-  attacking: 0
+  inAction: 0
 --- !u!120 &215969183930627810
 LineRenderer:
   m_ObjectHideFlags: 0

@@ -109,7 +109,7 @@ public class PlayerActionSelector : MonoBehaviour
                 Resources.Spend(Costs.container.initUnit);
                 //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.saveToString());
+                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
 
                 //wysłanie danych na serwer
 
@@ -131,7 +131,7 @@ public class PlayerActionSelector : MonoBehaviour
         Resources.ChangePassiveIncome(1);
         //************************************
 
-        TCPConnection.instance.messageQueue.Add(builder.saveToString());
+        TCPConnection.instance.messageQueue.Add(builder.SaveToString());
         //wysłanie danych na serwer
         //*************************************
         BaseActions.instance.CancelAction();
@@ -162,8 +162,8 @@ public class PlayerActionSelector : MonoBehaviour
                 Resources.ChangePassiveIncome(2);
                 //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.saveToString());
-                Debug.Log(builder.saveToString());
+                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
+                Debug.Log(builder.SaveToString());
                 //wysłanie danych na serwer
                 //*************************************
                 if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
@@ -200,7 +200,7 @@ public class PlayerActionSelector : MonoBehaviour
                     Resources.ChangeTmpIncome(1);
                 //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.saveToString());
+                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
 
                 //wysłanie danych na serwer
                 //*************************************
@@ -228,10 +228,10 @@ public class PlayerActionSelector : MonoBehaviour
                         end.transform.parent.GetComponent<NetworkId>().objectId
                     }
                 );
-                Debug.Log(builder.saveToString());
+                Debug.Log(builder.SaveToString());
                 //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.saveToString());
+                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
 
                 //wysłanie danych na serwer
                 //*************************************
@@ -268,8 +268,8 @@ public class PlayerActionSelector : MonoBehaviour
         }
         //************************************
 
-        TCPConnection.instance.messageQueue.Add(builder.saveToString());
-        Debug.Log(builder.saveToString());
+        TCPConnection.instance.messageQueue.Add(builder.SaveToString());
+        Debug.Log(builder.SaveToString());
         //wysłanie danych na serwer
         //*************************************
         BaseActions.instance.CancelAction();

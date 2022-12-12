@@ -19,8 +19,8 @@ public class MoveCommand : ICommand
         GameObject obj = FindNetworkObject.FindObj(objectId);
         if (obj == null)
             return;
-        List<GameObject> path = ArgsParser.makePathFromCoordinates(coordinateList);
-        obj.GetComponent<TankMovement>().setPath(path);
+        List<GameObject> path = ArgsParser.MakePathFromCoordinates(coordinateList);
+        obj.GetComponent<TankMovement>().SetPath(path);
 
         Vector2Int newPosition = path[path.Count - 1].GetComponent<CustomTag>().coordinates;
         path[path.Count - 1].GetComponent<CustomTag>().taken = true;

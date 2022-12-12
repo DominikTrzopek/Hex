@@ -14,7 +14,7 @@ public class TankMovement : MonoBehaviour
     bool startMoving = false;
     bool startRotating = false;
 
-    public void setPath(List<GameObject> selectedPath)
+    public void SetPath(List<GameObject> selectedPath)
     {
         path = selectedPath;
         startSelected = true;
@@ -83,7 +83,8 @@ public class TankMovement : MonoBehaviour
         {
             var script = obj.GetComponent<TankMovement>();
             startSelected = false;
-            script.enabled = false;
+            if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+                script.enabled = false;
         }
     }
 

@@ -18,12 +18,12 @@ public class CommandBuilder
         this.args = args;
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }
 
-    public static CommandBuilder fromString(string json)
+    public static CommandBuilder FromString(string json)
     {
         return JsonUtility.FromJson<CommandBuilder>(json);
     }

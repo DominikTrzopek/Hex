@@ -20,7 +20,7 @@ public class UnitActions : ActionsAbstract, IActions
     public void MoveUnit()
     {
         TankMovement script = obj.GetComponent<TankMovement>();
-        if (script.enabled == false || script.moving == true)
+        if (script.enabled == false || script.startSelected == true)
         {
             textMeshPro.text = "This unit has already taken action";
             return;
@@ -33,7 +33,7 @@ public class UnitActions : ActionsAbstract, IActions
     public void AttackUnit()
     {
         TankAttack script = obj.GetComponent<TankAttack>();
-        if (script.enabled == false || script.attacking == true)
+        if (script.enabled == false || script.inAction == true)
         {
             textMeshPro.text = "This unit has already taken action";
             return;

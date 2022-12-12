@@ -25,7 +25,7 @@ public class InitStructureCommand : ICommand
         if (creatorObj == null)
             return;
 
-        List<GameObject> path = ArgsParser.makePathFromCoordinates(coordinateList);
+        List<GameObject> path = ArgsParser.MakePathFromCoordinates(coordinateList);
         GameObject endPath = path[path.Count - 1];
         Vector2Int endCoordinates = endPath.GetComponent<CustomTag>().coordinates;
         Vector3 structurePosition = HexGrid.hexArray[endCoordinates.x, endCoordinates.y].transform.position;
@@ -37,13 +37,14 @@ public class InitStructureCommand : ICommand
 
         CreateRoad.Create(path, road);
 
-        endPath.GetComponent<CustomTag>().Rename(0, CellTag.obstruction);
-        if (endPath.GetComponent<CustomTag>().HasTag(CellTag.tree))
+        CustomTag tags = endPath.GetComponent<CustomTag>();
+        tags.Rename(0, CellTag.obstruction);
+        if (tags.HasTag(CellTag.tree))
         {
             Object.Destroy(endPath.transform.GetChild(2).gameObject);
-            endPath.GetComponent<CustomTag>().Rename(1, CellTag.structure);
+            tags.Rename(1, CellTag.structure);
         }
         else
-            endPath.GetComponent<CustomTag>().Add(CellTag.structure);
+            tags.Add(CellTag.structure);
     }
 }

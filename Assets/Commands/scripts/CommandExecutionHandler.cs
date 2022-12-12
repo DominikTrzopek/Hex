@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -20,7 +18,7 @@ public class CommandExecutionHandler : MonoBehaviour
         {
             try
             {
-                CommandBuilder builder = CommandBuilder.fromString(conn.messageQueue[0]);
+                CommandBuilder builder = CommandBuilder.FromString(conn.messageQueue[0]);
                 switch (builder.command)
                 {
                     case CommandEnum.INSTANTIANE_UNIT:

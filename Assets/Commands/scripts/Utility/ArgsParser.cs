@@ -20,7 +20,7 @@ public class ArgsParser
         return result;
     }
 
-    public static List<GameObject> makePathFromCoordinates(List<string> coordinateList)
+    public static List<GameObject> MakePathFromCoordinates(List<string> coordinateList)
     {
         List<GameObject> path = new List<GameObject>();
         foreach (string stringCoordinates in coordinateList)
