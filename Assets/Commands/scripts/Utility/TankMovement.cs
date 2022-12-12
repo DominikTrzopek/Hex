@@ -26,7 +26,6 @@ public class TankMovement : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(madeMove);
         Rigidbody obj = gameObject.GetComponent<Rigidbody>();
         GameObject pivot = gameObject.transform.GetChild(0).gameObject;
         Vector3 direction = (pivot.transform.position - gameObject.transform.position).normalized;

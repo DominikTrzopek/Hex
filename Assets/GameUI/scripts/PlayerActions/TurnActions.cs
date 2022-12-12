@@ -45,19 +45,14 @@ public class TurnActions : ActionsAbstract, IActions
         currentTurn++;
         CommandBuilder builder = new CommandBuilder
         (
-            UDPServerConfig.getId(), //set by server
+            "##", //set by server
             CommandEnum.ENDTURN,
             new List<string>{
                 currentTurn.ToString()
             }
         );
+        Debug.Log(builder.SaveToString());
 
-        //************************************
-
-        TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-
-        //wysłanie danych na serwer
-        //*************************************
-
+        TCPConnection.instance.client.writeSocket(builder);
     }
 }

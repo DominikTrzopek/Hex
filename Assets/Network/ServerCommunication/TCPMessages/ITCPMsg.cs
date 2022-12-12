@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface ITCPMsg
 {
-    public string saveToString();
+    public string SaveToString();
 
 }

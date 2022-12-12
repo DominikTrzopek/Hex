@@ -58,6 +58,7 @@ public class CommandExecutionHandler : MonoBehaviour
             }
             catch (ArgumentException err)
             {
+                Debug.Log(conn.messageQueue[0]);
                 Debug.Log(err);
             }
             conn.messageQueue.RemoveAt(0);

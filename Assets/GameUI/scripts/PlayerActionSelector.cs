@@ -9,8 +9,9 @@ public class PlayerActionSelector : MonoBehaviour
     private GameObject obj;
 
     LayerMask layerPlayer, layerHex;
-    private void Start()
+    private void Awake()
     {
+        command = CommandEnum.ENDTURN;
         layerPlayer = LayerMask.GetMask("Player");
         layerHex = LayerMask.GetMask("Default");
     }
@@ -83,8 +84,6 @@ public class PlayerActionSelector : MonoBehaviour
 
     }
 
-    //*******************************************************************************************************************
-
     private void HandleInstantiateUnitCommand()
     {
         Collider rayhit = GetRaycast(layerHex);
@@ -107,13 +106,8 @@ public class PlayerActionSelector : MonoBehaviour
                     }
                 );
                 Resources.Spend(Costs.container.initUnit);
-                //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-
-                //wysłanie danych na serwer
-
-                //************************************
+                TCPConnection.instance.client.writeSocket(builder);
                 BaseActions.instance.CancelAction();
             }
         }
@@ -129,11 +123,8 @@ public class PlayerActionSelector : MonoBehaviour
         );
         Resources.Spend(Costs.container.makeBank);
         Resources.ChangePassiveIncome(1);
-        //************************************
 
-        TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-        //wysłanie danych na serwer
-        //*************************************
+        TCPConnection.instance.client.writeSocket(builder);
         BaseActions.instance.CancelAction();
     }
 
@@ -160,12 +151,8 @@ public class PlayerActionSelector : MonoBehaviour
                 );
                 Resources.Spend(Costs.container.initStructure);
                 Resources.ChangePassiveIncome(2);
-                //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-                Debug.Log(builder.SaveToString());
-                //wysłanie danych na serwer
-                //*************************************
+                TCPConnection.instance.client.writeSocket(builder);
                 if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
                     BaseActions.instance.CancelAction();
                 else
@@ -173,8 +160,6 @@ public class PlayerActionSelector : MonoBehaviour
             }
         }
     }
-
-    //****************************************************************************************************
 
     private void HandleMoveUnitCommand()
     {
@@ -198,12 +183,8 @@ public class PlayerActionSelector : MonoBehaviour
                 );
                 if (end.GetComponent<CustomTag>().getResources == true)
                     Resources.ChangeTmpIncome(1);
-                //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-
-                //wysłanie danych na serwer
-                //*************************************
+                TCPConnection.instance.client.writeSocket(builder);
                 UnitActions.instance.CancelAction();
 
             }
@@ -229,12 +210,8 @@ public class PlayerActionSelector : MonoBehaviour
                     }
                 );
                 Debug.Log(builder.SaveToString());
-                //************************************
 
-                TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-
-                //wysłanie danych na serwer
-                //*************************************
+                TCPConnection.instance.client.writeSocket(builder);
                 UnitActions.instance.CancelAction();
             }
         }
@@ -266,12 +243,8 @@ public class PlayerActionSelector : MonoBehaviour
                 Resources.Spend(Costs.container.upgradeStructure);
                 break;
         }
-        //************************************
 
-        TCPConnection.instance.messageQueue.Add(builder.SaveToString());
-        Debug.Log(builder.SaveToString());
-        //wysłanie danych na serwer
-        //*************************************
+        TCPConnection.instance.client.writeSocket(builder);
         BaseActions.instance.CancelAction();
     }
 

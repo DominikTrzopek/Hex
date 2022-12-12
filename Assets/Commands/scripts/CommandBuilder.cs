@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class CommandBuilder
+public class CommandBuilder : ITCPMsg
 {
     public string ownerId;
     public string networkId;

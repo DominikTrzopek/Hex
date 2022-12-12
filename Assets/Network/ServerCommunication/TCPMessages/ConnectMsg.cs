@@ -20,7 +20,7 @@ public class ConnectMsg : ITCPMsg
         this.password = pass;
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

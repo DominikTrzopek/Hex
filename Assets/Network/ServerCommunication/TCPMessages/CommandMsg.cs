@@ -22,7 +22,7 @@ public class CommandMsg : ITCPMsg
         this.args = args;
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

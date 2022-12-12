@@ -46,7 +46,7 @@ public class TCPClient
         {
             if (!socketReady)
                 return;
-            theWriter.Write(msg.saveToString() + "\n");
+            theWriter.Write(msg.SaveToString() + "\n");
             theWriter.Flush();
         }
         catch (Exception err)

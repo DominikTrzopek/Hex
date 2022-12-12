@@ -16,6 +16,13 @@ public class Resources : MonoBehaviour
         synchronizedIncome = new List<int>(TCPConnection.instance.serverInfo.numberOfPlayers);
     }
 
+    public static void Clear()
+    {
+        coins = 30;
+        passiveIncome = 2;
+        tempIncome = 0;
+    }
+
     public static void ChangePassiveIncome(int value)
     {
         passiveIncome += value;
