@@ -82,8 +82,8 @@ public class TCPConnection : MonoBehaviour
                 if (bytes != null)
                 {
                     string message = Encoding.Default.GetString(bytes);
-                    string[] splieted = message.Split("\n");
-                    foreach (string part in splieted)
+                    string[] splited = message.Split("\n");
+                    foreach (string part in splited)
                     {
                         try
                         {

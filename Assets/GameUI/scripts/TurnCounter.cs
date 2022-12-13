@@ -6,9 +6,16 @@ public class TurnCounter : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI text;
     public GameObject bottomPanel;
+    int maxTurns;
+
+    void Awake()
+    {
+        maxTurns = TCPConnection.instance.serverInfo.numberOfTurns;
+    }
+
     void Update()
     {
         int income = Resources.passiveIncome + Resources.tempIncome;
-        text.text = "Turns " + TurnActions.instance.GetCurrentTurn() + "/" + TCPConnection.instance.serverInfo.numberOfTurns;
+        text.text = "Turns " + TurnActions.instance.GetCurrentTurn() + "/" + maxTurns;
     }
 }

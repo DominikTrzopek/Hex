@@ -7,7 +7,7 @@ public static class HexMetrics
 
     public static readonly float outerRadious = 1f;
     public static readonly float innerRadious = 0.25f * Mathf.Sqrt(3);
-    const float vector_z = 1.5f;
+    public static readonly float vector_z = 1.5f;
 
     //****************************************************************************************************************
 

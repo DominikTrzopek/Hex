@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankMovement : MonoBehaviour
 {
     public bool madeMove = false;
+    public static int isMovingCount = 0;
 
     public float maxVelocity = 1;
     public float speed;
@@ -20,12 +21,14 @@ public class TankMovement : MonoBehaviour
     {
         path = selectedPath;
         startSelected = true;
+        ++isMovingCount;
         if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
             madeMove = true;
     }
 
     private void Update()
     {
+        Debug.Log(isMovingCount);
         Rigidbody obj = gameObject.GetComponent<Rigidbody>();
         GameObject pivot = gameObject.transform.GetChild(0).gameObject;
         Vector3 direction = (pivot.transform.position - gameObject.transform.position).normalized;
@@ -86,6 +89,8 @@ public class TankMovement : MonoBehaviour
         if (pathSelected == true && moving == false)
         {
             var script = obj.GetComponent<TankMovement>();
+            if(startSelected == true)
+                --isMovingCount;
             startSelected = false;
         }
     }

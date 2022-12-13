@@ -3,7 +3,8 @@ using System;
 
 public class CommandExecutionHandler : MonoBehaviour
 {
-
+    public Camera cam;
+    public LevelLoader loader;
     TCPConnection conn;
     Invoker invoker = new Invoker();
 
@@ -52,7 +53,10 @@ public class CommandExecutionHandler : MonoBehaviour
                         invoker.ExecuteCommand(new UpgradeRadioCommand(builder));
                         break;
                     case CommandEnum.ENDTURN:
-                        invoker.ExecuteCommand(new EndTurnCommand(builder));
+                        invoker.ExecuteCommand(new EndTurnCommand(builder, cam));
+                        break;
+                    case CommandEnum.ENDGAME:
+                        invoker.ExecuteCommand(new EndGameCommand(loader));
                         break;
                 }
             }

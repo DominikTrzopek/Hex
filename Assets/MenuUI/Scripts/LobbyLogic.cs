@@ -12,6 +12,8 @@ public class LobbyLogic : MonoBehaviour
     private GameObject CellPrefab;
     [SerializeField]
     private GameObject deleteButton;
+    [SerializeField]
+    private LevelLoader levelLoader;
     private TCPConnection conn;
     private bool isActive = false;
     private List<PlayerInfo> info_FIFO = new List<PlayerInfo>();
@@ -28,7 +30,7 @@ public class LobbyLogic : MonoBehaviour
         cells.Clear();
         conn = TCPConnection.instance;
         TCPServerInfo info = conn.serverInfo;
-        if(UDPServerConfig.getSecretHash() != info.creatorId)
+        if (UDPServerConfig.getSecretHash() != info.creatorId)
         {
             deleteButton.SetActive(false);
         }
@@ -49,13 +51,13 @@ public class LobbyLogic : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isActive == true)
+        if (isActive == true)
         {
 
-            if(checkIfPlayersReady())
+            if (CheckIfPlayersReady())
             {
                 tick++;
-                if(tick >= 100)
+                if (tick >= 100)
                     StarGame();
             }
             else
@@ -63,11 +65,11 @@ public class LobbyLogic : MonoBehaviour
 
             if (cells.Count > 0 && conn.messageQueue.Count > 0)
             {
-                try 
+                try
                 {
-                    
+
                     ConnectMsg info = ConnectMsg.fromString(conn.messageQueue[0]);
-                    if(info.playerInfo.id == UDPServerConfig.getId())
+                    if (info.playerInfo.id == UDPServerConfig.getId())
                         conn.selfNumber = info.playerInfo.number;
                     ErrorHandling.handle(info.code, this.transform.parent.parent.gameObject);
                     int foundIndex = FindCell(info.playerInfo.id);
@@ -88,7 +90,7 @@ public class LobbyLogic : MonoBehaviour
                 }
             }
         }
-        if(isActive == true && !conn.client.socketReady && conn.messageQueue.Count <= 1)
+        if (isActive == true && !conn.client.socketReady && conn.messageQueue.Count <= 1)
         {
             ErrorHandling.handle(ResponseType.DISCONNECT, this.transform.parent.parent.gameObject);
             conn.clearConnection();
@@ -135,15 +137,18 @@ public class LobbyLogic : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    bool checkIfPlayersReady()
+    bool CheckIfPlayersReady()
     {
-        foreach(GameObject cell in cells)
+        foreach (GameObject cell in cells)
         {
-            if(cell.GetComponent<PlayersInfoLogic>().playerInfo.status != PlayerStatus.READY)
-                return false;
+            PlayerStatus status = cell.GetComponent<PlayersInfoLogic>().playerInfo.status;
+            if(status == PlayerStatus.INGAME)
+                StarGame();
+            if (status != PlayerStatus.READY)
+                return false;    
         }
         return true;
     }
 
-  
+
 }

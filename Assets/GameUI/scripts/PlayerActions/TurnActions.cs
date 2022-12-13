@@ -30,19 +30,26 @@ public class TurnActions : ActionsAbstract, IActions
 
     public void NextTurn()
     {
-        GameObject bottomPanel = PrefabContainer.container.bottomPanel;
+        if(PlayerActionSelector.command == CommandEnum.ENDTURN)
+            return;
+        List<GameObject> panels = PanelHolder.holder.panels;
         if (PlayerActionSelector.command != CommandEnum.NONE)
         {
             textMeshPro.text = "End or cancel your current action";
             return;
         }
-        foreach (IActions actions in bottomPanel.GetComponents<IActions>())
+        if(TankAttack.isAttackingCount != 0 || TankMovement.isMovingCount != 0)
+        {
+            textMeshPro.text = "Wait for units to stop";
+            return;
+        }
+        foreach (IActions actions in PanelHolder.holder.bottomPanel.GetComponents<IActions>())
         {
             actions.CancelAction();
         }
-        bottomPanel.SetActive(false);
-        PlayerActionSelector.command = CommandEnum.ENDTURN;
         currentTurn++;
+        PanelHolder.holder.DisableUiPlanels();
+        PlayerActionSelector.command = CommandEnum.ENDTURN;
         CommandBuilder builder = new CommandBuilder
         (
             "##", //set by server

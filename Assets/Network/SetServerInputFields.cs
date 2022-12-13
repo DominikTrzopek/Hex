@@ -15,7 +15,10 @@ public class SetServerInputFields : MonoBehaviour
         setInputFields();
         portInputField.text = UDPServerConfig.getPort().ToString();
         ipInputField.text = UDPServerConfig.getIp();
-        playerName.text = UDPServerConfig.getPlayerName() + UnityEngine.Random.Range(100, 1000).ToString();
+        if(UDPServerConfig.getPlayerName().Trim() != "" && UDPServerConfig.getPlayerName().Trim() != "player")
+            playerName.text = UDPServerConfig.getPlayerName();
+        else
+            playerName.text = "player" + UnityEngine.Random.Range(100, 1000).ToString();
     }
 
     public static void setInputFields()

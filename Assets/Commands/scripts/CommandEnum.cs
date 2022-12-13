@@ -2,6 +2,7 @@ public enum CommandEnum
 {
     NONE,
     ENDTURN,
+    ENDGAME,
     UPGRADE_CHASIS,
     UPGRADE_ENGINE,
     UPGRADE_GUN,

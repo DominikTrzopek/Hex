@@ -18123,6 +18123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CellPrefab: {fileID: 6689771312958232378, guid: 18ed1b4402e66a3449fb049413c31dee, type: 3}
   deleteButton: {fileID: 711381973}
+  levelLoader: {fileID: 0}
 --- !u!1 &1819319792
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,6 +28,6 @@ public class MoveCommand : ICommand
         obj.GetComponent<NetworkId>().position = newPosition;
 
         if(path[path.Count - 1].GetComponent<CustomTag>().getResources == true && obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
-            Resources.ChangeTmpIncome(1);
+            Resources.ChangeTmpIncome(2);
     }
 }

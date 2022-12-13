@@ -108,7 +108,7 @@ public class GridManipulator : MonoBehaviour
             Color color = conn.playerInfo[i].color;
             color.a = ColorList.alpha;
             bases[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
-            bases[i].GetComponent<TakeCell>().MarkCells();
+            bases[i].GetComponent<TakeCell>().MarkCells(conn.playerInfo[i].id);
         }
     }
 

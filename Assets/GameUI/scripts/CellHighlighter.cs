@@ -17,7 +17,7 @@ public class CellHighlighter : MonoBehaviour
         {
             cellOutline.SetActive(true);
         }
-        cellOutline.GetComponent<SpriteRenderer>().color = PlayerColor.GetColor(networkId.ownerId);
+        cellOutline.GetComponent<SpriteRenderer>().color = PlayerInfoGetter.GetColor(networkId.ownerId);
     }
 
     void OnMouseExit()

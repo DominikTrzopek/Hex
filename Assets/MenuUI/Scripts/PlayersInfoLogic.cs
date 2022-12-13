@@ -65,6 +65,14 @@ public class PlayersInfoLogic : MonoBehaviour
                 readyText.text = "READY";
                 readyText.color = Color.green;
                 break;
+            case PlayerStatus.INGAME:
+                readyText.text = "INGAME";
+                readyText.color = Color.yellow;
+                break;
+            case PlayerStatus.NOTCONNECTED:
+                readyText.text = "NOT CONNECTED";
+                readyText.color = Color.gray;
+                break;
             default:
                 readyText.text = "NOT CONNECTED";
                 readyText.color = Color.gray;

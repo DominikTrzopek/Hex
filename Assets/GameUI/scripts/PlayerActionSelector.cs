@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerActionSelector : MonoBehaviour
 {
-    public List<GameObject> uiPanels;
+    private List<GameObject> uiPanels;
     public static CommandEnum command = CommandEnum.NONE;
     private GameObject obj;
 
@@ -19,7 +19,7 @@ public class PlayerActionSelector : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0) || ((int)command >= 2 && (int)command <= 7))
+        if (Input.GetMouseButtonDown(0) || ((int)command >= 3 && (int)command <= 8))
         {
             Collider rayhit = GetRaycast(layerPlayer);
             if (rayhit != null && command == CommandEnum.NONE)
@@ -47,7 +47,7 @@ public class PlayerActionSelector : MonoBehaviour
             HandleInstantiateStructureCommand();
         else if (command == CommandEnum.ATTACK)
             HandleAttackCommand();
-        else if ((int)command >= 2 && (int)command <= 6)
+        else if ((int)command >= 3 && (int)command <= 8)
             HandleUpgradeCommand(command);
     }
 
@@ -61,14 +61,6 @@ public class PlayerActionSelector : MonoBehaviour
             PrepareUi(StructureActions.instance, "StructureActions");
     }
 
-    private void DisableUiPlanels()
-    {
-        foreach (GameObject panel in uiPanels)
-        {
-            panel.SetActive(false);
-        }
-    }
-
     private Collider GetRaycast(LayerMask layer)
     {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit rayhit, Mathf.Infinity, layer))
@@ -79,7 +71,9 @@ public class PlayerActionSelector : MonoBehaviour
     private void PrepareUi(IActions instance, string panelName)
     {
         instance.SetObj(obj);
-        DisableUiPlanels();
+        PanelHolder.holder.DisableUiPlanels();
+        
+        uiPanels = PanelHolder.holder.panels;
         uiPanels.Find(item => item.name == panelName).SetActive(true);
 
     }
