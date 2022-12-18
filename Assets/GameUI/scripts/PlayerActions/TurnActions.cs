@@ -38,7 +38,7 @@ public class TurnActions : ActionsAbstract, IActions
             textMeshPro.text = "End or cancel your current action";
             return;
         }
-        if(TankAttack.isAttackingCount != 0 || TankMovement.isMovingCount != 0)
+        if(ActionCounters.isAttackingCount != 0 || ActionCounters.isMovingCount != 0)
         {
             textMeshPro.text = "Wait for units to stop";
             return;

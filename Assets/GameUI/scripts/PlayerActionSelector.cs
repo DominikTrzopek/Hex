@@ -88,6 +88,7 @@ public class PlayerActionSelector : MonoBehaviour
             {
                 float rotation = HexMetrics.GetRotation(BaseActions.instance.GetObjPosition() - obj.transform.position);
                 Vector2Int position = obj.GetComponent<CustomTag>().coordinates;
+                int unitPrefabNumber = 0;
 
                 CommandBuilder builder = new CommandBuilder
                 (
@@ -96,7 +97,8 @@ public class PlayerActionSelector : MonoBehaviour
                     new List<string>{
                         position.x.ToString(),
                         position.y.ToString(),
-                        rotation.ToString()
+                        rotation.ToString(),
+                        unitPrefabNumber.ToString()
                     }
                 );
                 Resources.Spend(Costs.container.initUnit);

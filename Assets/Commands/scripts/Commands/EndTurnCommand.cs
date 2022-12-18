@@ -58,10 +58,12 @@ public class EndTurnCommand : ICommand
     {
         foreach (GameObject obj in playerObjects)
         {
-            if (obj.GetComponent<TankAttack>())
-                obj.GetComponent<TankAttack>().madeMove = false;
-            if (obj.GetComponent<TankMovement>())
-                obj.GetComponent<TankMovement>().madeMove = false;
+            try
+            {
+                obj.GetComponent<Attack>().SetMadeMove(false);
+                obj.GetComponent<Movement>().SetMadeMove(false);
+            }
+            catch{}
         }
     }
 

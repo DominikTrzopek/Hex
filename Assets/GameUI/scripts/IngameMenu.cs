@@ -10,8 +10,8 @@ public class IngameMenu : MonoBehaviour
         SceneManager.LoadScene(0);
         Resources.Clear();
         PlayerActionSelector.command = CommandEnum.NONE;
-        TankAttack.isAttackingCount = 0;
-        TankMovement.isMovingCount = 0;
+        ActionCounters.isAttackingCount = 0;
+        ActionCounters.isMovingCount = 0;
         TCPConnection.instance.clear();
     }
 
@@ -21,7 +21,7 @@ public class IngameMenu : MonoBehaviour
         {
             PanelHolder.holder.endTurnButton.interactable = false;
         }
-        else if(TankAttack.isAttackingCount != 0 || TankMovement.isMovingCount != 0)
+        else if(ActionCounters.isAttackingCount != 0 || ActionCounters.isMovingCount != 0)
         {
             PanelHolder.holder.endTurnButton.interactable = false;
         }

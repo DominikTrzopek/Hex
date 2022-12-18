@@ -2,33 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankMovement : MonoBehaviour
+public class TankMovement : Movement
 {
-    public bool madeMove = false;
-    public static int isMovingCount = 0;
-
     public float maxVelocity = 1;
     public float speed;
     public bool pathSelected = false;
-    public bool startSelected = false;
     public bool moving = false;
     List<GameObject> path = new List<GameObject>();
     GameObject end;
     bool startMoving = false;
     bool startRotating = false;
 
-    public void SetPath(List<GameObject> selectedPath)
+    override public void SetPath(List<GameObject> selectedPath)
     {
         path = selectedPath;
         startSelected = true;
-        ++isMovingCount;
+        ActionCounters.isMovingCount++;
         if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
             madeMove = true;
     }
 
     private void Update()
     {
-        Debug.Log(isMovingCount);
         Rigidbody obj = gameObject.GetComponent<Rigidbody>();
         GameObject pivot = gameObject.transform.GetChild(0).gameObject;
         Vector3 direction = (pivot.transform.position - gameObject.transform.position).normalized;
@@ -90,7 +85,7 @@ public class TankMovement : MonoBehaviour
         {
             var script = obj.GetComponent<TankMovement>();
             if(startSelected == true)
-                --isMovingCount;
+                ActionCounters.isMovingCount--;
             startSelected = false;
         }
     }

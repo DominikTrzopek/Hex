@@ -17162,11 +17162,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: 24
+      m_Image: {fileID: 0}
     - m_Text: 32
       m_Image: {fileID: 0}
     - m_Text: 48
-      m_Image: {fileID: 0}
-    - m_Text: 64
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

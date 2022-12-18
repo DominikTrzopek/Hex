@@ -19,14 +19,15 @@ public class UnitActions : ActionsAbstract, IActions
 
     public void MoveUnit()
     {
-        TankMovement movement = obj.GetComponent<TankMovement>();
-        TankAttack attack = obj.GetComponent<TankAttack>();
-        if (movement.madeMove == true || movement.startSelected == true)
+        bool madeMove = obj.GetComponent<Movement>().GetMadeMove();
+        bool startSelected = obj.GetComponent<Movement>().GetStartSelected();
+        bool inAction = obj.GetComponent<Attack>().GetInAction();
+        if (madeMove == true || startSelected == true)
         {
             textMeshPro.text = "This unit has already taken action";
             return;
         }
-        else if (attack.inAction == true)
+        else if (inAction == true)
         {
             textMeshPro.text = "Wait for unit to end attacking";
             return;
@@ -37,14 +38,15 @@ public class UnitActions : ActionsAbstract, IActions
 
     public void AttackUnit()
     {
-        TankMovement movement = obj.GetComponent<TankMovement>();
-        TankAttack attack = obj.GetComponent<TankAttack>();
-        if (attack.madeMove == true || attack.inAction == true)
+        bool startSelected = obj.GetComponent<Movement>().GetStartSelected();
+        bool madeMove = obj.GetComponent<Attack>().GetMadeMove();
+        bool inAction = obj.GetComponent<Attack>().GetInAction();
+        if (madeMove == true || inAction == true)
         {
             textMeshPro.text = "This unit has already taken action";
             return;
         }
-        else if (movement.startSelected == true)
+        else if (startSelected == true)
         {
             textMeshPro.text = "Wait for unit to end moving";
             return;

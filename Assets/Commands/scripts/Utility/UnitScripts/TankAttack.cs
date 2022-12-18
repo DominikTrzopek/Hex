@@ -1,11 +1,8 @@
 using UnityEngine;
 using System;
 
-public class TankAttack : MonoBehaviour
+public class TankAttack : Attack
 {
-    public bool madeMove = false;
-    public static int isAttackingCount = 0;
-
     const float threshold = 0.00001f;
     public GameObject pivot;
     public LineRenderer lineRenderer;
@@ -19,11 +16,10 @@ public class TankAttack : MonoBehaviour
     bool start = false;
     bool attack = false;
     bool increment = true;
-    public bool inAction = false;
     float newRotation;
     int iteration = 1;
 
-    public void SetEnemy(GameObject newEnemy)
+    override public void SetEnemy(GameObject newEnemy)
     {
         if (attack || start)
             enemy.GetComponent<StatsAbstract>().ApplyReceivedAttack();
@@ -32,7 +28,7 @@ public class TankAttack : MonoBehaviour
         attack = false;
         increment = true;
         iteration = 1;
-        isAttackingCount++;
+        ActionCounters.isAttackingCount++;
         this.enemy = newEnemy;
         newRotation = turret.transform.rotation.y + 10f;
         start = true;
@@ -116,6 +112,6 @@ public class TankAttack : MonoBehaviour
     private void SetBoolsAfterAttack()
     {
         inAction = false;
-        isAttackingCount--;
+        ActionCounters.isAttackingCount--;
     }
 }

@@ -20,7 +20,7 @@ public class MoveCommand : ICommand
         if (obj == null)
             return;
         List<GameObject> path = ArgsParser.MakePathFromCoordinates(coordinateList);
-        obj.GetComponent<TankMovement>().SetPath(path);
+        obj.GetComponent<Movement>().SetPath(path);
 
         Vector2Int newPosition = path[path.Count - 1].GetComponent<CustomTag>().coordinates;
         path[path.Count - 1].GetComponent<CustomTag>().taken = true;

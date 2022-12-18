@@ -1,9 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PrefabContainer : MonoBehaviour
 {
     public static PrefabContainer container;
-    public GameObject playerUnitPrefab;
+    public List<GameObject> playerUnitPrefab;
     public GameObject structurePrefab;
     public GameObject roadPrefab;
     public GameObject bottomPanel;

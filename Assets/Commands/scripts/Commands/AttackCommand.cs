@@ -23,7 +23,7 @@ public class AttackCommand : ICommand
         if (playerUnit == null)
             return;
 
-        playerUnit.GetComponent<TankAttack>().SetEnemy(enemy);
+        playerUnit.GetComponent<Attack>().SetEnemy(enemy);
 
         int attackPoints = playerUnit.GetComponent<UnitStats>().GetAP();
         enemy.GetComponent<StatsAbstract>().AddToReceived(attackPoints);
