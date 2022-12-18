@@ -53,7 +53,7 @@ public class TCPConnection : MonoBehaviour
                 receiverThread.Start();
                 selfPort = port;
                 return;
-                
+
             }
             catch (System.IO.IOException)
             {
@@ -97,29 +97,38 @@ public class TCPConnection : MonoBehaviour
     {
         new Thread(() =>
         {
+            string message = "";
             while (client.socketReady)
-            {   Debug.Log("ddddddd");
+            {
+                Debug.Log("aaaa");
                 byte[] bytes = client.readSocket();
                 if (bytes != null)
                 {
-                    Debug.Log("afsfff");
-                    string message = Encoding.Default.GetString(bytes);
-                    string[] splited = message.Split("\n");
-                    foreach (string part in splited)
+                    message += Encoding.Default.GetString(bytes);
+                    Debug.Log(message);
+                    Debug.Log(message.Contains("\n"));
+                    if (message.Contains("\n"))
                     {
-                        try
+                        string[] splited = message.Split("\n");
+                        Debug.Log(splited.Length);
+                        foreach (string part in splited)
                         {
-                            messageQueue.Add(part);
+                            try
+                            {
+                                messageQueue.Add(part);
+                            }
+                            catch (ArgumentException err)
+                            {
+                                Debug.Log(err.ToString());
+                            }
                         }
-                        catch (ArgumentException err)
-                        {
-                            Debug.Log(err.ToString());
-                        }
+                        message = "";
                     }
                 }
                 else
                 {
-                    messageQueue.Add("Zerwano polaczenie");
+                    // client.socketReady = false;
+                    // messageQueue.Add("Zerwano polaczenie");
                 }
             }
         }).Start();
@@ -133,7 +142,7 @@ public class TCPConnection : MonoBehaviour
         messageQueue = new List<string>();
         serverInfo = null;
         client = new TCPClient();
-        if(receiverThread != null)
+        if (receiverThread != null)
             receiverThread.Join();
     }
 }

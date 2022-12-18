@@ -21,6 +21,14 @@ public abstract class StatsAbstract : MonoBehaviour
         return healthPoints;
     }
 
+    public void SetValues(int lv, int hp, int vr)
+    {
+        healthPoints = hp;
+        maxHealthPoints = hp;
+        level = lv;
+        viewRange = vr;
+    }
+
     public int GetMaxHP()
     {
         return maxHealthPoints;

@@ -57,8 +57,10 @@ public class TurnActions : ActionsAbstract, IActions
             "##", //set by server
             CommandEnum.ENDTURN,
             new List<string>{
-                currentTurn.ToString()
-            }
+                currentTurn.ToString(),
+                Resources.coins.ToString(),
+            },
+            new GameState()
         );
         Debug.Log(builder.SaveToString());
 

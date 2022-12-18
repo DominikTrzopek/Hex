@@ -7,6 +7,7 @@ public class PrefabContainer : MonoBehaviour
     public static PrefabContainer container;
     public List<GameObject> playerUnitPrefab;
     public GameObject structurePrefab;
+    public GameObject basePrefab;
     public GameObject roadPrefab;
     public GameObject bottomPanel;
 

@@ -15,7 +15,7 @@ public class FindNetworkObject : MonoBehaviour
         return null;
     }
 
-    public static List<GameObject> FindAllNetObj(string playerId)
+    public static List<GameObject> FindPlayerAllNetObj(string playerId)
     {
         List<GameObject> networkObjects = new List<GameObject>();
         NetworkId[] scripts = Object.FindObjectsOfType<NetworkId>();
@@ -23,6 +23,17 @@ public class FindNetworkObject : MonoBehaviour
         {
             if (script.gameObject.GetComponent<NetworkId>().ownerId == playerId)
                 networkObjects.Add(script.transform.root.gameObject);
+        }
+        return networkObjects;
+    }
+
+    public static List<GameObject> FindAllNetObj()
+    {
+        List<GameObject> networkObjects = new List<GameObject>();
+        NetworkId[] scripts = Object.FindObjectsOfType<NetworkId>();
+        foreach (NetworkId script in scripts)
+        {
+            networkObjects.Add(script.transform.root.gameObject);
         }
         return networkObjects;
     }

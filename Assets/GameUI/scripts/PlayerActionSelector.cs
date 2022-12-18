@@ -99,7 +99,8 @@ public class PlayerActionSelector : MonoBehaviour
                         position.y.ToString(),
                         rotation.ToString(),
                         unitPrefabNumber.ToString()
-                    }
+                    },
+                    new GameState(false)
                 );
                 Resources.Spend(Costs.container.initUnit);
 
@@ -115,7 +116,8 @@ public class PlayerActionSelector : MonoBehaviour
         (
             obj.GetComponent<NetworkId>().objectId,
             CommandEnum.MAKE_BANK,
-            null
+            null,
+            new GameState(false)
         );
         Resources.Spend(Costs.container.makeBank);
         Resources.ChangePassiveIncome(1);
@@ -143,7 +145,8 @@ public class PlayerActionSelector : MonoBehaviour
                 (
                     System.Guid.NewGuid().ToString().Substring(0, 18),
                     CommandEnum.INSTANTIANE_STRUCTURE,
-                    cellsInPath
+                    cellsInPath,
+                    new GameState(false)
                 );
                 Resources.Spend(Costs.container.initStructure);
                 Resources.ChangePassiveIncome(2);
@@ -175,11 +178,12 @@ public class PlayerActionSelector : MonoBehaviour
                 (
                     obj.GetComponent<NetworkId>().objectId,
                     CommandEnum.MOVE,
-                    cellsInPath
+                    cellsInPath,
+                    new GameState(false)
                 );
                 if (end.GetComponent<CustomTag>().getResources == true)
                     Resources.ChangeTmpIncome(1);
-
+                Debug.Log(builder.SaveToString());
                 TCPConnection.instance.client.writeSocket(builder);
                 UnitActions.instance.CancelAction();
 
@@ -203,7 +207,8 @@ public class PlayerActionSelector : MonoBehaviour
                     CommandEnum.ATTACK,
                     new List<string>{
                         end.transform.parent.GetComponent<NetworkId>().objectId
-                    }
+                    },
+                    new GameState(false)
                 );
                 Debug.Log(builder.SaveToString());
 
@@ -219,7 +224,8 @@ public class PlayerActionSelector : MonoBehaviour
         (
             obj.GetComponent<NetworkId>().objectId,
             upgrade,
-            null
+            null,
+            new GameState(false)
         );
         switch (upgrade)
         {

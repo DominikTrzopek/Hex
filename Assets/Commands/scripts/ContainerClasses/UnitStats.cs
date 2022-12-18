@@ -9,6 +9,13 @@ public class UnitStats : StatsAbstract
     [SerializeField]
     private int attackRange;
 
+    public void UpdateUnit(int attackPoints, int moveRange, int attackRange)
+    {
+        this.attackPoints = attackPoints;
+        this.moveRange = moveRange;
+        this.attackRange = attackRange;
+    }
+
     public int GetAP()
     {
         return attackPoints;

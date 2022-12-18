@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class EndTurnCommand : ICommand
 {
@@ -9,12 +10,18 @@ public class EndTurnCommand : ICommand
     TMPro.TextMeshProUGUI textMeshPro;
     string playerId;
     int currentTurn;
+    int resources;
+    GameState gameState;
     Camera camera;
 
     public EndTurnCommand(CommandBuilder command, Camera camera)
     {
         this.playerId = command.networkId;
-        this.currentTurn = int.Parse(command.args[0]);
+        if (command.args.Count == 1)
+            this.currentTurn = int.Parse(command.args[0]);
+        if (command.args.Count == 2)
+            this.resources = int.Parse(command.args[1]);
+        this.gameState = command.gameState;
         this.tooltip = PanelHolder.holder.tooltip;
         this.textMeshPro = PanelHolder.holder.textMeshPro;
         this.camera = camera;
@@ -31,17 +38,24 @@ public class EndTurnCommand : ICommand
         camera.GetComponent<Camera_move>().move = true;
         camera.GetComponent<Camera_move>().doneScrolling = false;
 
-        if(currentTurn > TCPConnection.instance.serverInfo.numberOfTurns)
-            Debug.Log("Game ended");
+        if (ConnectionHandler.reconnected)
+        {
+            try
+            {
+                ConnectionHandler.reconnected = false;
+                ConnectionHandler.Reinstantiate(gameState);
+            }
+            catch(NullReferenceException){}
+        }
+
         PlayerScores.container.UpdateScores();
         if (playerId == UDPServerConfig.getId())
         {
-            
             PanelHolder.holder.endTurnButton.interactable = true;
             PlayerActionSelector.command = CommandEnum.NONE;
             tooltip.GetComponent<Image>().color = Color.black;
             textMeshPro.text = "Your turn";
-            List<GameObject> playerObjects = FindNetworkObject.FindAllNetObj(playerId);
+            List<GameObject> playerObjects = FindNetworkObject.FindPlayerAllNetObj(playerId);
             Resources.coins += Resources.passiveIncome + Resources.tempIncome;
             EnableScripts(playerObjects);
         }
@@ -63,7 +77,7 @@ public class EndTurnCommand : ICommand
                 obj.GetComponent<Attack>().SetMadeMove(false);
                 obj.GetComponent<Movement>().SetMadeMove(false);
             }
-            catch{}
+            catch { }
         }
     }
 

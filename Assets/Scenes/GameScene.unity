@@ -12631,6 +12631,7 @@ MonoBehaviour:
   playerUnitPrefab:
   - {fileID: 640297529574435754, guid: d9584feb34019f74a84c8c0ba7b038a5, type: 3}
   structurePrefab: {fileID: 2896637420692342140, guid: 4691daa356fc73047bab8735ed07c13e, type: 3}
+  basePrefab: {fileID: 3579664208746967279, guid: e00192de1d0f7c3409b1bbe4b5662bff, type: 3}
   roadPrefab: {fileID: 4982215186583176076, guid: 9f40f766c726a2946a330c42dc63cb61, type: 3}
   bottomPanel: {fileID: 1227031001}
 --- !u!114 &2007716350

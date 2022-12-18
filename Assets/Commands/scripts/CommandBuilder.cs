@@ -9,13 +9,15 @@ public class CommandBuilder : ITCPMsg
     public string networkId;
     public CommandEnum command;
     public List<string> args;
+    public GameState gameState;
 
-    public CommandBuilder(string networkId, CommandEnum command, List<string> args)
+    public CommandBuilder(string networkId, CommandEnum command, List<string> args, GameState gameState)
     {
         this.ownerId = UDPServerConfig.getId();
         this.networkId = networkId;
         this.command = command;
         this.args = args;
+        this.gameState = gameState;
     }
 
     public string SaveToString()

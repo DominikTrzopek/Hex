@@ -21,6 +21,8 @@ public class TCPClient
         try
         {
             client = new TcpClient(host, port);
+            client.SendBufferSize = 8192;
+            client.ReceiveBufferSize = 8192;
             client.SendTimeout = 2000;
             client.ReceiveTimeout = 2000;
             theStream = client.GetStream();
@@ -89,7 +91,6 @@ public class TCPClient
         }
         catch (Exception err)
         {
-         //   socketReady = false;
             Debug.Log(err.ToString());
         }
         return null;
