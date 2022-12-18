@@ -20,6 +20,11 @@ public class PlayerInfo
         this.color = color;
     }
 
+    public PlayerInfo(string id, string secretId){
+        this.id = id;
+        this.secretId = secretId;
+    }
+
     public PlayerInfo(PlayerStatus status, int number){
         this.id = UDPServerConfig.getId();
         this.name = UDPServerConfig.getPlayerName();

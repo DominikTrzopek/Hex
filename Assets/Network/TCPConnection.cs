@@ -13,6 +13,7 @@ public class TCPConnection : MonoBehaviour
     public List<string> messageQueue = new List<string>();
     private Thread receiverThread;
     public int selfNumber;
+    public int selfPort;
 
     private void Awake()
     {
@@ -50,6 +51,7 @@ public class TCPConnection : MonoBehaviour
                 client.writeSocket(buildConnectMsg(password));
                 receiverThread = new Thread(new ThreadStart(receiveData));
                 receiverThread.Start();
+                selfPort = port;
                 return;
                 
             }
@@ -72,15 +74,35 @@ public class TCPConnection : MonoBehaviour
         return new ConnectMsg(info, password);
     }
 
+    public static ConnectMsg buildReconnectMsg()
+    {
+        PlayerInfo info = new PlayerInfo(
+            UDPServerConfig.getId(),
+            UDPServerConfig.getSecretId()
+        );
+        return new ConnectMsg(info);
+    }
+
+    public void Reconnect()
+    {
+        TCPConnection conn = TCPConnection.instance;
+        conn.client.setupSocket(conn.serverInfo.ip, conn.selfPort);
+        conn.client.writeSocket(TCPConnection.buildReconnectMsg());
+        receiverThread = new Thread(new ThreadStart(receiveData));
+        receiverThread.Start();
+    }
+
+
     private void receiveData()
     {
         new Thread(() =>
         {
             while (client.socketReady)
-            {
+            {   Debug.Log("ddddddd");
                 byte[] bytes = client.readSocket();
                 if (bytes != null)
                 {
+                    Debug.Log("afsfff");
                     string message = Encoding.Default.GetString(bytes);
                     string[] splited = message.Split("\n");
                     foreach (string part in splited)
@@ -105,6 +127,7 @@ public class TCPConnection : MonoBehaviour
 
     public void clearConnection()
     {
+        client.disconnect();
         client.closeSocket();
         playerInfo = new List<PlayerInfo>();
         messageQueue = new List<string>();

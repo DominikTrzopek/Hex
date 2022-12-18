@@ -55,6 +55,21 @@ public class TCPClient
         }
     }
 
+    public void disconnect()
+    {
+        try
+        {
+            if (!socketReady)
+                return;
+            theWriter.Write("");
+            theWriter.Flush();
+        }
+        catch (Exception err)
+        {
+            Debug.Log(err.ToString());
+        }
+    }
+
     public byte[] readSocket(int maxBuffer = 1024)
     {
         try
@@ -74,7 +89,7 @@ public class TCPClient
         }
         catch (Exception err)
         {
-            socketReady = false;
+         //   socketReady = false;
             Debug.Log(err.ToString());
         }
         return null;

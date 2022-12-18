@@ -41,6 +41,8 @@ public class TankAttack : Attack
 
     void FixedUpdate()
     {
+        if(enemy == null && start)
+            RotateTurret(SetBoolsAfterAttack, pivot);
         if (start)
             RotateTurret(SetBoolsBeforeAttack, enemy);
         else if (attack)
@@ -111,6 +113,7 @@ public class TankAttack : Attack
 
     private void SetBoolsAfterAttack()
     {
+        start = false;
         inAction = false;
         ActionCounters.isAttackingCount--;
     }
