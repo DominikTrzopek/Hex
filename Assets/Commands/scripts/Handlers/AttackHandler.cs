@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AttackHandler : IActionHandler
 {
@@ -28,10 +29,10 @@ public class AttackHandler : IActionHandler
         foreach (Collider enemy in enemyObjects)
         {
             NetworkId networkId = enemy.transform.parent.GetComponent<NetworkId>();
-            if (networkId != null && networkId.ownerId != UDPServerConfig.getId())
+            if (networkId != null && networkId.ownerId != UDPServerConfig.GetId())
             {
-                Vector3 rayDirection = (enemy.transform.position - unit.transform.position).normalized * 10;
-                rayDirection.y = 0.2f;
+                Vector3 rayDirection = (enemy.transform.position - unit.transform.position).normalized * 5;
+                rayDirection.y = 0.15f;
                 Ray ray = new Ray(unit.transform.position, rayDirection);
                 RaycastHit hitData;
                 if (Physics.Raycast(ray, out hitData))
@@ -65,10 +66,14 @@ public class AttackHandler : IActionHandler
     {
         foreach (GameObject cell in cells)
         {
-            cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = oldColor;
-            cell.GetComponent<CellSelector>().activeCellColor = oldColor;
-            cell.transform.GetChild(1).gameObject.SetActive(false);
-            cell.GetComponent<CustomTag>().active = false;
+            try
+            {
+                cell.transform.GetChild(1).GetComponent<SpriteRenderer>().color = oldColor;
+                cell.GetComponent<CellSelector>().activeCellColor = oldColor;
+                cell.transform.GetChild(1).gameObject.SetActive(false);
+                cell.GetComponent<CustomTag>().active = false;
+            }
+            catch (NullReferenceException) { }
             linePoints.Clear();
             lineController.SetUpLine(linePoints.ToArray());
         }

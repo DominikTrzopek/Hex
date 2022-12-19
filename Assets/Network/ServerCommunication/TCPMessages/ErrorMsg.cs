@@ -6,7 +6,7 @@ public class ErrorMsg
     public ResponseType code;
     public string errorMessage;
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

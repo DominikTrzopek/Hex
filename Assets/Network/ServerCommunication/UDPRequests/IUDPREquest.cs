@@ -1,5 +1,5 @@
 public interface IUDPREquest
 {
-    public string getRequestType();
-    public string saveToString();
+    public string GetRequestType();
+    public string SaveToString();
 }

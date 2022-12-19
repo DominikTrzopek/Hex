@@ -10,52 +10,52 @@ public static class UDPServerConfig
     private static string secretId = System.Guid.NewGuid().ToString();
     private static string secretHash;
 
-    public static int getPort()
+    public static int GetPort()
     {
         return port;
     }
 
-    public static string getIp()
+    public static string GetIp()
     {
         return ipAddress;
     }
 
-    public static string getPlayerName()
+    public static string GetPlayerName()
     {
         return playerName;
     }
 
-    public static void setPort(int newPort)
+    public static void SetPort(int newPort)
     {
         port = newPort;
     }
 
-    public static void setIP(string newIp)
+    public static void SetIP(string newIp)
     {
         ipAddress = newIp;
     }
 
-    public static void setPlayerName(string newName)
+    public static void SetPlayerName(string newName)
     {
         playerName = newName;
     }
 
-    public static string getId()
+    public static string GetId()
     {
         return id;
     }
 
-    public static string getSecretId()
+    public static string GetSecretId()
     {
         return secretId;
     }
 
-    public static string getSecretHash()
+    public static string GetSecretHash()
     {
         return secretHash;
     }
 
-    public static void setSecretHash(string hash)
+    public static void SetSecretHash(string hash)
     {
         secretHash = hash;
     }

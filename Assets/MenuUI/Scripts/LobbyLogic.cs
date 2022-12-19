@@ -30,7 +30,7 @@ public class LobbyLogic : MonoBehaviour
         cells.Clear();
         conn = TCPConnection.instance;
         TCPServerInfo info = conn.serverInfo;
-        if (UDPServerConfig.getSecretHash() != info.creatorId)
+        if (UDPServerConfig.GetSecretHash() != info.creatorId)
         {
             deleteButton.SetActive(false);
         }
@@ -68,10 +68,10 @@ public class LobbyLogic : MonoBehaviour
                 try
                 {
 
-                    ConnectMsg info = ConnectMsg.fromString(conn.messageQueue[0]);
-                    if (info.playerInfo.id == UDPServerConfig.getId())
+                    ConnectMsg info = ConnectMsg.FromString(conn.messageQueue[0]);
+                    if (info.playerInfo.id == UDPServerConfig.GetId())
                         conn.selfNumber = info.playerInfo.number;
-                    ErrorHandling.handle(info.code, this.transform.parent.parent.gameObject);
+                    ErrorHandling.Handle(info.code, this.transform.parent.parent.gameObject);
                     int foundIndex = FindCell(info.playerInfo.id);
                     if (foundIndex != -1)
                     {
@@ -92,8 +92,8 @@ public class LobbyLogic : MonoBehaviour
         }
         if (isActive == true && !conn.client.socketReady && conn.messageQueue.Count <= 1)
         {
-            ErrorHandling.handle(ResponseType.DISCONNECT, this.transform.parent.parent.gameObject);
-            conn.clearConnection();
+            ErrorHandling.Handle(ResponseType.DISCONNECT, this.transform.parent.parent.gameObject);
+            conn.ClearConnection();
         }
     }
 
@@ -127,7 +127,7 @@ public class LobbyLogic : MonoBehaviour
     public void StarGame()
     {
         conn = TCPConnection.instance;
-        conn.client.writeSocket(new ConnectMsg(new PlayerInfo(PlayerStatus.INGAME, TCPConnection.instance.selfNumber)));
+        conn.client.WriteSocket(new ConnectMsg(new PlayerInfo(PlayerStatus.INGAME, TCPConnection.instance.selfNumber)));
         foreach (GameObject cell in cells)
         {
             PlayersInfoLogic playerData = cell.GetComponent<PlayersInfoLogic>();

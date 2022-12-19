@@ -1,5 +1,5 @@
 public interface IUDPResponse
 {
-    public string getResponseCode();
-    public static UDPResponse fromString(string json) => new UDPResponse();
+    public string GetResponseCode();
+    public static UDPResponse FromString(string json) => new UDPResponse();
 }

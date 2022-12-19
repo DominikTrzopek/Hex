@@ -7,14 +7,14 @@ public class GetServerListRequest : IUDPREquest
     public RequestType requestType = RequestType.GET;
 
     public GetServerListRequest(){
-        this.id = UDPServerConfig.getId();
+        this.id = UDPServerConfig.GetId();
     }
 
-    public string getRequestType(){
+    public string GetRequestType(){
         return requestType.ToString();
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

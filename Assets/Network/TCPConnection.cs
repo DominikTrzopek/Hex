@@ -28,28 +28,28 @@ public class TCPConnection : MonoBehaviour
         }
     }
 
-    public void clear()
+    public void Clear()
     {
         instance = null;
     }
 
-    public void connectToGame(TCPServerInfo info, string password)
+    public void ConnectToGame(TCPServerInfo info, string password)
     {
         serverInfo = info;
         foreach (int port in info.ports)
         {
             try
             {
-                client.setupSocket(info.ip, port);
-                client.readSocket();
+                client.SetupSocket(info.ip, port);
+                client.ReadSocket();
                 if (!client.socketReady)
                 {
-                    client.closeSocket();
+                    client.CloseSocket();
                     throw new System.IO.IOException();
                 }
-                client.setTimeout(300);
-                client.writeSocket(buildConnectMsg(password));
-                receiverThread = new Thread(new ThreadStart(receiveData));
+                client.SetTimeout(300);
+                client.WriteSocket(BuildConnectMsg(password));
+                receiverThread = new Thread(new ThreadStart(ReceiveData));
                 receiverThread.Start();
                 selfPort = port;
                 return;
@@ -62,23 +62,23 @@ public class TCPConnection : MonoBehaviour
         }
     }
 
-    private ConnectMsg buildConnectMsg(string password)
+    private ConnectMsg BuildConnectMsg(string password)
     {
         PlayerInfo info = new PlayerInfo(
-            UDPServerConfig.getId(),
-            UDPServerConfig.getSecretId(),
-            UDPServerConfig.getPlayerName(),
+            UDPServerConfig.GetId(),
+            UDPServerConfig.GetSecretId(),
+            UDPServerConfig.GetPlayerName(),
             PlayerStatus.NOTREADY,
             Color.black
         );
         return new ConnectMsg(info, password);
     }
 
-    public static ConnectMsg buildReconnectMsg()
+    public static ConnectMsg BuildReconnectMsg()
     {
         PlayerInfo info = new PlayerInfo(
-            UDPServerConfig.getId(),
-            UDPServerConfig.getSecretId()
+            UDPServerConfig.GetId(),
+            UDPServerConfig.GetSecretId()
         );
         return new ConnectMsg(info);
     }
@@ -86,21 +86,21 @@ public class TCPConnection : MonoBehaviour
     public void Reconnect()
     {
         TCPConnection conn = TCPConnection.instance;
-        conn.client.setupSocket(conn.serverInfo.ip, conn.selfPort);
-        conn.client.writeSocket(TCPConnection.buildReconnectMsg());
-        receiverThread = new Thread(new ThreadStart(receiveData));
+        conn.client.SetupSocket(conn.serverInfo.ip, conn.selfPort);
+        conn.client.WriteSocket(TCPConnection.BuildReconnectMsg());
+        receiverThread = new Thread(new ThreadStart(ReceiveData));
         receiverThread.Start();
     }
 
 
-    private void receiveData()
+    private void ReceiveData()
     {
         new Thread(() =>
         {
             string message = "";
             while (client.socketReady)
             {
-                byte[] bytes = client.readSocket();
+                byte[] bytes = client.ReadSocket();
                 if (bytes != null)
                 {
                     message += Encoding.Default.GetString(bytes);
@@ -130,10 +130,10 @@ public class TCPConnection : MonoBehaviour
         }).Start();
     }
 
-    public void clearConnection()
+    public void ClearConnection()
     {
-        client.disconnect();
-        client.closeSocket();
+        client.Disconnect();
+        client.CloseSocket();
         playerInfo = new List<PlayerInfo>();
         messageQueue = new List<string>();
         serverInfo = null;

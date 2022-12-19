@@ -26,7 +26,7 @@ public class PlayerActionSelector : MonoBehaviour
             {
                 obj = rayhit.transform.parent.gameObject;
 
-                if (obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+                if (obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.GetId())
                 {
                     CheckObjActions();
                 }
@@ -104,7 +104,7 @@ public class PlayerActionSelector : MonoBehaviour
                 );
                 Resources.Spend(Costs.container.initUnit);
 
-                TCPConnection.instance.client.writeSocket(builder);
+                TCPConnection.instance.client.WriteSocket(builder);
                 BaseActions.instance.CancelAction();
             }
         }
@@ -122,7 +122,7 @@ public class PlayerActionSelector : MonoBehaviour
         Resources.Spend(Costs.container.makeBank);
         Resources.ChangePassiveIncome(1);
 
-        TCPConnection.instance.client.writeSocket(builder);
+        TCPConnection.instance.client.WriteSocket(builder);
         BaseActions.instance.CancelAction();
     }
 
@@ -151,7 +151,7 @@ public class PlayerActionSelector : MonoBehaviour
                 Resources.Spend(Costs.container.initStructure);
                 Resources.ChangePassiveIncome(2);
 
-                TCPConnection.instance.client.writeSocket(builder);
+                TCPConnection.instance.client.WriteSocket(builder);
                 if (obj.GetComponent<CustomTag>().HasTag(CellTag.mainBase))
                     BaseActions.instance.CancelAction();
                 else
@@ -181,10 +181,7 @@ public class PlayerActionSelector : MonoBehaviour
                     cellsInPath,
                     new GameState(false)
                 );
-                if (end.GetComponent<CustomTag>().getResources == true)
-                    Resources.ChangeTmpIncome(1);
-                Debug.Log(builder.SaveToString());
-                TCPConnection.instance.client.writeSocket(builder);
+                TCPConnection.instance.client.WriteSocket(builder);
                 UnitActions.instance.CancelAction();
 
             }
@@ -212,7 +209,7 @@ public class PlayerActionSelector : MonoBehaviour
                 );
                 Debug.Log(builder.SaveToString());
 
-                TCPConnection.instance.client.writeSocket(builder);
+                TCPConnection.instance.client.WriteSocket(builder);
                 UnitActions.instance.CancelAction();
             }
         }
@@ -246,7 +243,7 @@ public class PlayerActionSelector : MonoBehaviour
                 break;
         }
 
-        TCPConnection.instance.client.writeSocket(builder);
+        TCPConnection.instance.client.WriteSocket(builder);
         BaseActions.instance.CancelAction();
     }
 

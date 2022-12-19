@@ -104,7 +104,7 @@ public class GridManipulator : MonoBehaviour
         for (int i = 0; i < bases.Count; i++)
         {
             bases[i].GetComponent<CustomTag>().Rename(0, CellTag.structure);
-            bases[i].GetComponent<NetworkId>().setIds(conn.playerInfo[i].id, conn.playerInfo[i].id);
+            bases[i].GetComponent<NetworkId>().SetIds(conn.playerInfo[i].id, conn.playerInfo[i].id);
             Color color = conn.playerInfo[i].color;
             color.a = ColorList.alpha;
             bases[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;

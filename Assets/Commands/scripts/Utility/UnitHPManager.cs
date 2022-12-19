@@ -10,8 +10,15 @@ public class UnitHPManager : MonoBehaviour
         if(hp <= 0)
         {
             Vector2Int position = this.GetComponent<NetworkId>().position;
-            HexGrid.hexArray[position.x, position.y].GetComponent<CustomTag>().taken = false;
-            HexGrid.hexArray[position.x, position.y].GetComponent<CustomTag>().Rename(0, CellTag.standard);
+            CustomTag hexTag = HexGrid.hexArray[position.x, position.y].GetComponent<CustomTag>();
+            hexTag.taken = false;
+            hexTag.Rename(0, CellTag.standard);
+
+            if(hexTag.getResources == true)
+            {
+                Resources.ChangeTmpIncome(-2);
+            }
+
             Destroy(this.gameObject);
         }
     }

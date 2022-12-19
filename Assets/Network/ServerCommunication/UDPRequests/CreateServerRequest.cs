@@ -11,12 +11,12 @@ public class CreateServerRequest : IUDPREquest
         this.serverInfo = serverInfo;
     }
 
-    public string getRequestType()
+    public string GetRequestType()
     {
         return requestType.ToString();
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

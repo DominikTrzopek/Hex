@@ -33,7 +33,7 @@ public class TankAttack : Attack
         this.enemy = newEnemy;
         newRotation = turret.transform.rotation.y + 10f;
         start = true;
-        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.GetId())
         {
             madeMove = true;
             this.gameObject.GetComponent<TankMovement>().madeMove = true;

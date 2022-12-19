@@ -29,7 +29,7 @@ public class InitUnitCommand : ICommand
         Vector3 position = HexGrid.hexArray[coordinates.x, coordinates.y].transform.position;
         GameObject newObj = Object.Instantiate(units[prefabNum], position, Quaternion.Euler(new Vector3(0, rotation, 0)));
         newObj.GetComponent<NetworkId>().position = coordinates;
-        newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
+        newObj.GetComponent<NetworkId>().SetIds(ownerId, objectId);
         HexGrid.hexArray[coordinates.x, coordinates.y].GetComponent<CustomTag>().taken = true;
 
         Color color = PlayerInfoGetter.GetColor(ownerId);

@@ -26,13 +26,13 @@ public class PlayerInfo
     }
 
     public PlayerInfo(PlayerStatus status, int number){
-        this.id = UDPServerConfig.getId();
-        this.name = UDPServerConfig.getPlayerName();
+        this.id = UDPServerConfig.GetId();
+        this.name = UDPServerConfig.GetPlayerName();
         this.status = status;
         this.number = number;
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

@@ -25,7 +25,7 @@ public class ConnectMsg : ITCPMsg
         return JsonUtility.ToJson(this);
     }
 
-    public static ConnectMsg fromString(string json)
+    public static ConnectMsg FromString(string json)
     {
         return JsonUtility.FromJson<ConnectMsg>(json);
     }

@@ -39,7 +39,7 @@ public class TurnActions : ActionsAbstract, IActions
             textMeshPro.text = "End or cancel your current action";
             return;
         }
-        if(ActionCounters.isAttackingCount != 0 || ActionCounters.isMovingCount != 0)
+        if(ActionCounters.isAttackingCount > 0 || ActionCounters.isMovingCount > 0)
         {
             Debug.Log("wait for units");
             textMeshPro.text = "Wait for units to stop";
@@ -64,6 +64,6 @@ public class TurnActions : ActionsAbstract, IActions
         );
         Debug.Log(builder.SaveToString());
 
-        TCPConnection.instance.client.writeSocket(builder);
+        TCPConnection.instance.client.WriteSocket(builder);
     }
 }

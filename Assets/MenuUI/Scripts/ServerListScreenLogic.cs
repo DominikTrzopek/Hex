@@ -31,8 +31,8 @@ public class ServerListScreenLogic : MonoBehaviour
             UDPClient client = new UDPClient();
             try
             {
-                client.init();
-                client.sendData(new GetServerListRequest());
+                client.Init();
+                client.SendData(new GetServerListRequest());
             }
             catch (Exception err)
             {
@@ -45,9 +45,9 @@ public class ServerListScreenLogic : MonoBehaviour
             {
                 try
                 {
-                    byte[] byteResponse = client.receiveData();
+                    byte[] byteResponse = client.ReceiveData();
                     string message = Encoding.Default.GetString(byteResponse);
-                    UDPResponse udpResponse = UDPResponse.fromString(message);
+                    UDPResponse udpResponse = UDPResponse.FromString(message);
                     if (udpResponse.responseType == ResponseType.ENDOFMESSAGE)
                     {
                         responseCode = ResponseType.ENDOFMESSAGE;
@@ -82,7 +82,7 @@ public class ServerListScreenLogic : MonoBehaviour
             dataReady = false;
             if (responseCode != ResponseType.SUCCESS && responseCode != ResponseType.ENDOFMESSAGE)
             {
-                ErrorHandling.handle(responseCode, this.transform.parent.parent.gameObject);
+                ErrorHandling.Handle(responseCode, this.transform.parent.parent.gameObject);
                 return;
             }
             DisplayServerInfo(tcpServers);
@@ -116,7 +116,7 @@ public class ServerListScreenLogic : MonoBehaviour
             numOfPlayersText.SetText(serverInfo.connections.ToString() + "/" + serverInfo.numberOfPlayers.ToString());
             gameLenghtText.SetText(serverInfo.numberOfTurns.ToString() + " TURNS");
             mapSizeText.SetText(serverInfo.mapSize.ToString() + " x " + serverInfo.mapSize.ToString() + " Cells");
-            newCell.GetComponent<ServerInfoReference>().setTCPInfo(serverInfo);
+            newCell.GetComponent<ServerInfoReference>().SetTCPInfo(serverInfo);
             if (serverInfo.password == null || serverInfo.password.Trim() == "")
             {
                 newCell.transform.Find("Button/PasswordInputField").gameObject.SetActive(false);

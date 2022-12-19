@@ -47,7 +47,7 @@ public class NewServerInputLogic : MonoBehaviour
             catch(Exception err)
             {
                 Debug.Log(err);
-                ErrorHandling.handle(ResponseType.FILENOTFOUND, this.gameObject);
+                ErrorHandling.Handle(ResponseType.FILENOTFOUND, this.gameObject);
                 return null;
             }
             level = CustomMapLogic.Scale(level, size, size);
@@ -58,7 +58,7 @@ public class NewServerInputLogic : MonoBehaviour
             if(stringMap.Length * sizeof(Char) > 4092)
             {
                 Debug.Log(levelMap.Length);
-                ErrorHandling.handle(ResponseType.MAPSIZETOLARGE, this.gameObject);
+                ErrorHandling.Handle(ResponseType.MAPSIZETOLARGE, this.gameObject);
                 return null;
             }
             return stringMap;
@@ -66,10 +66,10 @@ public class NewServerInputLogic : MonoBehaviour
         return null;
     }
 
-    private TCPServerInfo setServerInfo(int seed, string customMap)
+    private TCPServerInfo SetServerInfo(int seed, string customMap)
     {
         return new TCPServerInfo(
-            UDPServerConfig.getSecretId(),
+            UDPServerConfig.GetSecretId(),
             serverName.text,
             serverPassword.text,
             int.Parse(numberOfPlayers.options[numberOfPlayers.value].text),
@@ -89,15 +89,15 @@ public class NewServerInputLogic : MonoBehaviour
         string customMap = GetCustomMap(int.Parse(mapSize.options[mapSize.value].text));
         if (useCustomMap.isOn && customMap == null)
             return;
-        serverInfo = setServerInfo(seed, customMap);
-        Debug.Log(serverInfo.saveToString());
+        serverInfo = SetServerInfo(seed, customMap);
+        Debug.Log(serverInfo.SaveToString());
         new Thread(() =>
         {
             UDPClient client = new UDPClient();
             try
             {
-                client.init();
-                client.sendData(new CreateServerRequest(serverInfo));
+                client.Init();
+                client.SendData(new CreateServerRequest(serverInfo));
             }
             catch(Exception err)
             {
@@ -108,11 +108,11 @@ public class NewServerInputLogic : MonoBehaviour
             }
             try
             {
-                byte[] responseByte = client.receiveData();
+                byte[] responseByte = client.ReceiveData();
                 string message = Encoding.Default.GetString(responseByte);
-                UDPResponse response = UDPResponse.fromString(message);
+                UDPResponse response = UDPResponse.FromString(message);
                 serverInfo = response.serverInfo;
-                UDPServerConfig.setSecretHash(serverInfo.creatorId);
+                UDPServerConfig.SetSecretHash(serverInfo.creatorId);
                 responseCode = response.responseType;
                 dataReady = true;
             }
@@ -139,17 +139,17 @@ public class NewServerInputLogic : MonoBehaviour
             if(responseCode != ResponseType.SUCCESS)
             {
                 Debug.Log(this.gameObject.name);
-                ErrorHandling.handle(responseCode, this.gameObject);
+                ErrorHandling.Handle(responseCode, this.gameObject);
                 return;
             }
             TCPConnection conn = TCPConnection.instance;
             try
             {
-                conn.connectToGame(serverInfo, serverPassword.text);
+                conn.ConnectToGame(serverInfo, serverPassword.text);
             }
             catch
             {
-                conn.clearConnection();
+                conn.ClearConnection();
                 return;
             }
             this.gameObject.SetActive(false);

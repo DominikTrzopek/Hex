@@ -16,10 +16,10 @@ public class TankMovement : Movement
     override public void SetPath(List<GameObject> selectedPath)
     {
         path = selectedPath;
-        startSelected = true;
         if(moving == false)
             ActionCounters.isMovingCount++;
-        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+        startSelected = true;
+        if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.GetId())
             madeMove = true;
     }
 
@@ -88,6 +88,7 @@ public class TankMovement : Movement
             if(startSelected == true)
                 ActionCounters.isMovingCount--;
             startSelected = false;
+            pathSelected = false;
         }
     }
 

@@ -9,15 +9,15 @@ public class DeleteServerRequest : IUDPREquest
     public int serverId;
 
     public DeleteServerRequest(int serverId){
-        this.playerid = UDPServerConfig.getSecretId();
+        this.playerid = UDPServerConfig.GetSecretId();
         this.serverId = serverId;
     }
 
-    public string getRequestType(){
+    public string GetRequestType(){
         return requestType.ToString();
     }
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

@@ -12,24 +12,17 @@ public class IngameMenu : MonoBehaviour
         PlayerActionSelector.command = CommandEnum.NONE;
         ActionCounters.isAttackingCount = 0;
         ActionCounters.isMovingCount = 0;
-        TCPConnection.instance.clear();
+        TCPConnection.instance.Clear();
     }
 
     void Update()
     {
         if (PlayerActionSelector.command != CommandEnum.NONE)
-        {
             PanelHolder.holder.endTurnButton.interactable = false;
-        }
-        else if(ActionCounters.isAttackingCount != 0 || ActionCounters.isMovingCount != 0)
-        {
-            Debug.Log(ActionCounters.isMovingCount);
+        else if (ActionCounters.isAttackingCount > 0 || ActionCounters.isMovingCount > 0)
             PanelHolder.holder.endTurnButton.interactable = false;
-        }
-        else if(PlayerActionSelector.command != CommandEnum.ENDTURN)
-        {
+        else if (PlayerActionSelector.command != CommandEnum.ENDTURN)
             PanelHolder.holder.endTurnButton.interactable = true;
-        }
 
     }
 

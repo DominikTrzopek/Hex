@@ -22,6 +22,9 @@ public class AttackCommand : ICommand
         GameObject playerUnit = FindNetworkObject.FindObj(objectId);
         if (playerUnit == null)
             return;
+        
+        if(playerUnit.GetComponent<Attack>().madeMove == true)
+            return;
 
         playerUnit.GetComponent<Attack>().SetEnemy(enemy);
 

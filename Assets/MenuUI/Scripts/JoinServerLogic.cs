@@ -15,21 +15,21 @@ public class JoinServerLogic : MonoBehaviour
 
     public void JoinGame()
     {
-        TCPServerInfo info = getTCPInfo();
+        TCPServerInfo info = GetTCPInfo();
         TCPConnection conn = TCPConnection.instance;
         try
         {
-            conn.connectToGame(info, getTCPPass());
+            conn.ConnectToGame(info, GetTCPPass());
         }
         catch
         {
-            conn.clearConnection();
+            conn.ClearConnection();
             return;
         }
-        setScene();
+        SetScene();
     }
 
-    private void setScene()
+    private void SetScene()
     {
         GameObject oldScene = child.transform.parent.gameObject.GetComponent<ServerSceneReferences>().oldScene;
         GameObject newScene = child.transform.parent.gameObject.GetComponent<ServerSceneReferences>().newScene;
@@ -38,12 +38,12 @@ public class JoinServerLogic : MonoBehaviour
         newScene.SetActive(true);
     }
 
-    private TCPServerInfo getTCPInfo()
+    private TCPServerInfo GetTCPInfo()
     {
-        return child.GetComponent<ServerInfoReference>().getTCPInfo();
+        return child.GetComponent<ServerInfoReference>().GetTCPInfo();
     }
 
-    private string getTCPPass(){
+    private string GetTCPPass(){
         return serverPass.text;
     }
 }

@@ -52,7 +52,8 @@ public class EndTurnCommand : ICommand
         }
 
         PlayerScores.container.UpdateScores();
-        if (playerId == UDPServerConfig.getId())
+        ActionCounters.Reset();
+        if (playerId == UDPServerConfig.GetId())
         {
             PanelHolder.holder.endTurnButton.interactable = true;
             PlayerActionSelector.command = CommandEnum.NONE;

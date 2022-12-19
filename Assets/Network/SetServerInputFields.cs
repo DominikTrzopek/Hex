@@ -12,16 +12,16 @@ public class SetServerInputFields : MonoBehaviour
 
     void Awake()
     {
-        setInputFields();
-        portInputField.text = UDPServerConfig.getPort().ToString();
-        ipInputField.text = UDPServerConfig.getIp();
-        if(UDPServerConfig.getPlayerName().Trim() != "" && UDPServerConfig.getPlayerName().Trim() != "player")
-            playerName.text = UDPServerConfig.getPlayerName();
+        SetInputFields();
+        portInputField.text = UDPServerConfig.GetPort().ToString();
+        ipInputField.text = UDPServerConfig.GetIp();
+        if(UDPServerConfig.GetPlayerName().Trim() != "" && UDPServerConfig.GetPlayerName().Trim() != "player")
+            playerName.text = UDPServerConfig.GetPlayerName();
         else
             playerName.text = "player" + UnityEngine.Random.Range(100, 1000).ToString();
     }
 
-    public static void setInputFields()
+    public static void SetInputFields()
     {
         portInputField = GameObject.Find("PortInputField").GetComponent<TMPro.TMP_InputField>();
         ipInputField = GameObject.Find("IpInputField").GetComponent<TMPro.TMP_InputField>();
@@ -30,9 +30,9 @@ public class SetServerInputFields : MonoBehaviour
 
     public static void UpdateData()
     {
-        UDPServerConfig.setPort(int.Parse(portInputField.text));
-        UDPServerConfig.setIP(ipInputField.text);
-        UDPServerConfig.setPlayerName(playerName.text);
+        UDPServerConfig.SetPort(int.Parse(portInputField.text));
+        UDPServerConfig.SetIP(ipInputField.text);
+        UDPServerConfig.SetPlayerName(playerName.text);
     }
 
     void OnEnable()
@@ -40,7 +40,7 @@ public class SetServerInputFields : MonoBehaviour
         try
         {
             TCPConnection conn = TCPConnection.instance;
-            conn.clearConnection();
+            conn.ClearConnection();
         }
         catch(NullReferenceException){}
     }

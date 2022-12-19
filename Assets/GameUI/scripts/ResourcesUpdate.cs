@@ -6,6 +6,6 @@ public class ResourcesUpdate : MonoBehaviour
     void Update()
     {
         int income = Resources.passiveIncome + Resources.tempIncome;
-        text.text = "Coins:  " + Resources.GetCoins().ToString() + " (+" + income + ")";
+        text.text = "Coins:  " + Resources.GetCoins().ToString() + " (+" + income + ")" + " " + ActionCounters.isMovingCount;
     }
 }

@@ -25,6 +25,9 @@ public class MoveCommand : ICommand
         if(obj.GetComponent<NetworkId>().position == path[path.Count - 1].GetComponent<CustomTag>().coordinates || path.Count == 0)
             return;
 
+        if(obj.GetComponent<Movement>().madeMove == true)
+            return;
+
         obj.GetComponent<Movement>().SetPath(path);
         
 
@@ -33,7 +36,10 @@ public class MoveCommand : ICommand
         path[0].GetComponent<CustomTag>().taken = false;
         obj.GetComponent<NetworkId>().position = newPosition;
 
-        if(path[path.Count - 1].GetComponent<CustomTag>().getResources == true && obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
+        if(path[path.Count - 1].GetComponent<CustomTag>().getResources == true && obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.GetId())
             Resources.ChangeTmpIncome(2);
+
+        if(path[0].GetComponent<CustomTag>().getResources == true && obj.GetComponent<NetworkId>().ownerId == UDPServerConfig.GetId())
+            Resources.ChangeTmpIncome(-2);
     }
 }

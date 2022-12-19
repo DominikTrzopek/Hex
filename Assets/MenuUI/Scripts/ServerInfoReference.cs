@@ -7,19 +7,19 @@ public class ServerInfoReference : MonoBehaviour
     private TCPServerInfo tCPServerInfo;
     private string tCPPassword;
 
-    public void setTCPPassword(string password){
+    public void SetTCPPassword(string password){
         tCPPassword = password;
     }
 
-    public string getTCPPassword(){
+    public string GetTCPPassword(){
         return tCPPassword;
     } 
 
-    public void setTCPInfo(TCPServerInfo info){
+    public void SetTCPInfo(TCPServerInfo info){
         tCPServerInfo = info;
     }
 
-    public TCPServerInfo getTCPInfo(){
+    public TCPServerInfo GetTCPInfo(){
         return tCPServerInfo;
     }
 }

@@ -16,7 +16,7 @@ public class TCPClient
 
     public TCPClient() {}
 
-    public void setupSocket(String host, Int32 port)
+    public void SetupSocket(String host, Int32 port)
     {
         try
         {
@@ -36,13 +36,13 @@ public class TCPClient
         }
     }
 
-    public void setTimeout(int seconds)
+    public void SetTimeout(int seconds)
     {
         client.SendTimeout = seconds * 1000;
         client.ReceiveTimeout = seconds * 1000;
     }
 
-    public void writeSocket(ITCPMsg msg)
+    public void WriteSocket(ITCPMsg msg)
     {
         try
         {
@@ -57,7 +57,7 @@ public class TCPClient
         }
     }
 
-    public void disconnect()
+    public void Disconnect()
     {
         try
         {
@@ -72,7 +72,7 @@ public class TCPClient
         }
     }
 
-    public byte[] readSocket(int maxBuffer = 1024)
+    public byte[] ReadSocket(int maxBuffer = 1024)
     {
         try
         {
@@ -96,7 +96,7 @@ public class TCPClient
         return null;
     }
 
-    public void closeSocket()
+    public void CloseSocket()
     {
         if (!socketReady)
             return;

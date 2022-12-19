@@ -205,6 +205,7 @@ MonoBehaviour:
   healthPoints: 5
   viewRange: 0
   takenRange: 5
+  parentId: 
 --- !u!114 &1021302746141154575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,8 +500,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.009999999
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.015999999
+  m_Center: {x: 0, y: 0, z: -0.003}
 --- !u!114 &2639411020520962877
 MonoBehaviour:
   m_ObjectHideFlags: 0

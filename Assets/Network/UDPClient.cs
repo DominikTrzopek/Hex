@@ -11,11 +11,11 @@ public class UDPClient
     IPEndPoint remoteEndPoint;
     UdpClient client;
 
-    public void init()
+    public void Init()
     {
         remoteEndPoint = new IPEndPoint(
-            IPAddress.Parse(UDPServerConfig.getIp()),
-            UDPServerConfig.getPort()
+            IPAddress.Parse(UDPServerConfig.GetIp()),
+            UDPServerConfig.GetPort()
         );
         client = new UdpClient();
         client.Client.SendBufferSize = 8192;
@@ -24,12 +24,12 @@ public class UDPClient
         client.Client.SendTimeout = 2000;
     }
 
-    public void sendData(IUDPREquest request)
+    public void SendData(IUDPREquest request)
     {
         try
         {
-            Debug.Log(request.getRequestType());
-            string text = request.saveToString();
+            Debug.Log(request.GetRequestType());
+            string text = request.SaveToString();
             if (text != "")
             {
                 byte[] data = Encoding.UTF8.GetBytes(text);
@@ -42,7 +42,7 @@ public class UDPClient
         }
     }
 
-    public byte[] receiveData()
+    public byte[] ReceiveData()
     {
         try
         {

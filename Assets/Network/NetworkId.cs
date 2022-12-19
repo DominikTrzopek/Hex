@@ -8,7 +8,7 @@ public class NetworkId : MonoBehaviour
     public string objectId;
     public Vector2Int position;
 
-    public void setIds(string ownerId, string objectId)
+    public void SetIds(string ownerId, string objectId)
     {
         this.ownerId = ownerId;
         this.objectId = objectId;

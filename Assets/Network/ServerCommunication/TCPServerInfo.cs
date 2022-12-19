@@ -17,7 +17,7 @@ public class TCPServerInfo
     public int connections;
     public int pid;
 
-    public string saveToString()
+    public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }

@@ -15,8 +15,8 @@ public class CommandMsg : ITCPMsg
 
     public CommandMsg(string objectId, CommandEnum command, List<string> args)
     {
-        this.ownerId = UDPServerConfig.getId();
-        this.secretId = UDPServerConfig.getSecretId();
+        this.ownerId = UDPServerConfig.GetId();
+        this.secretId = UDPServerConfig.GetSecretId();
         this.objectId = objectId;
         this.command = command;
         this.args = args;
@@ -27,7 +27,7 @@ public class CommandMsg : ITCPMsg
         return JsonUtility.ToJson(this);
     }
 
-    public static CommandMsg fromString(string json){
+    public static CommandMsg FromString(string json){
         return JsonUtility.FromJson<CommandMsg>(json);
     }
 }

@@ -93,10 +93,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   madeMove: 0
+  startSelected: 0
   maxVelocity: 1.5
   speed: 5
   pathSelected: 0
-  startSelected: 0
   moving: 0
 --- !u!54 &-6720036101626792847
 Rigidbody:
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   madeMove: 0
+  inAction: 0
   pivot: {fileID: 7937656833256938255}
   lineRenderer: {fileID: 215969183930627810}
   gunPivot: {fileID: 7656252455111878045}
@@ -163,7 +164,6 @@ MonoBehaviour:
   speed: 1
   widthStep: 0.002
   maxWidth: 0.05
-  inAction: 0
 --- !u!120 &215969183930627810
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -918,8 +918,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.04046224, y: 0.0098, z: 0.02185943}
-  m_Center: {x: 0.0035657696, y: 0.01, z: -0.00000014482066}
+  m_Size: {x: 0.04046224, y: 0.017614942, z: 0.021859428}
+  m_Center: {x: 0.0035657692, y: 0.013907454, z: -0.00000014424323}
 --- !u!1 &9171861560871225992
 GameObject:
   m_ObjectHideFlags: 0

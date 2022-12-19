@@ -9,29 +9,29 @@ public class ConnectionScreenLogic : MonoBehaviour
 {
     private bool ready = false;
 
-    public void setReadyStatus()
+    public void SetReadyStatus()
     {
         if (ready == false)
         {
             ready = true;
-            sendStatus(new PlayerInfo(PlayerStatus.READY, TCPConnection.instance.selfNumber));
+            SendStatus(new PlayerInfo(PlayerStatus.READY, TCPConnection.instance.selfNumber));
             return;
         }
         else
         {
             ready = false;
-            sendStatus(new PlayerInfo(PlayerStatus.NOTREADY, TCPConnection.instance.selfNumber));
+            SendStatus(new PlayerInfo(PlayerStatus.NOTREADY, TCPConnection.instance.selfNumber));
         }
 
     }
 
-    private void sendStatus(PlayerInfo info)
+    private void SendStatus(PlayerInfo info)
     {
         TCPConnection conn = TCPConnection.instance;
-        conn.client.writeSocket(new ConnectMsg(info));
+        conn.client.WriteSocket(new ConnectMsg(info));
     }
 
-    public void sendDeleteRequest()
+    public void SendDeleteRequest()
     {
         new Thread(() =>
         {
@@ -39,18 +39,18 @@ public class ConnectionScreenLogic : MonoBehaviour
             UDPClient client = new UDPClient();
             try
             {
-                client.init();
-                client.sendData(new DeleteServerRequest(TCPConnection.instance.serverInfo.pid));
-                byte[] responseByte = client.receiveData();
+                client.Init();
+                client.SendData(new DeleteServerRequest(TCPConnection.instance.serverInfo.pid));
+                byte[] responseByte = client.ReceiveData();
                 string message = Encoding.Default.GetString(responseByte);
-                UDPResponse response = UDPResponse.fromString(message);
+                UDPResponse response = UDPResponse.FromString(message);
                 Debug.Log(message);
             }
             catch (Exception err)
             {
                 Debug.Log(err.ToString());
             }
-            TCPConnection.instance.clearConnection();
+            TCPConnection.instance.ClearConnection();
 
         }).Start();
 

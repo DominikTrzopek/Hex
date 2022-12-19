@@ -21,8 +21,8 @@ public class ConnectionHandler : MonoBehaviour
 
         if (Input.GetKey("q"))
         {
-            TCPConnection.instance.client.disconnect();
-            TCPConnection.instance.client.closeSocket();
+            TCPConnection.instance.client.Disconnect();
+            TCPConnection.instance.client.CloseSocket();
         }
     }
 
