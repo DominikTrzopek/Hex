@@ -11,7 +11,6 @@ public class ConnectionScreenLogic : MonoBehaviour
 
     public void setReadyStatus()
     {
-        Debug.Log(TCPConnection.instance.selfNumber);
         if (ready == false)
         {
             ready = true;

@@ -13,6 +13,7 @@ public class EndTurnCommand : ICommand
     int resources;
     GameState gameState;
     Camera camera;
+    bool addCoins;
 
     public EndTurnCommand(CommandBuilder command, Camera camera)
     {
@@ -25,6 +26,7 @@ public class EndTurnCommand : ICommand
         this.tooltip = PanelHolder.holder.tooltip;
         this.textMeshPro = PanelHolder.holder.textMeshPro;
         this.camera = camera;
+        this.addCoins = true;
     }
 
     public void Execute()
@@ -42,6 +44,7 @@ public class EndTurnCommand : ICommand
         {
             try
             {
+                addCoins = false;
                 ConnectionHandler.reconnected = false;
                 ConnectionHandler.Reinstantiate(gameState);
             }
@@ -56,7 +59,8 @@ public class EndTurnCommand : ICommand
             tooltip.GetComponent<Image>().color = Color.black;
             textMeshPro.text = "Your turn";
             List<GameObject> playerObjects = FindNetworkObject.FindPlayerAllNetObj(playerId);
-            Resources.coins += Resources.passiveIncome + Resources.tempIncome;
+            if(addCoins)
+                Resources.coins += Resources.passiveIncome + Resources.tempIncome;
             EnableScripts(playerObjects);
         }
         else

@@ -21,6 +21,9 @@ public class InitStructureCommand : ICommand
 
     public void Execute()
     {
+        if(FindNetworkObject.FindObj(objectId) != null)
+            return;
+
         GameObject creatorObj = FindNetworkObject.FindObj(creatorObjectId);
         if (creatorObj == null)
             return;
@@ -33,6 +36,7 @@ public class InitStructureCommand : ICommand
         GameObject newObj = Object.Instantiate(structure, structurePosition, Quaternion.Euler(new Vector3(0, Random.Range(0, 6) * 60, 0)));
         newObj.GetComponent<NetworkId>().position = endCoordinates;
         newObj.GetComponent<NetworkId>().setIds(ownerId, objectId);
+        newObj.GetComponent<StructureStats>().parentId = creatorObjectId;
         creatorObj.GetComponent<StructureStats>().AddConnected(newObj);
         newObj.GetComponent<TakeCell>().MarkCells(ownerId);
 

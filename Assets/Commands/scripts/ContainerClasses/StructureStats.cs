@@ -8,6 +8,7 @@ public class StructureStats : StatsAbstract
     private int takenRange;
 
     private List<GameObject> connected = new List<GameObject>();
+    public string parentId;
 
     public int GetTakenRange()
     {

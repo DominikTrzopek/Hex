@@ -100,17 +100,13 @@ public class TCPConnection : MonoBehaviour
             string message = "";
             while (client.socketReady)
             {
-                Debug.Log("aaaa");
                 byte[] bytes = client.readSocket();
                 if (bytes != null)
                 {
                     message += Encoding.Default.GetString(bytes);
-                    Debug.Log(message);
-                    Debug.Log(message.Contains("\n"));
                     if (message.Contains("\n"))
                     {
                         string[] splited = message.Split("\n");
-                        Debug.Log(splited.Length);
                         foreach (string part in splited)
                         {
                             try

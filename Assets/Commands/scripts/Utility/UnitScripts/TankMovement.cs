@@ -17,7 +17,8 @@ public class TankMovement : Movement
     {
         path = selectedPath;
         startSelected = true;
-        ActionCounters.isMovingCount++;
+        if(moving == false)
+            ActionCounters.isMovingCount++;
         if (this.GetComponent<NetworkId>().ownerId == UDPServerConfig.getId())
             madeMove = true;
     }

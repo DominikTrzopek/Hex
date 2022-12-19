@@ -19,13 +19,11 @@ public class IngameMenu : MonoBehaviour
     {
         if (PlayerActionSelector.command != CommandEnum.NONE)
         {
-            Debug.Log("dfgdfgfdg");
             PanelHolder.holder.endTurnButton.interactable = false;
         }
         else if(ActionCounters.isAttackingCount != 0 || ActionCounters.isMovingCount != 0)
         {
             Debug.Log(ActionCounters.isMovingCount);
-            Debug.Log(ActionCounters.isAttackingCount);
             PanelHolder.holder.endTurnButton.interactable = false;
         }
         else if(PlayerActionSelector.command != CommandEnum.ENDTURN)

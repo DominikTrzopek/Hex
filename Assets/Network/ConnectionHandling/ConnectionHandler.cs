@@ -39,9 +39,9 @@ public class ConnectionHandler : MonoBehaviour
 
     public static void Reinstantiate(GameState state)
     {
-
         foreach (NetworkObjInfo obj in state.networkInfos)
         {
+            Debug.Log(obj.name);
             GameObject found = FindNetworkObject.FindObj(obj.objectId);
             if (found != null)
             {
@@ -71,6 +71,8 @@ public class ConnectionHandler : MonoBehaviour
                 {
                     newObj = Instantiate(PrefabContainer.container.structurePrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     newObj.GetComponent<TakeCell>().MarkCells(obj.ownerId);
+                    newObj.GetComponent<StatsAbstract>().SetValues(obj.lv, obj.HP, obj.VR);
+                    newObj.GetComponent<StructureStats>().parentId = obj.parentId;
                     GameObject hex = HexGrid.hexArray[obj.position.x, obj.position.y];
 
                     CustomTag tags = hex.GetComponent<CustomTag>();
@@ -88,24 +90,42 @@ public class ConnectionHandler : MonoBehaviour
                 newObj.GetComponent<NetworkId>().objectId = obj.objectId;
                 newObj.GetComponent<NetworkId>().position = obj.position;
             }
-
         }
 
         List<GameObject> allExisting = FindNetworkObject.FindAllNetObj();
         for (int i = 0; i < allExisting.Count; i++)
         {
             bool todelete = true;
+            int count = 0;
             foreach (NetworkObjInfo obj in state.networkInfos)
             {
                 if (obj.objectId == allExisting[i].GetComponent<NetworkId>().objectId)
                 {
                     todelete = false;
-                    break;
+                    count++;
+                    if(count > 1)
+                    {
+                        Object.Destroy(allExisting[i]);
+                        count--;
+                    }
                 }
             }
             if (todelete)
+            {
                 Object.Destroy(allExisting[i]);
+                continue;
+            }
+
+            if(allExisting[i].GetComponent<StructureStats>())
+            {
+                string parentId = allExisting[i].GetComponent<StructureStats>().parentId;
+                GameObject parent = FindNetworkObject.FindObj(parentId);
+                parent.GetComponent<StructureStats>().AddConnected(allExisting[i]);
+            }
+
         }
+
+        
 
     }
 

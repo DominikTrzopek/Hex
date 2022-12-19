@@ -24,11 +24,12 @@ public class TankAttack : Attack
         if (attack || start)
             enemy.GetComponent<StatsAbstract>().ApplyReceivedAttack();
 
+        if(inAction == false)
+            ActionCounters.isAttackingCount++;
         inAction = true;
         attack = false;
         increment = true;
         iteration = 1;
-        ActionCounters.isAttackingCount++;
         this.enemy = newEnemy;
         newRotation = turret.transform.rotation.y + 10f;
         start = true;

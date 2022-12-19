@@ -105,7 +105,6 @@ public class ServerListScreenLogic : MonoBehaviour
         foreach (var serverInfo in tcpServers)
         {
             GameObject newCell = Instantiate(CellPrefab);
-            Debug.Log(this.gameObject);
             newCell.transform.SetParent(this.gameObject.transform, false);
 
             TMPro.TextMeshProUGUI serverNameText = newCell.transform.Find("ServerName/NameValue").GetComponent<TMPro.TextMeshProUGUI>();

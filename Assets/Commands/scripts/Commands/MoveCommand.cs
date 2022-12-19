@@ -19,8 +19,14 @@ public class MoveCommand : ICommand
         GameObject obj = FindNetworkObject.FindObj(objectId);
         if (obj == null)
             return;
+
         List<GameObject> path = ArgsParser.MakePathFromCoordinates(coordinateList);
+
+        if(obj.GetComponent<NetworkId>().position == path[path.Count - 1].GetComponent<CustomTag>().coordinates || path.Count == 0)
+            return;
+
         obj.GetComponent<Movement>().SetPath(path);
+        
 
         Vector2Int newPosition = path[path.Count - 1].GetComponent<CustomTag>().coordinates;
         path[path.Count - 1].GetComponent<CustomTag>().taken = true;

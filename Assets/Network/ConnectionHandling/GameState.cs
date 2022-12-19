@@ -51,7 +51,8 @@ public class GameState
                         0,
                         obj.GetComponent<UnitStats>().GetAP(),
                         obj.GetComponent<UnitStats>().GetMR(),
-                        obj.GetComponent<UnitStats>().GetAR()
+                        obj.GetComponent<UnitStats>().GetAR(),
+                        ""
                     )
                 );
             }
@@ -69,7 +70,8 @@ public class GameState
                         obj.GetComponent<StructureStats>().GetTakenRange(),
                         0,
                         0,
-                        0
+                        0,
+                        obj.GetComponent<StructureStats>().parentId
                     )
                 );
             }
