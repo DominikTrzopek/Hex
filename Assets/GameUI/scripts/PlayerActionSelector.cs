@@ -92,7 +92,7 @@ public class PlayerActionSelector : MonoBehaviour
 
                 CommandBuilder builder = new CommandBuilder
                 (
-                    System.Guid.NewGuid().ToString().Substring(0, 18),
+                    System.Guid.NewGuid().ToString().Substring(0, 12),
                     CommandEnum.INSTANTIANE_UNIT,
                     new List<string>{
                         position.x.ToString(),
@@ -143,7 +143,7 @@ public class PlayerActionSelector : MonoBehaviour
                 }
                 CommandBuilder builder = new CommandBuilder
                 (
-                    System.Guid.NewGuid().ToString().Substring(0, 18),
+                    System.Guid.NewGuid().ToString().Substring(0, 12),
                     CommandEnum.INSTANTIANE_STRUCTURE,
                     cellsInPath,
                     new GameState(false)

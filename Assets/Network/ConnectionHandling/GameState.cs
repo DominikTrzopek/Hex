@@ -47,12 +47,9 @@ public class GameState
                         obj.GetComponent<NetworkId>().position,
                         obj.GetComponent<UnitStats>().GetHP(),
                         obj.GetComponent<UnitStats>().GetLevel(),
-                        obj.GetComponent<UnitStats>().GetVR(),
-                        0,
                         obj.GetComponent<UnitStats>().GetAP(),
                         obj.GetComponent<UnitStats>().GetMR(),
-                        obj.GetComponent<UnitStats>().GetAR(),
-                        ""
+                        obj.GetComponent<UnitStats>().GetAR()
                     )
                 );
             }
@@ -66,11 +63,6 @@ public class GameState
                         obj.GetComponent<NetworkId>().position,
                         obj.GetComponent<StructureStats>().GetHP(),
                         obj.GetComponent<StructureStats>().GetLevel(),
-                        obj.GetComponent<StructureStats>().GetVR(),
-                        obj.GetComponent<StructureStats>().GetTakenRange(),
-                        0,
-                        0,
-                        0,
                         obj.GetComponent<StructureStats>().parentId
                     )
                 );

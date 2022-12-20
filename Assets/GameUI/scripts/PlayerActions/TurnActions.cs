@@ -62,7 +62,6 @@ public class TurnActions : ActionsAbstract, IActions
             },
             new GameState()
         );
-        Debug.Log(builder.SaveToString());
 
         TCPConnection.instance.client.WriteSocket(builder);
     }

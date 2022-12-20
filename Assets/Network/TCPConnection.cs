@@ -106,6 +106,7 @@ public class TCPConnection : MonoBehaviour
                     message += Encoding.Default.GetString(bytes);
                     if (message.Contains("\n"))
                     {
+                        Debug.Log(message);
                         string[] splited = message.Split("\n");
                         foreach (string part in splited)
                         {
@@ -120,9 +121,14 @@ public class TCPConnection : MonoBehaviour
                         }
                         message = "";
                     }
+                    else
+                    {
+                        Debug.Log("aaa");
+                    }
                 }
                 else
                 {
+                    Debug.Log("Zerwano polacznie");
                     // client.socketReady = false;
                     // messageQueue.Add("Zerwano polaczenie");
                 }

@@ -18,6 +18,7 @@ public class MoveHandler : IActionHandler
     {
         Vector2Int position = obj.GetComponent<NetworkId>().position;
         GameObject takenHex = HexGrid.hexArray[position.x, position.y];
+        PathFinding.ClearDistance(null);
         objInRange = PathFinding.SetRange(obj.GetComponent<UnitStats>().GetMR(), takenHex);
 
         foreach (GameObject cell in objInRange)

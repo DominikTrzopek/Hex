@@ -6,7 +6,7 @@ public static class UDPServerConfig
     private static string ipAddress = "192.168.0.219";
     private static int port = 8051;
     private static string playerName = "player";
-    private static string id = System.Guid.NewGuid().ToString(); //SystemInfo.deviceUniqueIdentifier;
+    private static string id = System.Guid.NewGuid().ToString().Substring(0, 8);
     private static string secretId = System.Guid.NewGuid().ToString();
     private static string secretHash;
 

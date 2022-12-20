@@ -25,6 +25,9 @@ public class MoveCommand : ICommand
         if(obj.GetComponent<NetworkId>().position == path[path.Count - 1].GetComponent<CustomTag>().coordinates || path.Count == 0)
             return;
 
+        if(path[path.Count - 1].GetComponent<CustomTag>().coordinates == path[0].GetComponent<CustomTag>().coordinates)
+            return;
+
         if(obj.GetComponent<Movement>().madeMove == true)
             return;
 

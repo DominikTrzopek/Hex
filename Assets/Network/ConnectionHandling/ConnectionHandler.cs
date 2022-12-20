@@ -64,14 +64,14 @@ public class ConnectionHandler : MonoBehaviour
                         }
                         catch { }
                     }
-                    newObj.GetComponent<StatsAbstract>().SetValues(obj.lv, obj.HP, obj.VR);
+                    newObj.GetComponent<StatsAbstract>().SetValues(obj.lv, obj.HP);
                     newObj.GetComponent<UnitStats>().UpdateUnit(obj.AP, obj.MR, obj.AR);
                 }
                 if (obj.name == "structure(Clone)")
                 {
                     newObj = Instantiate(PrefabContainer.container.structurePrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
                     newObj.GetComponent<TakeCell>().MarkCells(obj.ownerId);
-                    newObj.GetComponent<StatsAbstract>().SetValues(obj.lv, obj.HP, obj.VR);
+                    newObj.GetComponent<StatsAbstract>().SetValues(obj.lv, obj.HP);
                     newObj.GetComponent<StructureStats>().parentId = obj.parentId;
                     GameObject hex = HexGrid.hexArray[obj.position.x, obj.position.y];
 
@@ -136,7 +136,7 @@ public class ConnectionHandler : MonoBehaviour
         Vector3 position = hex.transform.position;
         obj.transform.position = position;
         obj.GetComponent<NetworkId>().position = info.position;
-        obj.GetComponent<StatsAbstract>().SetValues(info.lv, info.HP, info.VR);
+        obj.GetComponent<StatsAbstract>().SetValues(info.lv, info.HP);
     }
 
     public static void UpdateUnit(GameObject obj, NetworkObjInfo info)

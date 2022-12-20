@@ -72,7 +72,7 @@ public class TCPClient
         }
     }
 
-    public byte[] ReadSocket(int maxBuffer = 1024)
+    public byte[] ReadSocket(int maxBuffer = 8192)
     {
         try
         {
