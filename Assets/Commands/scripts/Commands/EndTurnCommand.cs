@@ -55,6 +55,7 @@ public class EndTurnCommand : ICommand
         ActionCounters.Reset();
         if (playerId == UDPServerConfig.GetId())
         {
+            TurnActions.instance.SetCurrentTurn(currentTurn);
             PanelHolder.holder.endTurnButton.interactable = true;
             PlayerActionSelector.command = CommandEnum.NONE;
             tooltip.GetComponent<Image>().color = Color.black;
