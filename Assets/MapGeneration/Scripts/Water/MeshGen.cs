@@ -20,7 +20,6 @@ public class MeshGen : MonoBehaviour
             for (int x = 0; x < width; x ++)
             {
                 meshData.verticles[vertexIndex] = new Vector3(topLeftX + x, 0, topLeftY - y);
-                //Debug.Log(heightMap[x, y]);
                 meshData.uvs[vertexIndex] = new Vector2(x / (float)width, y / (float)height);
                 if (x < width - 1 && y < height - 1)
                 {

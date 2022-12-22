@@ -35,7 +35,6 @@ public class ConnectionScreenLogic : MonoBehaviour
     {
         new Thread(() =>
         {
-            Debug.Log(TCPConnection.instance.serverInfo.pid);
             UDPClient client = new UDPClient();
             try
             {
@@ -44,7 +43,6 @@ public class ConnectionScreenLogic : MonoBehaviour
                 byte[] responseByte = client.ReceiveData();
                 string message = Encoding.Default.GetString(responseByte);
                 UDPResponse response = UDPResponse.FromString(message);
-                Debug.Log(message);
             }
             catch (Exception err)
             {

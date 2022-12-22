@@ -35,13 +35,11 @@ public class TurnActions : ActionsAbstract, IActions
         List<GameObject> panels = PanelHolder.holder.panels;
         if (PlayerActionSelector.command != CommandEnum.NONE)
         {
-            Debug.Log("End or cancel your current action");
             textMeshPro.text = "End or cancel your current action";
             return;
         }
         if(ActionCounters.isAttackingCount > 0 || ActionCounters.isMovingCount > 0)
         {
-            Debug.Log("wait for units");
             textMeshPro.text = "Wait for units to stop";
             return;
         }

@@ -85,7 +85,6 @@ public class LobbyLogic : MonoBehaviour
                 }
                 catch (ArgumentException)
                 {
-                    //Debug.Log(err.ToString());
                     conn.messageQueue.RemoveAt(0);
                 }
             }

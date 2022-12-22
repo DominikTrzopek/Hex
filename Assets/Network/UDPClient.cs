@@ -28,7 +28,6 @@ public class UDPClient
     {
         try
         {
-            Debug.Log(request.GetRequestType());
             string text = request.SaveToString();
             if (text != "")
             {

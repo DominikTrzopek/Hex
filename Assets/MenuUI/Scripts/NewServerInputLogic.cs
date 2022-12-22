@@ -138,7 +138,6 @@ public class NewServerInputLogic : MonoBehaviour
             dataReady = false;
             if(responseCode != ResponseType.SUCCESS)
             {
-                Debug.Log(this.gameObject.name);
                 ErrorHandling.Handle(responseCode, this.gameObject);
                 return;
             }

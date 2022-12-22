@@ -45,6 +45,7 @@ public class EndTurnCommand : ICommand
             try
             {
                 addCoins = false;
+                TurnActions.instance.SetCurrentTurn(currentTurn);
                 ConnectionHandler.reconnected = false;
                 ConnectionHandler.Reinstantiate(gameState);
             }
@@ -55,7 +56,6 @@ public class EndTurnCommand : ICommand
         ActionCounters.Reset();
         if (playerId == UDPServerConfig.GetId())
         {
-            TurnActions.instance.SetCurrentTurn(currentTurn);
             PanelHolder.holder.endTurnButton.interactable = true;
             PlayerActionSelector.command = CommandEnum.NONE;
             tooltip.GetComponent<Image>().color = Color.black;

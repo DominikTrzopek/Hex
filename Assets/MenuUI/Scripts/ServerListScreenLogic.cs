@@ -25,7 +25,6 @@ public class ServerListScreenLogic : MonoBehaviour
 
         tcpServers = new List<TCPServerInfo>();
 
-        //RequestServerList
         new Thread(() =>
         {
             UDPClient client = new UDPClient();

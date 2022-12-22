@@ -14,7 +14,6 @@ public class UpgradeARCommand : ICommand
     public void Execute()
     {
         GameObject obj = FindNetworkObject.FindObj(objectId);
-        Debug.Log(obj.name);
         if (obj == null)
             return;
         obj.GetComponent<UnitStats>().UpgradeAR();

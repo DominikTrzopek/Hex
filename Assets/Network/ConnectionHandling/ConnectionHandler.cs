@@ -11,18 +11,11 @@ public class ConnectionHandler : MonoBehaviour
         StartCoroutine(Coroutine());
         if (TCPConnection.instance.client.socketReady)
         {
-            Debug.Log("Connected");
             errorPannel.SetActive(false);
         }
         else
         {
             errorPannel.SetActive(true);
-        }
-
-        if (Input.GetKey("q"))
-        {
-            TCPConnection.instance.client.Disconnect();
-            TCPConnection.instance.client.CloseSocket();
         }
     }
 
@@ -41,7 +34,6 @@ public class ConnectionHandler : MonoBehaviour
     {
         foreach (NetworkObjInfo obj in state.networkInfos)
         {
-            Debug.Log(obj.name);
             GameObject found = FindNetworkObject.FindObj(obj.objectId);
             if (found != null)
             {

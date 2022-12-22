@@ -207,7 +207,6 @@ public class PlayerActionSelector : MonoBehaviour
                     },
                     new GameState(false)
                 );
-                Debug.Log(builder.SaveToString());
 
                 TCPConnection.instance.client.WriteSocket(builder);
                 UnitActions.instance.CancelAction();
